@@ -1,6 +1,10 @@
 const client = require('./client');
+
 const moment = require('moment')
 //Create an address site in Posts
+
+const { authenticate, compare, findUserFromToken, hash } = require("./auth");
+
 
 const models = { companies, users, posts } = require('./models');
 
