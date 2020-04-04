@@ -1,4 +1,5 @@
 const client = require('./client');
+const { authenticate, compare, findUserFromToken, hash } = require("./auth");
 
 const models = { companies, users } = require('./models');
 console.log(users.create)
