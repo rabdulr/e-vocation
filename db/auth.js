@@ -16,6 +16,7 @@ const hash = (password) => {
       if (err) {
         return reject(err);
       }
+      console.log("hashed: ", hashed)
       return resolve(hashed);
     });
   });
