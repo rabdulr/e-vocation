@@ -1,4 +1,6 @@
 const client = require('./client');
+const moment = require('moment')
+//Create an address site in Posts
 
 const models = { companies, users, posts } = require('./models');
 
@@ -48,7 +50,6 @@ const sync = async() => {
             "startDate" DATE,
             "endDate" DATE,
             "proposedBudget" INT
-
         );
     `;
     await client.query(SQL);
@@ -108,9 +109,27 @@ const [ santa, gordon ] = await Promise.all(Object.values(_companies).map(compan
 
 const _posts = {
     item1: {
-        
+        userId: jack.id,
+        title: 'Create Santa Land',
+        description: 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing',
+        industry: 'Packaging',
+        startDate: new Date('2020-9-20'),
+        endDate: new Date('2020-10-25'),
+        proposedBudget: 1000,
+    },
+    item2: {
+        userId: eva.id,
+        title: 'Cater My Event',
+        description: 'I am hosting an event that needs to be catered to 1000 people and the food needs to be excellent. Anything less is a travesty',
+        industry: 'Food',
+        startDate: new Date('2020-8-31'),
+        endDate: new Date('2020-8-31'),
+        proposedBudget: 1000000
     }
 }
+
+const [ item1, item2 ] = await posts.create(_posts.item1);
+console.log(_posts.item1);
 
 };
 
