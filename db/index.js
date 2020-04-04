@@ -124,12 +124,11 @@ const _posts = {
         industry: 'Food',
         startDate: new Date('2020-8-31'),
         endDate: new Date('2020-8-31'),
-        proposedBudget: 1000000
+        proposedBudget: 1000000,
     }
 }
 
-const [ item1, item2 ] = await posts.create(_posts.item1);
-console.log(_posts.item1);
+const [ item1, item2 ] = await Promise.all(Object.values(_posts).map(post => posts.create(post)));
 
 };
 
