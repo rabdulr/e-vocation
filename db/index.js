@@ -1,4 +1,5 @@
 const client = require('./client');
+const { authenticate, compare, findUserFromToken, hash } = require("./auth");
 
 const sync = async() => {
     const SQL = `
