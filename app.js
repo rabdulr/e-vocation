@@ -11,4 +11,14 @@ app.get('/', (req, res, next) => {
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    const error = { message: `page not found ${req.url} for ${req.method}`, status: 404 };
+    next(error);
+  });
+  
+  app.use((err, req, res, next) => {
+    console.log(err.status);
+    res.status(err.status || 500).send({ message: err.message });
+  });
+
 module.exports = app

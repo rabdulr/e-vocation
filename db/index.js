@@ -1,8 +1,12 @@
 const client = require('./client');
+
+const moment = require('moment')
+//Create an address site in Posts
+
 const { authenticate, compare, findUserFromToken, hash } = require("./auth");
 
-const models = { companies, users } = require('./models');
-console.log(users.create)
+
+const models = { companies, users, posts } = require('./models');
 
 const sync = async() => {
     const SQL = `
@@ -33,10 +37,23 @@ const sync = async() => {
             city VARCHAR(100),
             state VARCHAR(25),
             zip VARCHAR(10),
+            industry VARCHAR(100),
             "firstName" VARCHAR(100),
             "lastName" VARCHAR(100),
             password VARCHAR(100) NOT NULL,
             CHECK (char_length(username) > 0)
+        );
+
+        CREATE TABLE posts (
+            id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+            "userId" UUID REFERENCES users(id),
+            title VARCHAR(100),
+            description TEXT,
+            industry TEXT,
+            "datePosted" DATE NOT NULL DEFAULT CURRENT_DATE,
+            "startDate" DATE,
+            "endDate" DATE,
+            "proposedBudget" INT
         );
     `;
     await client.query(SQL);
@@ -51,6 +68,16 @@ const sync = async() => {
             zip: '93405',
             username: 'Jack',
             password: 'Jack'
+        },
+        eva: {
+            firstName: 'Eva',
+            lastName: 'Winters',
+            address: '888 Palm',
+            city: 'San Luis Obispo',
+            state: 'CA',
+            zip: '93401',
+            username: 'Eva',
+            password: 'Eva'
         }
     };
 
@@ -62,15 +89,50 @@ const sync = async() => {
             city: 'North Pole',
             state: 'AK',
             zip: '99501',
+            industry: 'Packaging',
             firstName: 'Santa',
             lastName: 'Claus',
             password: 'Santa'
+        },
+        ramsey: {
+            companyName: 'Hell\'s Kitchen',
+            username: 'Gordon',
+            address: '888 Higuera',
+            city: 'San Luis Obispo',
+            state: 'CA',
+            zip: '93401',
+            industry: 'Food',
+            firstName: 'Gordon',
+            lastName: 'Ramsey',
+            password: 'Gordon'
         }
     };
 
-const jack = await users.create(_users.jack)
-const santa = await companies.create(_companies.santa)
-console.log(jack, santa);
+const [ jack, eva ] = await Promise.all(Object.values(_users).map(user => users.create(user)));
+const [ santa, gordon ] = await Promise.all(Object.values(_companies).map(company => companies.create(company)));
+
+const _posts = {
+    item1: {
+        userId: jack.id,
+        title: 'Create Santa Land',
+        description: 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing',
+        industry: 'Packaging',
+        startDate: new Date('2020-9-20'),
+        endDate: new Date('2020-10-25'),
+        proposedBudget: 1000,
+    },
+    item2: {
+        userId: eva.id,
+        title: 'Cater My Event',
+        description: 'I am hosting an event that needs to be catered to 1000 people and the food needs to be excellent. Anything less is a travesty',
+        industry: 'Food',
+        startDate: new Date('2020-8-31'),
+        endDate: new Date('2020-8-31'),
+        proposedBudget: 1000000,
+    }
+}
+
+const [ item1, item2 ] = await Promise.all(Object.values(_posts).map(post => posts.create(post)));
 
 };
 
