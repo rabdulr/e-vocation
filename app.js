@@ -14,6 +14,7 @@ app.get('/', (req, res, next) => {
 
 app.use(express.json());
 
+<<<<<<< HEAD
 const isLoggedIn = (req, res, next) => {
     if (!req.user) {
       const error = Error("not authorized");
@@ -51,3 +52,16 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app
+=======
+app.use((req, res, next) => {
+    const error = { message: `page not found ${req.url} for ${req.method}`, status: 404 };
+    next(error);
+  });
+  
+  app.use((err, req, res, next) => {
+    console.log(err.status);
+    res.status(err.status || 500).send({ message: err.message });
+  });
+
+module.exports = app
+>>>>>>> master
