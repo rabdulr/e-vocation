@@ -18,15 +18,19 @@ import React, { useEffect, useState } from 'react';
 const AppHome = () => {
 
     return (
-        <div className = 'columnNW'>
-            <main>
+        <div id = 'container'>
+            <main className = 'shink0'>
                 <nav id = 'navBar' className = 'rowNW spaceBetweenRow'>
                     <div>logo placeholder</div>
                     <a>Login</a>
                 </nav>
+                <section className = 'rowNW justifyCenter'>
+                    <div></div>
+                    <div>This is Actual Content!</div>
+                </section>
             </main>
-            <footer>
-                © 2020 R. Abdul Rahim • C. Frazier • N. Lal • H. Adema
+            <footer className = 'shink0 centerText'>
+                © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema
             </footer>
         </div>
     );
