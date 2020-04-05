@@ -5,6 +5,8 @@ const db = require("./db");
 const jwt = require("jwt-simple");
 const models = db.models;
 
+app.use(express.json());
+
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
@@ -12,7 +14,21 @@ app.get('/', (req, res, next) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.use(express.json());
+const isAdmin = (req, res, next) => {
+  if (req.user.role !== 'ADMIN') {
+    return next(Error('not authorized'));
+  }
+  next();
+};
+
+const isLoggedIn = (req, res, next) => {
+  if (!req.user) {
+    const error = Error('not authorized');
+    error.status = 401;
+    return next(error);
+  }
+  next();
+};
 
 // middleware for adding user info to req, using the user token
 app.use((req, res, next) => {
@@ -34,8 +50,6 @@ app.use((req, res, next) => {
 
 //authentication routes
 app.post("/api/auth", (req, res, next) => {
-
-    console.log(db)
     db.authenticate(req.body)
         .then((token) => res.send({ token }))
         .catch((test_err) => {
@@ -46,7 +60,20 @@ app.post("/api/auth", (req, res, next) => {
         });
 });
 
-app.get("/api/auth", (req, res, next) => {
+Object.keys(models).forEach(key => {
+  app.get(`/api/${key}`, isLoggedIn, isAdmin, (req, res, next) => {
+    models[key].read({ user: req.user })
+      .then(items => res.send(items))
+      .catch(next);
+  });
+  app.post(`/api/${key}`, isLoggedIn, isAdmin, (req, res, next) => {
+    models[key].create({ user: req.body })
+      .then(items => res.send(items))
+      .catch(next);
+  });
+});
+
+app.get("/api/auth", isLoggedIn, (req, res, next) => {
     res.send(req.user);
 });
 
