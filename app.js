@@ -14,6 +14,23 @@ app.get('/', (req, res, next) => {
 
 app.use(express.json());
 
+// middleware for adding user info to req, using the user token
+app.use((req, res, next) => {
+    const token = req.headers.authentication;
+    if (!token) {
+        return next();
+    }
+    db.findUserFromToken(token)
+      .then((auth) => {
+        req.user = auth;
+        next();
+      })
+      .catch((ex) => {
+        const error = Error("not authorized");
+        error.status = 401;
+        next(error);
+      });
+  });
 
 //authentication routes
 app.post("/api/auth", (req, res, next) => {
@@ -22,7 +39,7 @@ app.post("/api/auth", (req, res, next) => {
     db.authenticate(req.body)
         .then((token) => res.send({ token }))
         .catch((test_err) => {
-            console.log("Error from Authenticate: ",test_err)
+            console.log("Error from db.authenticate: ",test_err)
             const error = Error("not authorized");
             error.status = 401;
             next(error);
@@ -39,7 +56,6 @@ app.use((req, res, next) => {
   });
 
   app.use((err, req, res, next) => {
-    console.log(err)
     console.log(err.status);
     res.status(err.status || 500).send({ message: err.message });
   });

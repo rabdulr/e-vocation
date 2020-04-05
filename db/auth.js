@@ -16,7 +16,6 @@ const hash = (password) => {
       if (err) {
         return reject(err);
       }
-      console.log("hashed: ", hashed)
       return resolve(hashed);
     });
   });
@@ -43,11 +42,8 @@ const authenticate = async ({ username, password }) => {
   ).rows[0];
 
   await compare({ plain: password, hashed: user.password });
-  console.log("I made it past the compare function:")
-  console.log("process.env.JWT: ", process.env.JWT)
   return jwt.encode({ id: user.id }, process.env.JWT);
 };
-//replace "foobar" with process.env.JWT
 
 module.exports = {
   findUserFromToken,
