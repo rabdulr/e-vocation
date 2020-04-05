@@ -14,54 +14,34 @@ app.get('/', (req, res, next) => {
 
 app.use(express.json());
 
-<<<<<<< HEAD
-const isLoggedIn = (req, res, next) => {
-    if (!req.user) {
-      const error = Error("not authorized");
-      error.status = 401;
-      return next(error);
-    }
-    next();
-  };
 
+//authentication routes
 app.post("/api/auth", (req, res, next) => {
+
+    console.log(db)
     db.authenticate(req.body)
-      .then((token) => res.send({ token }))
-      .catch(() => {
-        const error = Error("not authorized");
-        error.status = 401;
-        next(error);
-      });
-  });
+        .then((token) => res.send({ token }))
+        .catch((test_err) => {
+            console.log("Error from Authenticate: ",test_err)
+            const error = Error("not authorized");
+            error.status = 401;
+            next(error);
+        });
+});
 
-  app.get("/api/auth", isLoggedIn, (req, res, next) => {
+app.get("/api/auth", (req, res, next) => {
     res.send(req.user);
-  });
-
-// error messaging
-app.use((req, res, next) => {
-    const error = {
-        message: `page not found ${req.url} for ${req.method}`,
-        status: 404,
-    };
-    next(error);
-});
-app.use((err, req, res, next) => {
-    console.log(err.status, err.message);
-    res.status(err.status || 500).send({ message: err.message });
 });
 
-module.exports = app
-=======
 app.use((req, res, next) => {
     const error = { message: `page not found ${req.url} for ${req.method}`, status: 404 };
     next(error);
   });
-  
+
   app.use((err, req, res, next) => {
+    console.log(err)
     console.log(err.status);
     res.status(err.status || 500).send({ message: err.message });
   });
 
 module.exports = app
->>>>>>> master

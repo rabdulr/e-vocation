@@ -29,6 +29,7 @@ const compare = ({ plain, hashed }) => {
         return reject(err);
       }
       if (verified) {
+        console.log("credentials are verified!!")
         return resolve();
       }
       reject(Error("bad credentials"));
@@ -40,9 +41,13 @@ const authenticate = async ({ username, password }) => {
   const user = (
     await client.query("SELECT * FROM users WHERE username=$1", [username])
   ).rows[0];
+
   await compare({ plain: password, hashed: user.password });
+  console.log("I made it past the compare function:")
+  console.log("process.env.JWT: ", process.env.JWT)
   return jwt.encode({ id: user.id }, process.env.JWT);
 };
+//replace "foobar" with process.env.JWT
 
 module.exports = {
   findUserFromToken,
