@@ -138,5 +138,9 @@ const [ item1, item2 ] = await Promise.all(Object.values(_posts).map(post => pos
 
 module.exports = {
     sync,
-    models
+    models,
+    authenticate,
+    compare,
+    findUserFromToken,
+    hash
 }

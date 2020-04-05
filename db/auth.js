@@ -16,7 +16,6 @@ const hash = (password) => {
       if (err) {
         return reject(err);
       }
-      console.log("hashed: ", hashed)
       return resolve(hashed);
     });
   });
@@ -29,6 +28,7 @@ const compare = ({ plain, hashed }) => {
         return reject(err);
       }
       if (verified) {
+        console.log("credentials are verified!!")
         return resolve();
       }
       reject(Error("bad credentials"));
@@ -40,6 +40,7 @@ const authenticate = async ({ username, password }) => {
   const user = (
     await client.query("SELECT * FROM users WHERE username=$1", [username])
   ).rows[0];
+
   await compare({ plain: password, hashed: user.password });
   return jwt.encode({ id: user.id }, process.env.JWT);
 };
