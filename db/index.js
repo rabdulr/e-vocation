@@ -5,8 +5,9 @@ const moment = require('moment')
 
 const { authenticate, compare, findUserFromToken, hash } = require("./auth");
 
-
 const models = { companies, users, posts } = require('./models');
+
+
 
 const sync = async() => {
     const SQL = `
@@ -149,11 +150,17 @@ const [ item1, item2 ] = await Promise.all(Object.values(_posts).map(post => pos
 
 };
 
+// added one route to test front-end -H
+const getPosts = async () => {
+    return (await client.query(`SELECT * FROM posts`).rows)
+}
+
 module.exports = {
     sync,
     models,
     authenticate,
     compare,
     findUserFromToken,
-    hash
+    hash,
+    getPosts
 }
