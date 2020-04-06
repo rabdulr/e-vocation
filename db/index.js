@@ -26,6 +26,7 @@ const sync = async() => {
             zip VARCHAR(10),
             username VARCHAR(100) NOT NULL UNIQUE,
             password VARCHAR(100) NOT NULL,
+            role VARCHAR(20) DEFAULT 'USER',
             CHECK (char_length(username) > 0)
         );
 
@@ -78,6 +79,16 @@ const sync = async() => {
             zip: '93401',
             username: 'Eva',
             password: 'Eva'
+        },
+        admin: {
+            firstName: 'Capstone',
+            lastName: 'Admin',
+            address: 'Local Host',
+            city: 'Atascadero',
+            state: 'CA',
+            zip: '93422',
+            username: 'Admin',
+            password: 'Admin'
         }
     };
 
@@ -108,8 +119,10 @@ const sync = async() => {
         }
     };
 
-const [ jack, eva ] = await Promise.all(Object.values(_users).map(user => users.create(user)));
+const [ jack, eva, admin ] = await Promise.all(Object.values(_users).map(user => users.create(user)));
 const [ santa, gordon ] = await Promise.all(Object.values(_companies).map(company => companies.create(company)));
+
+await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['ADMIN', admin.id]);
 
 const _posts = {
     item1: {
@@ -138,5 +151,9 @@ const [ item1, item2 ] = await Promise.all(Object.values(_posts).map(post => pos
 
 module.exports = {
     sync,
-    models
+    models,
+    authenticate,
+    compare,
+    findUserFromToken,
+    hash
 }
