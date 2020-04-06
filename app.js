@@ -77,6 +77,13 @@ app.get("/api/auth", isLoggedIn, (req, res, next) => {
     res.send(req.user);
 });
 
+// added one route to test front-end -H
+app.get('/api/getPosts', (req, res, next) => {
+  db.getPosts()
+    .then(posts => res.send(posts))
+    .catch(next)
+})
+
 app.use((req, res, next) => {
     const error = { message: `page not found ${req.url} for ${req.method}`, status: 404 };
     next(error);
