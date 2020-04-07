@@ -169,10 +169,16 @@ const _bids = {
         companyId: gordon.id,
         proposal: 'You have got to be joking. What kind of event is this? Who\'s attending? I need more information',
         bid: 0
+    },
+    bid3: {
+        userId: eva.id,
+        companyId: santa.id,
+        proposal: 'We can do this for free!',
+        bid: 0
     }
 }
 
-const [ bid1, bid2 ] = await Promise.all(Object.values(_bids).map(bid => bids.create(bid)));
+const [ bid1, bid2, bid3 ] = await Promise.all(Object.values(_bids).map(bid => bids.create(bid)));
 
 };
 
