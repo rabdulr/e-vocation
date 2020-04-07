@@ -31,7 +31,7 @@ const AppHome = () => {
         axios.get('/api/getPosts')
             .then(response => setPosts(response.data))
             .then(() => console.log(posts))
-    })
+    }, [])
 
     // useEffect(() => {
     //     axios.get()

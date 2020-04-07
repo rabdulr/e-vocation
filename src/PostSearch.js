@@ -1,7 +1,7 @@
 import React from 'react';
 
 const PostSearch = ({posts}) => {
-  console.log(posts)
+  
   return(
     <div id="PostSearchRoot">
       <ul>
