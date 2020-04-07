@@ -152,7 +152,7 @@ const [ item1, item2 ] = await Promise.all(Object.values(_posts).map(post => pos
 
 // added one route to test front-end -H
 const getPosts = async () => {
-    return (await client.query(`SELECT * FROM posts`).rows)
+    return (await client.query(`SELECT * FROM posts`)).rows
 }
 
 module.exports = {
