@@ -69,116 +69,93 @@ const sync = async() => {
     `;
     await client.query(SQL);
 
-    const _users = {
-        jack: {
-            firstName: 'Jack',
-            lastName: 'Skellington',
-            address: '123 Halloween',
-            city: 'Halloween Town',
-            state: 'CA',
-            zip: '93405',
-            username: 'Jack',
-            password: 'Jack'
-        },
-        eva: {
-            firstName: 'Eva',
-            lastName: 'Winters',
-            address: '888 Palm',
-            city: 'San Luis Obispo',
-            state: 'CA',
-            zip: '93401',
-            username: 'Eva',
-            password: 'Eva'
-        },
-        admin: {
-            firstName: 'Capstone',
-            lastName: 'Admin',
-            address: 'Local Host',
-            city: 'Atascadero',
-            state: 'CA',
-            zip: '93422',
-            username: 'Admin',
-            password: 'Admin'
+    class Users {
+        constructor(firstName, lastName, address, city, state, zip, username, password){
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.address = address;
+            this.city = city;
+            this.state = state;
+            this.zip = zip;
+            this.username = username;
+            this.password = password;
         }
     };
 
-    const _companies = {
-        santa: {
-            companyName: 'Christmas',
-            username: 'Christmas',
-            address: '1 North Pole',
-            city: 'North Pole',
-            state: 'AK',
-            zip: '99501',
+    class Companies {
+        constructor(companyName, username, address, city, state, zip, industry, firstName, lastName, password){
+            this.companyName = companyName;
+            this.username = username;
+            this.address = address;
+            this.city = city;
+            this.state = state;
+            this.zip = zip;
+            this.industry = industry;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.password = password;
+        }
+    }
+
+    //Users using Users constructor
+    const jack = await users.create(new Users('Jack', 'Skellington', '123 Halloween', 'Halloween Town', 'CA', '93405', 'Jack', 'Jack'));
+
+    const eva = await users.create(new Users('Eva', 'Winters', '888 Palm', 'San Luis Obispo', 'CA', '93401', 'Eva', 'Eva'));
+
+    const admin = await users.create(new Users('Capstone', 'Admin', 'Local Host', 'Atascadero', 'CA', '93422', 'Admin', 'Admin'));
+
+    //Companies using Companies constructor
+    const santa = await companies.create(new Companies('Christmas', 'Christmas', '1 North Pole', 'North Pole', 'AK', '99501', 'TEST', 'Santa', 'Claus', 'Santa'));
+
+    const gordon = await companies.create(new Companies('Hell\'s Kitchen', 'Gordon', '888 Higuera', 'San Luis Obispo', 'CA', '93401', 'TEST', 'Gordon', 'Ramsey', 'Gordon'));
+
+    await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['ADMIN', admin.id]);
+
+    const _posts = {
+        item1: {
+            userId: jack.id,
+            title: 'Create Santa Land',
+            description: 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing',
             industry: 'Packaging',
-            firstName: 'Santa',
-            lastName: 'Claus',
-            password: 'Santa'
+            startDate: new Date('2020-9-20'),
+            endDate: new Date('2020-10-25'),
+            proposedBudget: 1000,
         },
-        ramsey: {
-            companyName: 'Hell\'s Kitchen',
-            username: 'Gordon',
-            address: '888 Higuera',
-            city: 'San Luis Obispo',
-            state: 'CA',
-            zip: '93401',
+        item2: {
+            userId: eva.id,
+            title: 'Cater My Event',
+            description: 'I am hosting an event that needs to be catered to 1000 people and the food needs to be excellent. Anything less is a travesty',
             industry: 'Food',
-            firstName: 'Gordon',
-            lastName: 'Ramsey',
-            password: 'Gordon'
+            startDate: new Date('2020-8-31'),
+            endDate: new Date('2020-8-31'),
+            proposedBudget: 1000000,
         }
-    };
-
-const [ jack, eva, admin ] = await Promise.all(Object.values(_users).map(user => users.create(user)));
-const [ santa, gordon ] = await Promise.all(Object.values(_companies).map(company => companies.create(company)));
-
-await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['ADMIN', admin.id]);
-
-const _posts = {
-    item1: {
-        userId: jack.id,
-        title: 'Create Santa Land',
-        description: 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing',
-        industry: 'Packaging',
-        startDate: new Date('2020-9-20'),
-        endDate: new Date('2020-10-25'),
-        proposedBudget: 1000,
-    },
-    item2: {
-        userId: eva.id,
-        title: 'Cater My Event',
-        description: 'I am hosting an event that needs to be catered to 1000 people and the food needs to be excellent. Anything less is a travesty',
-        industry: 'Food',
-        startDate: new Date('2020-8-31'),
-        endDate: new Date('2020-8-31'),
-        proposedBudget: 1000000,
     }
-}
 
-const [ item1, item2 ] = await Promise.all(Object.values(_posts).map(post => posts.create(post)));
+    const [ item1, item2 ] = await Promise.all(Object.values(_posts).map(post => posts.create(post)));
 
-const _bids = {
-    bid1: {
-        userId: jack.id,
-        companyId: santa.id,
-        proposal: 'Jolly good! My elves can set a very festive holiday for you! We will do it for free!',
-        bid: 0
-    },
-    bid2: {
-        userId: eva.id,
-        companyId: gordon.id,
-        proposal: 'You have got to be joking. What kind of event is this? Who\'s attending? I need more information',
-        bid: 0
-    },
-    bid3: {
-        userId: eva.id,
-        companyId: santa.id,
-        proposal: 'We can do this for free!',
-        bid: 0
+    const _bids = {
+        bid1: {
+            userId: jack.id,
+            companyId: santa.id,
+            proposal: 'Jolly good! My elves can set a very festive holiday for you! We will do it for free!',
+            bid: 0
+        },
+        bid2: {
+            userId: eva.id,
+            companyId: gordon.id,
+            proposal: 'You have got to be joking. What kind of event is this? Who\'s attending? I need more information',
+            bid: 0
+        },
+        bid3: {
+            userId: eva.id,
+            companyId: santa.id,
+            proposal: 'We can do this for free!',
+            bid: 0
+        }
     }
-}
 
-const [ bid1, bid2, bid3 ] = await Promise.all(Object.values(_bids).map(bid => bids.create(bid)));
+    const [ bid1, bid2, bid3 ] = await Promise.all(Object.values(_bids).map(bid => bids.create(bid)));
 
 };
 
