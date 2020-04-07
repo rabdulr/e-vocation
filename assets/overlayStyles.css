@@ -1,0 +1,32 @@
+/*These styles will apply overlay characteristics to elements
+    - The display layer- where components generally exist, will be layer 0.
+
+    - To place something behind this layer, apply a z layer < 0.
+    - To place something in above the layer, apply a z layer > 0.
+
+    -When website is prepared, only z layers in use should be present in the file. 
+*/
+.zNeg3{
+    z-index: -3;
+}
+.zNeg2{
+    z-index: -2;
+}
+.zNeg1{
+    z-index: -1;
+}
+.z0{
+    z-index: 0;
+}
+.z1{
+    z-index: 1;
+}
+.z2{
+    z-index: 2;
+}
+.z3{
+    z-index: 3;
+}
+.zInherit{
+    z-index: inherit;
+}

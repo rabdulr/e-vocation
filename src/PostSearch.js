@@ -3,7 +3,7 @@ import React from 'react';
 const PostSearch = ({posts}) => {
   
   return(
-    <div id="PostSearchRoot">
+    <div id="PostSearchRoot" className = 'marginHalf'>
       <ul>
         <li>1</li>
         <li>2</li>
