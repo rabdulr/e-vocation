@@ -1,5 +1,6 @@
 module.exports = {
     users: require('./users'),
     companies: require('./companies'),
-    posts: require('./posts')
+    posts: require('./posts'),
+    bids: require('./bids')
 };
