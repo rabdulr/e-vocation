@@ -5,13 +5,14 @@ const moment = require('moment')
 
 const { authenticate, compare, findUserFromToken, hash } = require("./auth");
 
-const models = { companies, users, posts } = require('./models');
+const models = { companies, users, posts, bids } = require('./models');
 
 
 
 const sync = async() => {
     const SQL = `
         CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+        DROP TABLE IF EXISTS bids;
         DROP TABLE IF EXISTS posts;
         DROP TABLE IF EXISTS ratings;
         DROP TABLE IF EXISTS users;
@@ -57,6 +58,14 @@ const sync = async() => {
             "endDate" DATE,
             "proposedBudget" INT
         );
+
+        CREATE TABLE bids (
+            id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+            "userId" UUID REFERENCES users(id),
+            "companyId" UUID REFERENCES companies(id),
+            proposal TEXT,
+            bid INT
+        )
     `;
     await client.query(SQL);
 
@@ -147,6 +156,23 @@ const _posts = {
 }
 
 const [ item1, item2 ] = await Promise.all(Object.values(_posts).map(post => posts.create(post)));
+
+const _bids = {
+    bid1: {
+        userId: jack.id,
+        companyId: santa.id,
+        proposal: 'Jolly good! My elves can set a very festive holiday for you! We will do it for free!',
+        bid: 0
+    },
+    bid2: {
+        userId: eva.id,
+        companyId: gordon.id,
+        proposal: 'You have got to be joking. What kind of event is this? Who\'s attending? I need more information',
+        bid: 0
+    }
+}
+
+const [ bid1, bid2 ] = await Promise.all(Object.values(_bids).map(bid => bids.create(bid)));
 
 };
 
