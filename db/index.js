@@ -104,12 +104,12 @@ const sync = async() => {
 
     const admin = await users.create(new Users('Capstone', 'Admin', 'Local Host', 'Atascadero', 'CA', '93422', 'Admin', 'Admin'));
 
-    //Companies using Companies constructor
-    const santa = await companies.create(new Companies('Christmas', 'Christmas', '1 North Pole', 'North Pole', 'AK', '99501', 'TEST', 'Santa', 'Claus', 'Santa'));
-
-    const gordon = await companies.create(new Companies('Hell\'s Kitchen', 'Gordon', '888 Higuera', 'San Luis Obispo', 'CA', '93401', 'TEST', 'Gordon', 'Ramsey', 'Gordon'));
-
     await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['ADMIN', admin.id]);
+
+    //Companies using Companies constructor
+    const santa = await companies.create(new Companies('Christmas', 'Christmas', '1 North Pole', 'North Pole', 'AK', '99501', 'Packaging', 'Santa', 'Claus', 'Santa'));
+
+    const gordon = await companies.create(new Companies('Hell\'s Kitchen', 'Gordon', '888 Higuera', 'San Luis Obispo', 'CA', '93401', 'Catering', 'Gordon', 'Ramsey', 'Gordon'));
 
     const _posts = {
         item1: {
