@@ -62,7 +62,7 @@ const sync = async() => {
         );
 
         CREATE TABLE bids (
-            id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+            "postId" UUID REFERENCES posts(id),
             "userId" UUID REFERENCES users(id),
             "companyId" UUID REFERENCES companies(id),
             proposal TEXT,
