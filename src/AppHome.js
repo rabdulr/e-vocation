@@ -53,6 +53,7 @@ const AppHome = () => {
 
     const login = async (credentials) => {
         console.log(credentials)
+        console.log(auth);
         const token = (await axios.post('/api/auth', credentials)).data.token;
         window.localStorage.setItem('token', token);
         exchangeTokenForAuth();
