@@ -37,6 +37,14 @@ footer{
     color: #efefef;
 }
 
+input:focus{
+    outline: none;
+}
+
+select:focus{
+    outline: none;
+}
+
 .centerText{
     text-align: center;
 }

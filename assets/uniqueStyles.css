@@ -1,3 +1,5 @@
+/* The webpage won't match to window border without this styling component.
+    Don't try to replace with applicale classList items. */
 #container{
     min-height: 100%;
     display: flex;

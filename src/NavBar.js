@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const NavBar = () => {
+
+const NavBar = ({ displayLogin }) => {
+
   return(<nav id = 'navBar' className = 'rowNW spaceBetweenRow'>
-    <div>logo placeholder</div>
-    <a>Login</a>
+    <div>Kreg's Least</div>
+    <div onClick = { ({ target }) => displayLogin() }>Login</div>
   </nav>)
 }
 

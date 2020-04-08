@@ -1,11 +1,11 @@
 /*
     Color Pallette: 
 
-    Dark Blue:          #1d2327
-    Bright Blue:        #1c5d83
-    Light Blue:         #bdd4de
-    Off-White:          #efefef
-    Orange:             #ea7200         Should be accents only
+    Dark Blue:          #1d2327         (29, 35, 39)
+    Bright Blue:        #1c5d83         (28, 93, 131)
+    Light Blue:         #bdd4de         (189, 212, 222)
+    Off-White:          #efefef         (239, 239, 239)
+    Orange:             #ea7200         (234, 114, 0)       Should be accents only
 */
 
 /* 
@@ -22,6 +22,9 @@
 }
 .borderDB{
     border: 1px solid #1d2327;
+}
+.bgAlphaDB{
+    background-color: rgba(29, 35, 39, 70%);
 }
 
 /* Bright Blue */
@@ -66,4 +69,8 @@
 }
 .borderAO{
     border: 1px solid #ea7200;
+}
+
+.bgTransparent{
+    background-color: rgba(255, 255, 255, 0%);
 }

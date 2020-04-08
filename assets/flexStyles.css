@@ -27,19 +27,19 @@
 }
 
 .alignStart{
-    align-items: start;
+    align-items: flex-start;
 }
 
 .justifyStart{
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .alignEnd{
-    align-items: end;
+    align-items: flex-end;
 }
 
 .justifyEnd{
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .spaceAroundRow{

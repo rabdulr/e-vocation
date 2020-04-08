@@ -6,6 +6,13 @@
 
     -When website is prepared, only z layers in use should be present in the file. 
 */
+
+.frosted{
+    backdrop-filter: blur(2px);
+}
+.hidden{
+    display: none;
+}
 .zNeg3{
     z-index: -3;
 }
@@ -19,6 +26,7 @@
     z-index: 0;
 }
 .z1{
+    position: fixed;
     z-index: 1;
 }
 .z2{
