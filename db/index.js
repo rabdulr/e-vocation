@@ -86,11 +86,6 @@ const sync = async() => {
 
 };
 
-// added one route to test front-end -H
-const getPosts = async (userId) => {
-    return (await client.query(`SELECT * FROM posts WHERE id=$1`, [userId])).rows
-}
-
 module.exports = {
     sync,
     models,
@@ -98,5 +93,4 @@ module.exports = {
     compare,
     findUserFromToken,
     hash,
-    getPosts
 }

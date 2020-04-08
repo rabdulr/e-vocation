@@ -77,10 +77,15 @@ app.get("/api/auth", isLoggedIn, (req, res, next) => {
     res.send(req.user);
 });
 
-// added one route to test front-end -H
 app.get('/api/getPosts', (req, res, next) => {
-  db.getPosts(req.user.id)
+  models.posts.getPosts(req.user.id)
     .then(posts => res.send(posts))
+    .catch(next)
+});
+
+app.get('/api/getCompanies', (req, res, next) => {
+  models.companies.readAll()
+    .then(companies => res.send(companies))
     .catch(next)
 })
 
