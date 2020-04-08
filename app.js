@@ -32,7 +32,7 @@ const isLoggedIn = (req, res, next) => {
 
 // middleware for adding user info to req, using the user token
 app.use((req, res, next) => {
-    const token = req.headers.authentication;
+    const token = req.headers.authorization;
     if (!token) {
         return next();
     }
