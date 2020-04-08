@@ -27,11 +27,12 @@ class Companies {
 };
 
 class Posts {
-    constructor(userId, title, description, industry, startDate, endDate, proposedBudget){
+    constructor(userId, title, description, industry, siteAddress, startDate, endDate, proposedBudget){
         this.userId = userId;
         this.title = title;
         this.description = description;
         this.industry = industry;
+        this.siteAddress = siteAddress;
         this.startDate = startDate;
         this.endDate = endDate;
         this.proposedBudget = proposedBudget;

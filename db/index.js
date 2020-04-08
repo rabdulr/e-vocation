@@ -1,7 +1,6 @@
 const client = require('./client');
 
 const moment = require('moment')
-//Create an address site in Posts
 
 const { authenticate, compare, findUserFromToken, hash } = require("./auth");
 
@@ -57,6 +56,7 @@ const sync = async() => {
             "datePosted" DATE NOT NULL DEFAULT CURRENT_DATE,
             "startDate" DATE,
             "endDate" DATE,
+            "siteAddress" TEXT,
             "proposedBudget" INT,
             status VARCHAR(25) DEFAULT 'Active'
         );
