@@ -31,19 +31,27 @@ const headers = () => {
 };
 
 const AppHome = () => {
-    // const [auth, setAuth] = useState({})
     // const [users, setUsers] = useState([]);
-    // const [companies, setCompanies] = useState([]);
+    const [companies, setCompanies] = useState([]);
     // const [ratings, setRatings] = useState([]);
     const [logDisplay, setLogDisplay] = useState(false);
     const [posts, setPosts] = useState([]);
     const [auth, setAuth] = useState({})
 
     useEffect(() => {
-        if(auth.id) {
-            axios.get('/api/getPosts')
+        if(auth.id && auth.role === 'USER') {
+            const token = window.localStorage.getItem('token');
+            axios.get('/api/getPosts', headers())
                 .then(response => setPosts(response.data))
-                .then(() => console.log(posts))
+                .catch(ex => console.log(ex))
+        }
+    }, [auth])
+
+    useEffect(() => {
+        if(auth.id && auth.role === 'USER') {
+            axios.get('/api/getCompanies', headers())
+                .then(response => setCompanies(response.data))
+                .catch(ex => console.log(ex))
         }
     }, [auth])
 
@@ -52,8 +60,6 @@ const AppHome = () => {
     };
 
     const login = async (credentials) => {
-        console.log(credentials)
-        console.log(auth);
         const token = (await axios.post('/api/auth', credentials)).data.token;
         window.localStorage.setItem('token', token);
         exchangeTokenForAuth();
