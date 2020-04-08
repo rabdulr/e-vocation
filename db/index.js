@@ -44,6 +44,7 @@ const sync = async() => {
             "firstName" VARCHAR(100),
             "lastName" VARCHAR(100),
             password VARCHAR(100) NOT NULL,
+            role VARCHAR(25) DEFAULT 'COMPANY',
             CHECK (char_length(username) > 0)
         );
 
@@ -86,8 +87,8 @@ const sync = async() => {
 };
 
 // added one route to test front-end -H
-const getPosts = async () => {
-    return (await client.query(`SELECT * FROM posts`)).rows
+const getPosts = async (userId) => {
+    return (await client.query(`SELECT * FROM posts WHERE id=$1`, [userId])).rows
 }
 
 module.exports = {

@@ -79,7 +79,7 @@ app.get("/api/auth", isLoggedIn, (req, res, next) => {
 
 // added one route to test front-end -H
 app.get('/api/getPosts', (req, res, next) => {
-  db.getPosts()
+  db.getPosts(req.user.id)
     .then(posts => res.send(posts))
     .catch(next)
 })

@@ -21,6 +21,15 @@ import NavBar from './NavBar'
 import PostSearch from './PostSearch'
 import LoginForm from './LoginForm';
 
+const headers = () => {
+    const token = window.localStorage.getItem('token');
+    return {
+        headers: {
+            authorization: token
+        }
+    };
+};
+
 const AppHome = () => {
     // const [auth, setAuth] = useState({})
     // const [users, setUsers] = useState([]);
@@ -28,21 +37,36 @@ const AppHome = () => {
     // const [ratings, setRatings] = useState([]);
     const [logDisplay, setLogDisplay] = useState(false);
     const [posts, setPosts] = useState([]);
+    const [auth, setAuth] = useState({})
 
     useEffect(() => {
-        axios.get('/api/getPosts')
-            .then(response => setPosts(response.data))
-            .then(() => console.log(posts))
-    }, [])
+        if(auth.id) {
+            axios.get('/api/getPosts')
+                .then(response => setPosts(response.data))
+                .then(() => console.log(posts))
+        }
+    }, [auth])
 
     const displayLogin = () => {
         setLogDisplay(!logDisplay);
     };
 
+    const login = async (credentials) => {
+        console.log(credentials)
+        const token = (await axios.post('/api/auth', credentials)).data.token;
+        window.localStorage.setItem('token', token);
+        exchangeTokenForAuth();
+    };
+
+    const exchangeTokenForAuth = async() => {
+        const response = await axios.get('/api/auth', headers());
+        setAuth(response.data);
+    }
+
     return (
         <div id = 'container'>
             <main className = 'z0'>
-            {logDisplay && <LoginForm credentials = { ['user', 'pass'] } displayLogin = { displayLogin }/> }
+            {logDisplay && <LoginForm credentials = { ['user', 'pass'] } displayLogin = { displayLogin } login = { login }/> }
                 <NavBar displayLogin = { displayLogin } logDisplay = { logDisplay } setLogDisplay = { setLogDisplay }/>
                 <PostSearch posts = {posts} />
             </main>
