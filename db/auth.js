@@ -38,7 +38,7 @@ const compare = ({ plain, hashed }) => {
 
 const authenticate = async ({ username, password }) => {
   const user = (
-    await client.query("SELECT * FROM users WHERE username=$1", [username])
+    await client.query("SELECT username FROM companies, users WHERE username=$1", [username])
   ).rows[0];
 
   await compare({ plain: password, hashed: user.password });
