@@ -1,7 +1,6 @@
 
 const client = require('../client');
 const { companies, users, posts, bids, contracts } = require('../models');
-
 const { Users, Companies, Posts, Bids, Contracts } = require('../models/constructors')
     
 const runSeed = async() => {
@@ -27,7 +26,6 @@ const runSeed = async() => {
     const item3 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', new Date('2020-7-31'), new Date('2020-7-31'), 10000));
     
     await client.query('UPDATE posts SET status=$1 WHERE "userId"=$2 RETURNING *', ['Accepted', eva.id]);
-    
     
     //Bids using Bids constructor
     const bid1 = await bids.create(new Bids(jack.id, santa.id, 'Jolly good! My elves can set a very festive holiday for you! We will do it for free!', 'Active', 0));
