@@ -41,7 +41,7 @@ const AppHome = () => {
         <div id = 'container'>
             <main className = 'shink0'>
                 <NavBar />
-                <section className = 'rowNW justifyCenter'>
+                <section className = 'rowNW justifyCenter margin1'>
                     <div></div>
                     <div>This is Actual Content!</div>
                 </section>
