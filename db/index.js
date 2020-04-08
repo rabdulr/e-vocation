@@ -97,6 +97,18 @@ const sync = async() => {
         }
     }
 
+    class Posts {
+        constructor(userId, title, description, industry, startDate, endDate, proposedBudget){
+            this.userId = userId;
+            this.title = title;
+            this.description = description;
+            this.industry = industry;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.proposedBudget = proposedBudget;
+        }
+    }
+
     //Users using Users constructor
     const jack = await users.create(new Users('Jack', 'Skellington', '123 Halloween', 'Halloween Town', 'CA', '93405', 'Jack', 'Jack'));
 
@@ -111,28 +123,10 @@ const sync = async() => {
 
     const gordon = await companies.create(new Companies('Hell\'s Kitchen', 'Gordon', '888 Higuera', 'San Luis Obispo', 'CA', '93401', 'Catering', 'Gordon', 'Ramsey', 'Gordon'));
 
-    const _posts = {
-        item1: {
-            userId: jack.id,
-            title: 'Create Santa Land',
-            description: 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing',
-            industry: 'Packaging',
-            startDate: new Date('2020-9-20'),
-            endDate: new Date('2020-10-25'),
-            proposedBudget: 1000,
-        },
-        item2: {
-            userId: eva.id,
-            title: 'Cater My Event',
-            description: 'I am hosting an event that needs to be catered to 1000 people and the food needs to be excellent. Anything less is a travesty',
-            industry: 'Food',
-            startDate: new Date('2020-8-31'),
-            endDate: new Date('2020-8-31'),
-            proposedBudget: 1000000,
-        }
-    }
+    //Posts using Posts constructor
+    const item1 = await posts.create(new Posts(jack.id, 'Create Santa Land', 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing', 'Packaging', new Date('2020-9-20'), new Date('2020-10-25'), 1000))
 
-    const [ item1, item2 ] = await Promise.all(Object.values(_posts).map(post => posts.create(post)));
+    const item2 = await posts.create(new Posts(eva.id, 'Cater My Event', 'I am hosting an event that needs to be catered to 1000 people and the food needs to be excellent. Anything less is a travesty', 'Food', new Date('2020-8-31'), new Date('2020-8-31'), 1000000))
 
     const _bids = {
         bid1: {
