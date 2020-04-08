@@ -5,3 +5,20 @@
 .heighthundred{
     height: 100%;
 }
+
+.maxWidth2{
+    max-width: 200px;
+}
+.maxWidth3{
+    max-width: 300px;
+}
+.maxWidth4{
+    max-width: 400px;
+}
+.maxWidth5{
+    max-width: 500px;
+}
+
+.maxHeight2{
+    max-height: 200px;
+}

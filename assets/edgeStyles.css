@@ -34,6 +34,11 @@
     padding-left: 0;
 }
 
+/* Quarter Rem */
+.padQuarter{
+    padding: .25rem;
+}
+
 /* Half Rem */
 .marginHalf{
     margin: 0.5rem;
@@ -160,4 +165,42 @@
 }
 .leftPad3{
     padding-left: 3rem;
+}
+
+/* Border Radius */
+
+.border5{
+    border-radius: 5px;
+}
+.border10{
+    border-radius: 10px;
+}
+.border50{
+    border-radius: 50%;
+}
+
+.topRight5{
+    border-top-right-radius: 5px;
+}
+.topLeft5{
+    border-top-left-radius: 5px;
+}
+.bottomRight5{
+    border-bottom-right-radius: 5px;
+}
+.bottomLeft5{
+    border-bottom-left-radius: 5px;
+}
+
+.topRight10{
+    border-top-right-radius: 10px;
+}
+.topLeft10{
+    border-top-left-radius: 10px;
+}
+.bottomRight10{
+    border-bottom-right-radius: 10px;
+}
+.bottomLeft10{
+    border-bottom-left-radius: 10px;
 }

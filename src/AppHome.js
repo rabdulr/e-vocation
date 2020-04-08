@@ -19,12 +19,14 @@ import axios from 'axios';
 // Components
 import NavBar from './NavBar'
 import PostSearch from './PostSearch'
+import LoginForm from './LoginForm';
 
 const AppHome = () => {
     // const [auth, setAuth] = useState({})
     // const [users, setUsers] = useState([]);
     // const [companies, setCompanies] = useState([]);
     // const [ratings, setRatings] = useState([]);
+    const [logDisplay, setLogDisplay] = useState(false);
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -33,18 +35,15 @@ const AppHome = () => {
             .then(() => console.log(posts))
     }, [])
 
-    // useEffect(() => {
-    //     axios.get()
-    // })
+    const displayLogin = () => {
+        setLogDisplay(!logDisplay);
+    };
 
     return (
         <div id = 'container'>
-            <main className = 'shink0'>
-                <NavBar />
-                <section className = 'rowNW justifyCenter margin1'>
-                    <div></div>
-                    <div>This is Actual Content!</div>
-                </section>
+            <main className = 'z0'>
+            {logDisplay && <LoginForm credentials = { ['user', 'pass'] } displayLogin = { displayLogin }/> }
+                <NavBar displayLogin = { displayLogin } logDisplay = { logDisplay } setLogDisplay = { setLogDisplay }/>
                 <PostSearch posts = {posts} />
             </main>
             <footer className = 'shink0 centerText'>
