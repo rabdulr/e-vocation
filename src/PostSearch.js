@@ -1,14 +1,22 @@
 import React from 'react';
 
 const PostSearch = ({posts}) => {
-  
   return(
-    <div id="PostSearchRoot" className = 'marginHalf'>
-      <ul>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-      </ul>
+    <div id="PostSearchRoot" className = 'marginHalf columnNW alignCenter'>
+      <h2 className = 'colorDB '>Posts</h2>
+      <ul className = 'widthundred'>{ 
+        posts.map(post => {
+          return (
+          <li key = { `post${ post.id }` } className = 'colorDB'>
+            <h4 className = 'leftMarginHalf'>{ post.title }</h4>
+            <div className = 'borderBB bgLB padHalf border10 marginHalf'>
+              <div>{ post.description }</div>
+              <div className = 'topMarginHalf'>Asking Price: $<span className = 'colorAO font700'>{ post.proposedBudget }</span></div>
+            </div>
+          </li>
+          )
+        })
+      }</ul>
     </div>
   )
 }
