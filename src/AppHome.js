@@ -80,7 +80,7 @@ const AppHome = () => {
             <main className = 'z0'>
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
-                <NavBar displayLogin = { displayLogin } logDisplay = { logDisplay } setLogDisplay = { setLogDisplay }/>
+                <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } />
                 { auth.id && <PostSearch posts = {posts} /> }
             </main>
             <footer className = 'shink0 centerText'>
