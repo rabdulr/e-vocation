@@ -20,6 +20,7 @@ import axios from 'axios';
 import NavBar from './NavBar'
 import PostSearch from './PostSearch'
 import LoginForm from './LoginForm';
+import SignInForm from './SignInForm';
 
 const headers = () => {
     const token = window.localStorage.getItem('token');
@@ -34,7 +35,7 @@ const AppHome = () => {
     // const [users, setUsers] = useState([]);
     const [companies, setCompanies] = useState([]);
     // const [ratings, setRatings] = useState([]);
-    const [logDisplay, setLogDisplay] = useState(false);
+    const [logDisplay, setLogDisplay] = useState({ on: false, form: 'login' });
     const [posts, setPosts] = useState([]);
     const [auth, setAuth] = useState({})
 
@@ -56,8 +57,12 @@ const AppHome = () => {
     }, [auth])
 
     const displayLogin = () => {
-        setLogDisplay(!logDisplay);
+        setLogDisplay({ ...logDisplay, on: !logDisplay.on });
     };
+
+    const toggleForm = () => {
+        setLogDisplay({ ...logDisplay, form: (logDisplay.form === 'login' ? 'sign' : 'login') })
+    }
 
     const login = async (credentials) => {
         const token = (await axios.post('/api/auth', credentials)).data.token;
@@ -73,7 +78,8 @@ const AppHome = () => {
     return (
         <div id = 'container'>
             <main className = 'z0'>
-            {logDisplay && <LoginForm credentials = { ['user', 'pass'] } displayLogin = { displayLogin } login = { login }/> }
+                { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
+                { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } logDisplay = { logDisplay } setLogDisplay = { setLogDisplay }/>
                 <PostSearch posts = {posts} />
             </main>
