@@ -81,7 +81,7 @@ const AppHome = () => {
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } logDisplay = { logDisplay } setLogDisplay = { setLogDisplay }/>
-                <PostSearch posts = {posts} />
+                { auth.id && <PostSearch posts = {posts} /> }
             </main>
             <footer className = 'shink0 centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema
