@@ -20,6 +20,8 @@ import moment from 'moment'
 // Components
 import NavBar from './NavBar'
 import Landing from './Landing'
+import CompanyHome from './CompanyHome'
+import UserHome from './UserHome'
 import PostSearch from './PostSearch'
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
@@ -89,6 +91,8 @@ const AppHome = () => {
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } />
                 <Landing displayLogin = { displayLogin } />
                 { auth.id && <PostSearch posts = {posts} /> }
+                { <UserHome auth = { auth } /> }
+                { <CompanyHome auth = { auth } /> }
             </main>
             <footer className = 'shink0 centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema
