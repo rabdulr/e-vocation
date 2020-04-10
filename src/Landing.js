@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
-const Landing = (()=> {
+const Landing = (({ displayLogin }) => {
   return(<div id='LandingRoot' className='rowNW'>
-    <div className='marginHalf'>
-      <h1>Find a Job Near You. Gluten-Free!</h1>
+    <div className='marginHalf justifyContent'>
+      <h2>Find a Job Near You. Gluten-Free!</h2>
+      <p>so many jobs!</p>
       <input type='text' value='search jobs'></input>
     </div>
     <div className='marginHalf'>
-      <h1>Find Local Labor without Having Kids!</h1>
-      <button>login to make a job</button>
+      <h2>Find Local Labor without Having Kids!</h2>
+      <p>create an offer today</p>
+      <button onClick = {() => displayLogin()}>Login</button>
     </div>
   </div>)
 })

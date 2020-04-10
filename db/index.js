@@ -92,5 +92,5 @@ module.exports = {
     authenticate,
     compare,
     findUserFromToken,
-    hash,
+    hash
 }
