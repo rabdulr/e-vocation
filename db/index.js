@@ -93,9 +93,4 @@ module.exports = {
     compare,
     findUserFromToken,
     hash,
-<<<<<<< HEAD
-    getPosts
 }
-=======
-}
->>>>>>> ce3da1fd7fb33ee10a357daa51d691651a83b447

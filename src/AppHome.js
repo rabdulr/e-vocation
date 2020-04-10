@@ -19,6 +19,7 @@ import axios from 'axios';
 import moment from 'moment'
 // Components
 import NavBar from './NavBar'
+import Landing from './Landing'
 import PostSearch from './PostSearch'
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
@@ -50,15 +51,6 @@ const AppHome = () => {
     }, [auth])
 
     useEffect(() => {
-<<<<<<< HEAD
-        axios.get('/api/getPosts')
-            .then(response => setPosts(response.data))
-    }, [])
-
-    useEffect(() => {
-        console.log(posts)
-    },[posts])
-=======
         if(auth.id && auth.role === 'USER') {
             axios.get('/api/getCompanies', headers())
                 .then(response => setCompanies(response.data))
@@ -84,7 +76,6 @@ const AppHome = () => {
         const response = await axios.get('/api/auth', headers());
         setAuth(response.data);
     }
->>>>>>> ce3da1fd7fb33ee10a357daa51d691651a83b447
 
     return (
         <div id = 'container'>
@@ -92,6 +83,7 @@ const AppHome = () => {
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } />
+                <Landing />
                 { auth.id && <PostSearch posts = {posts} /> }
             </main>
             <footer className = 'shink0 centerText'>
