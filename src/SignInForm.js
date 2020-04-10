@@ -9,7 +9,7 @@ const SignInForm = ({ displayLogin, login, toggleForm }) => {
         console.log("I'm a submission!")
     }
     return (
-        <div className = 'columnNW alignCenter z1 widthundred heighthundred bgAlphaDB frosted'>
+        <div className = 'columnNW alignCenter z2 widthundred heighthundred bgAlphaDB frosted'>
             <div className = 'rowNW justifyEnd widthundred'>
                 <input type = 'button' onClick = { () => displayLogin() } className = 'border50 colorAO bgTransparent topMargin2 rightMarginHalf borderAO padQuarter sixteenPoint' value = ' X '/>
             </div>
