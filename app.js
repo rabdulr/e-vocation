@@ -4,6 +4,7 @@ const path = require('path');
 const db = require("./db");
 const jwt = require("jwt-simple");
 const models = db.models;
+const {socketServer} = require('./websockets')
 
 app.use(express.json());
 
@@ -51,7 +52,10 @@ app.use((req, res, next) => {
 //authentication routes
 app.post("/api/auth", (req, res, next) => {
     db.authenticate(req.body)
-        .then((token) => res.send({ token }))
+        .then((token) => {
+            socketServer().emit('message', {text: 'Socket server test: Welcome!'})
+            res.send({ token })
+        })
         .catch((test_err) => {
             console.log("Error from db.authenticate: ",test_err)
             const error = Error("not authorized");
