@@ -105,6 +105,12 @@ app.post('/api/createCompany', (req, res, next) => {
   .catch(next);
 });
 
+app.get('/api/getBids', (req, res, next) => {
+  models.bids.getBids(req.user.id)
+    .then(bids => res.send(bids))
+    .catch(next)
+})
+
 app.use((req, res, next) => {
     const error = { message: `page not found ${req.url} for ${req.method}`, status: 404 };
     next(error);
