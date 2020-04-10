@@ -11,10 +11,11 @@ const { runSeed } = require('./seedData/seeded')
 const sync = async() => {
     const SQL = `
         CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+        DROP TABLE IF EXISTS comments;
+        DROP TABLE IF EXISTS ratings;
         DROP TABLE IF EXISTS contracts;
         DROP TABLE IF EXISTS bids;
         DROP TABLE IF EXISTS posts;
-        DROP TABLE IF EXISTS ratings;
         DROP TABLE IF EXISTS users;
         DROP TABLE IF EXISTS companies;
 
@@ -77,6 +78,20 @@ const sync = async() => {
             "companyId" UUID REFERENCES companies(id),
             contract TEXT,
             "contractStatus" VARCHAR(25)
+        );
+
+        CREATE TABLE ratings (
+            id UUID REFERENCES contracts(id),
+            "idOfRated" UUID,
+            rating INT,
+            comments TEXT
+        );
+
+        CREATE TABLE comments (
+            id UUID REFERENCES posts(id),
+            "idOfPoster" UUID,
+            "datePosted" DATE NOT NULL DEFAULT CURRENT_DATE,
+            comment TEXT
         );
         
     `;
