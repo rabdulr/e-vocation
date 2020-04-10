@@ -7,6 +7,7 @@ const NavBar = ({ auth, setAuth, displayLogin, route }) => {
   const logout = () => {
     window.localStorage.removeItem('token');
     setAuth({});
+    route('#');
   };
 
   return (
