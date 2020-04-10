@@ -22,3 +22,19 @@
 .maxHeight2{
     max-height: 200px;
 }
+.maxHeight3{
+    max-height: 300px;
+}
+.maxHeight4{
+    max-height: 400px;
+}
+.maxHeight5{
+    max-height: 500px;
+}
+.maxHeight7{
+    max-height: 700px;
+}
+
+.scrollable{
+    overflow-y: scroll;
+}

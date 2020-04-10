@@ -25,6 +25,12 @@ const runSeed = async() => {
     
     const item3 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000));
     
+    const item4 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000));
+
+    const item5 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000));
+    const item6 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000));
+    const item7 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000));
+
     await client.query('UPDATE posts SET status=$1 WHERE "userId"=$2 RETURNING *', ['Accepted', eva.id]);
     
     //Bids using Bids constructor
