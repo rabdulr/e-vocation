@@ -41,6 +41,14 @@ footer{
     color: #efefef;
 }
 
+a{
+    color: #bdd4de;
+}
+
+a:visited{
+    color: #efefef;
+}
+
 input:focus{
     outline: none;
 }

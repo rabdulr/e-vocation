@@ -8,11 +8,11 @@ const LoginForm = ({ displayLogin, login, toggleForm }) => {
         ev.preventDefault();
         displayLogin();
         login({ username, password })
-            .catch(ex => console.log(ex.response.data.message))
+            .catch(ex => console.log(ex))
     }
     
     return (
-        <div className = 'columnNW alignCenter z1 widthundred heighthundred bgAlphaDB frosted'>
+        <div className = 'columnNW alignCenter z2 widthundred heighthundred bgAlphaDB frosted'>
             <div className = 'rowNW justifyEnd widthundred'>
                 <input type = 'button' onClick = { () => displayLogin() } className = 'border50 colorAO bgTransparent topMargin2 rightMarginHalf borderAO padQuarter sixteenPoint' value = ' X '/>
             </div>
