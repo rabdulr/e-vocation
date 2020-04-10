@@ -30,9 +30,11 @@
     z-index: 1;
 }
 .z2{
+    position: fixed;
     z-index: 2;
 }
 .z3{
+    position: fixed;
     z-index: 3;
 }
 .zInherit{

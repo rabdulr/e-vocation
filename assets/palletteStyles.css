@@ -26,6 +26,9 @@
 .bgAlphaDB{
     background-color: rgba(29, 35, 39, 70%);
 }
+.bottomBorderDB{
+    border-bottom-color: #1d2327;
+}
 
 /* Bright Blue */
 .bgBB{
@@ -36,6 +39,9 @@
 }
 .borderBB{
     border: 1px solid #1c5d83;
+}
+.bottomBorderBB{
+    border-bottom-color: #1c5d83;
 }
 
 /* Light Blue */
@@ -48,6 +54,9 @@
 .borderLB{
     border: 1px solid #bdd4de;
 }
+.bottomBorderLB{
+    border-bottom-color: #bdd4de;
+}
 
 /* Off White */
 .bgOW{
@@ -58,6 +67,10 @@
 }
 .borderOW{
     border: 1px solid #efefef;
+}
+.bottomBorderOW{
+    border-bottom: 1px solid;
+    border-bottom-color: #efefef;
 }
 
 /* Accent Orange */
@@ -73,4 +86,8 @@
 
 .bgTransparent{
     background-color: rgba(255, 255, 255, 0%);
+}
+.bottomBorderAO{
+    border-bottom: 1px solid;
+    border-bottom-color: #ea7200;
 }
