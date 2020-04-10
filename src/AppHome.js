@@ -58,6 +58,10 @@ const AppHome = () => {
         }
     }, [auth])
 
+    useEffect(() => {
+        exchangeTokenForAuth();
+    }, []);
+
     const displayLogin = () => {
         setLogDisplay({ ...logDisplay, on: !logDisplay.on });
     };

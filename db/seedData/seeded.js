@@ -1,7 +1,7 @@
 
 const client = require('../client');
-const { companies, users, posts, bids, contracts } = require('../models');
-const { Users, Companies, Posts, Bids, Contracts } = require('../models/constructors')
+const { companies, users, posts, bids, contracts, ratings, comments } = require('../models');
+const { Users, Companies, Posts, Bids, Contracts, Ratings, Comments } = require('../models/constructors')
     
 const runSeed = async() => {
     //Users using Users constructor
@@ -25,7 +25,18 @@ const runSeed = async() => {
     
     const item3 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000));
     
+    const item4 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000));
+
+    const item5 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000));
+    const item6 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000));
+    const item7 = await posts.create(new Posts(eva.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000));
+
     await client.query('UPDATE posts SET status=$1 WHERE "userId"=$2 RETURNING *', ['Accepted', eva.id]);
+
+    //Comments using Comments Constructor
+    const com1 = await comments.create(new Comments(item2.id, gordon.id, 'What do you mean fancy? Need details!'));
+    const com2 = await comments.create(new Comments(item2.id, santa.id, 'How do you feel about cookies as an entree?'));
+    const com3 = await comments.create(new Comments(item2.id, eva.id, 'Cookies? Fancy? I\'m not the cooks. You are!'));
     
     //Bids using Bids constructor
     const bid1 = await bids.create(new Bids(item1.id, jack.id, santa.id, 'Jolly good! My elves can set a very festive holiday for you! We will do it for free!', 'Active', 0));
@@ -35,7 +46,12 @@ const runSeed = async() => {
     const bid3 = await bids.create(new Bids(item2.id, eva.id, gordon.id, 'We can do this for free!', 'Active', 0));
     
     //Contracts using Contracts constructor
-    const contract1 = await contracts.create(new Contracts(eva.id, gordon.id, 'I will cook your damn food.', 'Active'))
+    const contract1 = await contracts.create(new Contracts(eva.id, gordon.id, 'I will cook your damn food.', 'Completed'))
+
+    //Ratings using Ratings constructor
+    const rating1 = await ratings.create(new Ratings(contract1.id, gordon.id, 5, 'You were rude, annoying, and I could not stand you. I will hire you again in a heartbeat.'))
+    
+    const rating2 = await ratings.create(new Ratings(contract1.id, eva.id, 1, 'Fancy hot dogs? You had no idea what you wanted. It was horrible working with you.'))
 
 };
 

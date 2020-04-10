@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 const NavBar = ({ auth, setAuth, displayLogin }) => {
 
   const logout = () => {
-    console.log(auth);
+    window.localStorage.removeItem('token');
     setAuth({});
   };
 
