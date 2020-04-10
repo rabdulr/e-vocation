@@ -4,7 +4,7 @@ import axios from 'axios';
 const SignInForm = ({ displayLogin, login, toggleForm }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [firstname, setFirstname] = useState('');
+    const [firstName, setFirstName] = useState('');
     const [lastName, setlastName] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -23,7 +23,13 @@ const SignInForm = ({ displayLogin, login, toggleForm }) => {
     const createAccount = async() => {
         const info = isCompany ? { firstName, lastName, address, city, state, zip, username, password, companyName, industry }
             : { firstName, lastName, address, city, state, zip, username, password };
-        console.log('create account api call pending...');
+        if(isCompany){
+            await axios.post('api/createCompany', info);
+            login({ username, password });
+        }else{
+            await axios.post('api/createUser', info);
+            login({ username, password });
+        }
     };
 
     return (
@@ -39,7 +45,7 @@ const SignInForm = ({ displayLogin, login, toggleForm }) => {
                 </div>
                 <div className = 'rowNW spaceBetweenRow topMargin1 widthundred'>
                     <div>First Name: </div>
-                    <input className = 'bgLB colorDB borderDB padQuarter' placeholder = 'First Name...' pattern = '.{1,}' value = { firstname } onChange = { ({ target }) => setFirstname(target.value) } required/>
+                    <input className = 'bgLB colorDB borderDB padQuarter' placeholder = 'First Name...' pattern = '.{1,}' value = { firstName } onChange = { ({ target }) => setFirstName(target.value) } required/>
                 </div>
                 <div className = 'rowNW spaceBetweenRow topMargin1 widthundred'>
                     <div>lastName: </div>

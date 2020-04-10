@@ -93,6 +93,18 @@ app.get('/api/getCompanies', (req, res, next) => {
     .catch(next)
 })
 
+app.post('/api/createUser', (req, res, next) => {
+  models.users.create(req.body)
+  .then(user => res.send(user))
+  .catch(next);
+});
+
+app.post('/api/createCompany', (req, res, next) => {
+  models.companies.create(req.body)
+  .then(user => res.send(user))
+  .catch(next);
+});
+
 app.use((req, res, next) => {
     const error = { message: `page not found ${req.url} for ${req.method}`, status: 404 };
     next(error);
