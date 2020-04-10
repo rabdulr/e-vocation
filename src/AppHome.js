@@ -20,8 +20,7 @@ import moment from 'moment'
 // Components
 import NavBar from './NavBar'
 import Landing from './Landing'
-import CompanyHome from './CompanyHome'
-import UserHome from './UserHome'
+import ProfileHome from './ProfileHome'
 import PostSearch from './PostSearch'
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
@@ -102,8 +101,7 @@ const AppHome = () => {
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route }/>
                 { window.location.hash === '#' && <Landing displayLogin = { displayLogin } route = { route }/> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route }/> }
-                { <UserHome auth = { auth } /> }
-                { <CompanyHome auth = { auth } /> }
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } /> }
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema
