@@ -16,8 +16,11 @@
 import React, { useEffect, useState } from 'react';
 import qs from 'qs';
 import axios from 'axios';
+import moment from 'moment'
 // Components
 import NavBar from './NavBar'
+import Landing from './Landing'
+import ProfileHome from './ProfileHome'
 import PostSearch from './PostSearch'
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
@@ -38,6 +41,7 @@ const AppHome = () => {
     const [logDisplay, setLogDisplay] = useState({ on: false, form: 'login' });
     const [posts, setPosts] = useState([]);
     const [auth, setAuth] = useState({})
+    const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
 
     useEffect(()=>{
         const socket = io();
@@ -61,6 +65,16 @@ const AppHome = () => {
         }
     }, [auth])
 
+    useEffect(() => {
+        window.addEventListener('hashchange', () => {
+            setParams(qs.parse(window.location.hash.slice(1)));
+        })
+    }, []);
+
+    useEffect(() => {
+        exchangeTokenForAuth();
+    }, []);
+
     const displayLogin = () => {
         setLogDisplay({ ...logDisplay, on: !logDisplay.on });
     };
@@ -80,15 +94,21 @@ const AppHome = () => {
         setAuth(response.data);
     }
 
+    const route = hashVal => {
+        window.location.hash = hashVal;
+    };
+
     return (
         <div id = 'container'>
             <main className = 'z0'>
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
-                <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } />
-                { auth.id && <PostSearch posts = {posts} /> }
+                <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route }/>
+                { window.location.hash === '#' && <Landing displayLogin = { displayLogin } route = { route }/> }
+                { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route }/> }
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } /> }
             </main>
-            <footer className = 'shink0 centerText'>
+            <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema
             </footer>
         </div>
