@@ -3,5 +3,7 @@ module.exports = {
     companies: require('./companies'),
     posts: require('./posts'),
     bids: require('./bids'),
-    contracts: require('./contracts')
+    contracts: require('./contracts'),
+    ratings: require('./ratings'),
+    comments: require('./comments')
 };

@@ -1,7 +1,7 @@
 const client = require('../client');
 
 const contracts = {
-    read: async() => {
+    readAll: async() => {
         return (await client.query('SELECT * FROM contracts'));
     },
     create: async({ userId, companyId, contract, contractStatus }) => {
