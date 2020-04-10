@@ -21,7 +21,7 @@ const NavBar = ({ auth, setAuth, displayLogin, route }) => {
         <a href = { `#profile/${ auth.id }` } onClick = { ({ target }) => { setDropVis(!dropVis); route(target.href) } } className = 'bottomBorderOW widthundred centerText padQuarter'>Profile</a>
         <a href = { '#posts' } onClick = { ({ target }) => { setDropVis(!dropVis); route(target.href) } } className = 'bottomBorderOW widthundred centerText padQuarter'>Posts</a>
         <a href = { '#jobs' } onClick = { ({ target }) => { setDropVis(!dropVis); route(target.href) } } className = 'bottomBorderOW widthundred centerText padQuarter'>Jobs</a>
-        { auth.role === 'COMPANY' && <div href = { '#bids' } onClick = { ({ target }) => { setDropVis(!dropVis); route(target.href) } } className = 'bottomBorderOW widthundred centerText padQuarter'>Bids</div> }
+        { auth.role === 'COMPANY' && <a href = { '#bids' } onClick = { ({ target }) => { setDropVis(!dropVis); route(target.href) } } className = 'bottomBorderOW widthundred centerText padQuarter'>Bids</a> }
       </section> }
     </div>
     
