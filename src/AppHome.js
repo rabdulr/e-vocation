@@ -16,6 +16,7 @@
 import React, { useEffect, useState } from 'react';
 import qs from 'qs';
 import axios from 'axios';
+import moment from 'moment'
 // Components
 import NavBar from './NavBar'
 import PostSearch from './PostSearch'
@@ -30,12 +31,11 @@ const AppHome = () => {
     useEffect(() => {
         axios.get('/api/getPosts')
             .then(response => setPosts(response.data))
-            .then(() => console.log(posts))
     }, [])
 
-    // useEffect(() => {
-    //     axios.get()
-    // })
+    useEffect(() => {
+        console.log(posts)
+    },[posts])
 
     return (
         <div id = 'container'>
