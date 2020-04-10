@@ -7,7 +7,7 @@ const findUserFromToken = async (token) => {
   const id = jwt.decode(token, process.env.JWT).id;
   const role = jwt.decode(token, process.env.JWT).role;
 
-  if(role === 'USER'){
+  if(role === 'USER' || role === 'ADMIN'){
     const user = (await client.query("SELECT * FROM users WHERE id = $1", [id])).rows[0];
     delete user.password;
     return user;
