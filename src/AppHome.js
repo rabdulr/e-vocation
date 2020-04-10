@@ -16,8 +16,10 @@
 import React, { useEffect, useState } from 'react';
 import qs from 'qs';
 import axios from 'axios';
+import moment from 'moment'
 // Components
 import NavBar from './NavBar'
+import Landing from './Landing'
 import PostSearch from './PostSearch'
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
@@ -85,6 +87,7 @@ const AppHome = () => {
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } />
+                <Landing />
                 { auth.id && <PostSearch posts = {posts} /> }
             </main>
             <footer className = 'shink0 centerText'>
