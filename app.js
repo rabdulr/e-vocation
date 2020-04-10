@@ -32,7 +32,7 @@ const isLoggedIn = (req, res, next) => {
 
 // middleware for adding user info to req, using the user token
 app.use((req, res, next) => {
-    const token = req.headers.authentication;
+    const token = req.headers.authorization;
     if (!token) {
         return next();
     }
@@ -77,10 +77,15 @@ app.get("/api/auth", isLoggedIn, (req, res, next) => {
     res.send(req.user);
 });
 
-// added one route to test front-end -H
 app.get('/api/getPosts', (req, res, next) => {
-  db.getPosts()
+  models.posts.getPosts(req.user.id)
     .then(posts => res.send(posts))
+    .catch(next)
+});
+
+app.get('/api/getCompanies', (req, res, next) => {
+  models.companies.readAll()
+    .then(companies => res.send(companies))
     .catch(next)
 })
 

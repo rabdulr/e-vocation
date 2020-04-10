@@ -2,7 +2,7 @@ const client = require('../client');
 const { hash } = require("../auth");
 
 const companies = {
-    read: async() => {
+    readAll: async() => {
         return (await client.query('SELECT * FROM companies')).rows;
     },
     create: async({ companyName, username, address, city, state, zip, industry, firstName, lastName, password }) => {

@@ -1,14 +1,14 @@
 const client = require('../client');
 
 const bids = {
-    read: async() => {
+    readAll: async() => {
         return (await client.query('SELECT * FROM bids'));
     },
-    create: async({ userId, companyId, proposal, bid }) => {
+    create: async({ postId, userId, companyId, proposal, bid, bidStatus }) => {
 
-        const SQL =`INSERT INTO bids ("userId", "companyId", proposal, bid) values ($1, $2, $3, $4) RETURNING *`;
+        const SQL =`INSERT INTO bids ("postId", "userId", "companyId", proposal, bid, "bidStatus") values ($1, $2, $3, $4, $5, $6) RETURNING *`;
 
-        return (await client.query(SQL, [ userId, companyId, proposal, bid  ])).rows[0];
+        return (await client.query(SQL, [ postId, userId, companyId, proposal, bid, bidStatus ])).rows[0];
     }
 }
 

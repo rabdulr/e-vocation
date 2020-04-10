@@ -20,6 +20,10 @@ body{
     background-color: #efefef;
 }
 
+h1, h2, h3, h4, h5, h6{
+    margin: 0;
+}
+
 ul{
     padding: 0;
     list-style-type: none;
@@ -35,6 +39,14 @@ footer{
     font-size: 18px;
     background-image: linear-gradient(#efefef, #1c5d83, #1c5d83, #1c5d83, #1c5d83, #1c5d83, #1c5d83);
     color: #efefef;
+}
+
+input:focus{
+    outline: none;
+}
+
+select:focus{
+    outline: none;
 }
 
 .centerText{
