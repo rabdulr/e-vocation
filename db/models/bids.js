@@ -11,7 +11,7 @@ const bids = {
         return (await client.query(SQL, [ postId, userId, companyId, proposal, bid, bidStatus ])).rows[0];
     },
     getBids: async(companyId) => {
-        return (await client.query(`SELECT * FROM bids WHERE "companyId"=$1`, [companyId])).rows;
+        return (await client.query(`SELECT * FROM bids, posts WHERE "postId" = id AND "companyId"=$1`, [companyId])).rows;
     }
 }
 

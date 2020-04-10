@@ -24,6 +24,7 @@ import ProfileHome from './ProfileHome'
 import PostSearch from './PostSearch'
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
+import Bids from './Bids'
 
 const headers = () => {
     const token = window.localStorage.getItem('token');
@@ -40,6 +41,7 @@ const AppHome = () => {
     // const [ratings, setRatings] = useState([]);
     const [logDisplay, setLogDisplay] = useState({ on: false, form: 'login' });
     const [posts, setPosts] = useState([]);
+    const [bids, setBids] = useState([]);
     const [auth, setAuth] = useState({})
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
 
@@ -62,6 +64,14 @@ const AppHome = () => {
             axios.get('/api/getCompanies', headers())
                 .then(response => setCompanies(response.data))
                 .catch(ex => console.log(ex))
+        }
+    }, [auth]);
+
+    useEffect(() => {
+        if(auth.id && auth.role === 'COMPANY') {
+            axios.get('/api/getBids', headers())
+                .then(bids => setBids(bids.data))
+                .catch(ex => console.log(ex));
         }
     }, [auth])
 
@@ -107,6 +117,7 @@ const AppHome = () => {
                 { window.location.hash === '#' && <Landing displayLogin = { displayLogin } route = { route }/> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route }/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } /> }
+                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} /> }
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema
