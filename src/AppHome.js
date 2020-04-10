@@ -40,6 +40,7 @@ const AppHome = () => {
     const [logDisplay, setLogDisplay] = useState({ on: false, form: 'login' });
     const [posts, setPosts] = useState([]);
     const [auth, setAuth] = useState({})
+    const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
 
     useEffect(() => {
         if(auth.id && auth.role === 'USER') {
@@ -57,6 +58,12 @@ const AppHome = () => {
                 .catch(ex => console.log(ex))
         }
     }, [auth])
+
+    useEffect(() => {
+        window.addEventListener('hashchange', () => {
+            setParams(qs.parse(window.location.hash.slice(1)));
+        })
+    }, []);
 
     useEffect(() => {
         exchangeTokenForAuth();
@@ -81,16 +88,20 @@ const AppHome = () => {
         setAuth(response.data);
     }
 
+    const route = hashVal => {
+        window.location.hash = hashVal;
+    };
+
     return (
         <div id = 'container'>
             <main className = 'z0'>
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
-                <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } />
-                <Landing />
-                { auth.id && <PostSearch posts = {posts} /> }
+                <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route }/>
+                { window.location.hash === '#' && <Landing displayLogin = { displayLogin } route = { route }/> }
+                { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route }/> }
             </main>
-            <footer className = 'shink0 centerText'>
+            <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema
             </footer>
         </div>
