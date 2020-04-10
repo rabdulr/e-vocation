@@ -22,6 +22,7 @@ const isAdmin = (req, res, next) => {
 };
 
 const isLoggedIn = (req, res, next) => {
+  console.log(req)
   if (!req.user) {
     const error = Error('not authorized');
     error.status = 401;

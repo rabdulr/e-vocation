@@ -12,7 +12,7 @@ const findUserFromToken = async (token) => {
     delete user.password;
     return user;
   } else if(role === 'COMPANY'){
-    const company = (await client.query('SELECT * FROM companies WHERE username=$1', [username])).rows[0];
+    const company = (await client.query('SELECT * FROM companies WHERE id=$1', [id])).rows[0];
     delete company.password;
     return company;
   }
@@ -57,7 +57,7 @@ const authenticate = async ({ username, password }) => {
   if(user){
     await compare({ plain: password, hashed: user.password });
     return jwt.encode({ id: user.id, role: user.role }, process.env.JWT);
-  } else {
+  } else if(company) {
     await compare({ plain: password, hashed: company.password });
     return jwt.encode({ id: company.id, role: company.role }, process.env.JWT);
   };
