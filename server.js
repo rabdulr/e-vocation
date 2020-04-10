@@ -1,6 +1,6 @@
 const db = require('./db');
 const app = require('./app');
-const io = require('socket.io')
+const {start} = require('./websockets')
 
 const PORT = process.env.PORT || 3000;
 
@@ -10,5 +10,5 @@ db.sync()
             console.log(`Listening on port ${PORT}`)
         });
 
-        const socketServer = io(server);
+        start(server);
     });

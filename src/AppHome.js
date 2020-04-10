@@ -39,6 +39,11 @@ const AppHome = () => {
     const [posts, setPosts] = useState([]);
     const [auth, setAuth] = useState({})
 
+    useEffect(()=>{
+        const socket = io();
+        socket.on('message', (message)=>console.log(message))
+    }, [])
+
     useEffect(() => {
         if(auth.id && auth.role === 'USER') {
             const token = window.localStorage.getItem('token');
