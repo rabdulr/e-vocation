@@ -57,6 +57,23 @@ class Contracts {
         this.contract = contract;
         this.contractStatus = contractStatus
     }
+};
+
+class Ratings {
+    constructor(id, idOfRated, rating, comments){
+        this.id = id;
+        this.idOfRated = idOfRated;
+        this.rating = rating;
+        this.comments = comments;
+    }
+};
+
+class Comments {
+    constructor(id, idOfPoster, comment){
+        this.id = id;
+        this.idOfPoster = idOfPoster;
+        this.comment = comment;
+    }
 }
 
 module.exports = {
@@ -64,5 +81,7 @@ module.exports = {
     Companies,
     Posts,
     Bids,
-    Contracts
+    Contracts,
+    Ratings,
+    Comments
 }
