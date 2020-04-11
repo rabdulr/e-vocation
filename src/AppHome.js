@@ -22,6 +22,7 @@ import NavBar from './NavBar'
 import Landing from './Landing'
 import ProfileHome from './ProfileHome'
 import PostSearch from './PostSearch'
+import PostDetail from './PostDetail'
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
 import Bids from './Bids'
@@ -44,6 +45,7 @@ const AppHome = () => {
     const [jobs, setJobs] = useState([]);
     const [bids, setBids] = useState([]);
     const [auth, setAuth] = useState({})
+    const [focus, setFocus] = useState('');
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
 
     useEffect(()=>{
@@ -119,9 +121,10 @@ const AppHome = () => {
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route }/>
-                { window.location.hash === '#' && <Landing displayLogin = { displayLogin } route = { route }/> }
-                { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route }/> }
+                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route }/> }
+                { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route } setFocus = {setFocus} /> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } /> }
+                { focus && window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} />}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} /> }
             </main>
             <footer className = 'centerText'>
