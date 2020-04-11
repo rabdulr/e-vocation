@@ -41,6 +41,7 @@ const AppHome = () => {
     // const [ratings, setRatings] = useState([]);
     const [logDisplay, setLogDisplay] = useState({ on: false, form: 'login' });
     const [posts, setPosts] = useState([]);
+    const [jobs, setJobs] = useState([]);
     const [bids, setBids] = useState([]);
     const [auth, setAuth] = useState({})
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
@@ -72,6 +73,10 @@ const AppHome = () => {
             axios.get('/api/getBids', headers())
                 .then(bids => setBids(bids.data))
                 .catch(ex => console.log(ex));
+        }else{                                      //Edit when Jobs exist
+            axios.get('/api/getPosts', headers())
+            .then(jobs => setJobs(jobs.data))
+            .catch(ex => console.log(ex));
         }
     }, [auth])
 
@@ -116,7 +121,7 @@ const AppHome = () => {
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route }/>
                 { window.location.hash === '#' && <Landing displayLogin = { displayLogin } route = { route }/> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route }/> }
-                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } /> }
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } /> }
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} /> }
             </main>
             <footer className = 'centerText'>
