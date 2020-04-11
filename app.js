@@ -111,6 +111,12 @@ app.get('/api/getBids', (req, res, next) => {
     .catch(next)
 })
 
+app.post('/api/posts/createJobPost', (req, res, next) => {
+  models.posts.create(req.body)
+    .then(post => res.send(post).sendStatus(204))
+    .catch(next)
+})
+
 app.use((req, res, next) => {
     const error = { message: `page not found ${req.url} for ${req.method}`, status: 404 };
     next(error);

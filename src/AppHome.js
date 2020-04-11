@@ -1,14 +1,6 @@
 //Todo :
 /*
-    Generalize Nav Bar based on-
-        -whether someone is logged in
-        -how they are logged in (company representative or job poster)
-
-    Login Component and Route
-
     Jobs Tab
-
-    Profile Page
 
     Search Engine or Search Bar (Keywords? Tags?)
 */
@@ -44,9 +36,14 @@ const AppHome = () => {
     const [posts, setPosts] = useState([]);
     const [jobs, setJobs] = useState([]);
     const [bids, setBids] = useState([]);
-    const [auth, setAuth] = useState({})
+    const [auth, setAuth] = useState({});
     const [focus, setFocus] = useState('');
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
+    const [breakpoint, setBreakpoint] = useState(window.innerWidth < 641 ? 'sm'
+        : window.innerWidth < 769 ? 'md'
+        : window.innerWidth < 1025 ? 'lg'
+        : window.innerWidth < 2441 ? 'xl'
+        : 'xxl' );
 
     useEffect(()=>{
         const socket = io();
@@ -88,6 +85,22 @@ const AppHome = () => {
         })
     }, []);
 
+    const checkBreakPoint = () => {
+        //This is intended to allow dynamic style changes based on the screen width.
+        const bp = window.innerWidth < 641 ? 'sm'           //mobile
+        : window.innerWidth < 769 ? 'md'                    //ipad
+        : window.innerWidth < 1025 ? 'lg'                   //ipad Pro
+        : window.innerWidth < 2441 ? 'xl'                   //Standard Monitor
+        : 'xxl'                                             //Large Monitor
+        if(bp !== breakpoint){
+            setBreakpoint(bp);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', checkBreakPoint);
+    }, [checkBreakPoint]);
+
     useEffect(() => {
         exchangeTokenForAuth();
     }, []);
@@ -115,17 +128,25 @@ const AppHome = () => {
         window.location.hash = hashVal;
     };
 
+    const createJobPost = (post) => {
+        axios.post('/api/posts/CreateJobPost', post, headers())
+            .then(response => {
+                setPosts([response.data, ...posts])
+            })
+            .catch(ex => console.log(ex))
+    }
+
     return (
         <div id = 'container'>
             <main className = 'z0'>
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
-                <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route }/>
-                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route }/> }
-                { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route } setFocus = {setFocus} /> }
-                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } /> }
+                <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint }/>
+                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint }/> }
+                { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost }/> }
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } breakpoint = { breakpoint }/> }
                 { focus && window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} />}
-                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} /> }
+                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema
