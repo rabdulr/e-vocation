@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 
-const NavBar = ({ auth, setAuth, displayLogin, route }) => {
+const NavBar = ({ auth, setAuth, displayLogin, route, breakpoint }) => {
   const [dropVis, setDropVis] = useState(false);
 
   const logout = () => {

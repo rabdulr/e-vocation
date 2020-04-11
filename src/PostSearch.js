@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment'
 
-const PostSearch = ({posts, route}) => {
+const PostSearch = ({posts, route, breakpoint}) => {
   return(
     <div id="PostSearchRoot" className = 'marginHalf columnNW alignCenter maxWidth4'>
       <h2 className = 'colorDB '>Posts</h2>
