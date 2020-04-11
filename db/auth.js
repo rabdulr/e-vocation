@@ -56,10 +56,10 @@ const authenticate = async ({ username, password }) => {
 
   if(user){
     await compare({ plain: password, hashed: user.password });
-    return jwt.encode({ id: user.id, role: user.role }, process.env.JWT);
+    return jwt.encode({ id: user.id, role: user.role, username: user.username, firstName: user.firstName, lastName: user.lastName }, process.env.JWT);
   } else if(company) {
     await compare({ plain: password, hashed: company.password });
-    return jwt.encode({ id: company.id, role: company.role }, process.env.JWT);
+    return jwt.encode({ id: company.id, role: company.role , username: company.username, firstName: company.firstName, lastName: company.lastName}, process.env.JWT);
   };
 
 };
