@@ -134,6 +134,14 @@ const AppHome = () => {
         window.location.hash = hashVal;
     };
 
+    const createJobPost = (post) => {
+        axios.post('/api/posts/CreateJobPost', post, headers())
+            .then(response => {
+                setPosts([response.data, ...posts])
+            })
+            .catch(ex => console.log(ex))
+    }
+
     return (
         <div id = 'container'>
             <main className = 'z0'>
@@ -141,7 +149,8 @@ const AppHome = () => {
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route }/>
                 { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } setBreakpoint = { setBreakpoint }/> }
-                { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route }/> }
+                { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route } route = { route } auth = { auth } createJobPost={ createJobPost }/> }
+
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } /> }
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} /> }
             </main>
