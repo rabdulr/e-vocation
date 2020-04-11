@@ -119,7 +119,7 @@ const AppHome = () => {
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route }/>
-                { window.location.hash === '#' && <Landing displayLogin = { displayLogin } route = { route }/> }
+                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route }/> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route }/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } /> }
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} /> }
