@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Posts} from '../db/models/constructors';
 import moment from 'moment';
 
-const PostSearch = ({posts, route, breakpoint, createJobPost, setFocus}) => {
+const PostSearch = ({auth, posts, route, breakpoint, createJobPost, setFocus}) => {
   const [userId, setUserId] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -67,7 +67,7 @@ const PostSearch = ({posts, route, breakpoint, createJobPost, setFocus}) => {
         posts.map(post => {
           return (
           <li key = { `post${ post.id }` } className = 'colorDB'>
-            <a  href = {`#post/${post.id}`} onClick = {({target})=>{setFocus(post.id); route(target.href)}}>
+            <a  href = {`#post/${post.id}`} onClick = {()=>{setFocus(post.id)}}>
               <h4 className = 'leftMarginHalf colorDB'>{ post.title }</h4>
             </a>
             <div className = 'borderBB bgLB padHalf border10 marginHalf'>
