@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Posts} from '../db/models/constructors';
 import moment from 'moment';
 
-const PostSearch = ({posts, route, auth, createJobPost}) => {
-
+const PostSearch = ({posts, route, breakpoint, createJobPost}) => {
   const [userId, setUserId] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -38,7 +37,6 @@ const PostSearch = ({posts, route, auth, createJobPost}) => {
     setStartDate(moment(new Date()).format('MM/DD/YYYY'));
     setEndDate(moment(new Date()).add(1, 'week').format('MM/DD/YYYY'));
   }
-  
   return(
     <div id="PostSearchRoot" className = 'marginHalf columnNW alignCenter maxWidth4'>
       <form onSubmit={onSubmit}>

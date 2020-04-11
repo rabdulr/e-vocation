@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment'
 
-const Bids = ({bids, route}) => {
+const Bids = ({bids, route, breakpoint, auth}) => {
     const [bidList, setBidList] = useState([]);
 
     //Have this set just to make sure we get the info in
