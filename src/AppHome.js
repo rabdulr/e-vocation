@@ -40,15 +40,12 @@ const AppHome = () => {
     const [auth, setAuth] = useState({});
     const [focus, setFocus] = useState('');
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
-<<<<<<< HEAD
     const [chatMessages, setChatMessages] = useState([])
-=======
     const [breakpoint, setBreakpoint] = useState(window.innerWidth < 641 ? 'sm'
         : window.innerWidth < 769 ? 'md'
         : window.innerWidth < 1025 ? 'lg'
         : window.innerWidth < 2441 ? 'xl'
         : 'xxl' );
->>>>>>> master
 
     useEffect(()=>{
         const socket = io();
