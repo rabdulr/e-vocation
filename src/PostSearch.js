@@ -27,6 +27,14 @@ const PostSearch = ({posts, route, auth, createJobPost}) => {
     const address = `${siteAddress}, ${siteCity}, ${siteState}, ${siteZip}`
     const post = new Posts(userId, title, description, industry, address, startDate, endDate, proposedBudget);
     createJobPost(post)
+    setTitle('');
+    setDescription('');
+    setIndustry('');
+    setSiteAddress('');
+    setSiteCity('');
+    setSiteState('');
+    setSiteZip('');
+    proposedBudget('');
   }
   return(
     <div id="PostSearchRoot" className = 'marginHalf columnNW alignCenter maxWidth4'>
