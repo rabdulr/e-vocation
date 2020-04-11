@@ -34,8 +34,11 @@ const PostSearch = ({posts, route, auth, createJobPost}) => {
     setSiteCity('');
     setSiteState('');
     setSiteZip('');
-    proposedBudget('');
+    setProposedBudget('');
+    setStartDate(moment(new Date()).format('MM/DD/YYYY'));
+    setEndDate(moment(new Date()).add(1, 'week').format('MM/DD/YYYY'));
   }
+  
   return(
     <div id="PostSearchRoot" className = 'marginHalf columnNW alignCenter maxWidth4'>
       <form onSubmit={onSubmit}>
