@@ -14,6 +14,7 @@ import NavBar from './NavBar'
 import Landing from './Landing'
 import ProfileHome from './ProfileHome'
 import PostSearch from './PostSearch'
+import PostDetail from './PostDetail'
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
 import Bids from './Bids'
@@ -36,6 +37,7 @@ const AppHome = () => {
     const [jobs, setJobs] = useState([]);
     const [bids, setBids] = useState([]);
     const [auth, setAuth] = useState({});
+    const [focus, setFocus] = useState('');
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
     const [breakpoint, setBreakpoint] = useState(window.innerWidth < 641 ? 'sm'
         : window.innerWidth < 769 ? 'md'
@@ -143,6 +145,7 @@ const AppHome = () => {
                 { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint }/> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost }/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } breakpoint = { breakpoint }/> }
+                { focus && window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} />}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
             </main>
             <footer className = 'centerText'>

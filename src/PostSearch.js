@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Posts} from '../db/models/constructors';
 import moment from 'moment';
 
-const PostSearch = ({posts, route, breakpoint, createJobPost}) => {
+const PostSearch = ({posts, route, breakpoint, createJobPost, setFocus}) => {
   const [userId, setUserId] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -67,7 +67,9 @@ const PostSearch = ({posts, route, breakpoint, createJobPost}) => {
         posts.map(post => {
           return (
           <li key = { `post${ post.id }` } className = 'colorDB'>
-            <h4 className = 'leftMarginHalf'>{ post.title }</h4>
+            <a  href = {`#post/${post.id}`} onClick = {({target})=>{setFocus(post.id); route(target.href)}}>
+              <h4 className = 'leftMarginHalf colorDB'>{ post.title }</h4>
+            </a>
             <div className = 'borderBB bgLB padHalf border10 marginHalf'>
               <div>{ post.description }</div>
               <div className = 'topMarginHalf'>Asking Price: $<span className = 'colorAO font700'>{ post.proposedBudget }</span></div>
