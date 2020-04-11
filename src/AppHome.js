@@ -25,6 +25,7 @@ import PostSearch from './PostSearch'
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
 import Bids from './Bids'
+import ChatPage from './chatpage';
 
 const headers = () => {
     const token = window.localStorage.getItem('token');
@@ -45,10 +46,14 @@ const AppHome = () => {
     const [bids, setBids] = useState([]);
     const [auth, setAuth] = useState({})
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
+    const [chatMessages, setChatMessages] = useState([])
 
     useEffect(()=>{
         const socket = io();
-        socket.on('message', (message)=>console.log(message))
+        socket.on('message', (message)=>{
+            console.log(message)
+            setChatMessages([...chatMessages, message])
+        })
     }, [])
 
     useEffect(() => {
@@ -123,9 +128,10 @@ const AppHome = () => {
                 { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route }/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } /> }
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} /> }
+                {window.location.hash === '#chat' && <ChatPage chatMessages = {chatMessages} setChatMessages= {setChatMessages}/>}
             </main>
             <footer className = 'centerText'>
-                © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema
+                © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>
             </footer>
         </div>
     );
