@@ -1,5 +1,5 @@
 /*
-    Color Pallette: 
+    Color Pallette:
 
     Dark Blue:          #1d2327
     Bright Blue:        #1c5d83
@@ -59,6 +59,10 @@ select:focus{
 
 .centerText{
     text-align: center;
+}
+
+.rightAllignText{
+    text-align: right;
 }
 
 @media screen and (min-width: 641px){
