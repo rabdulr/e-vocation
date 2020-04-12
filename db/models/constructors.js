@@ -51,9 +51,10 @@ class Bids {
 };
 
 class Contracts {
-    constructor(userId, companyId, contract, contractStatus){
+    constructor(userId, companyId, postId, contract, contractStatus){
         this.userId = userId;
         this.companyId = companyId;
+        this.postId = postId;
         this.contract = contract;
         this.contractStatus = contractStatus
     }
