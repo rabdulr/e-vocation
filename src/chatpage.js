@@ -12,6 +12,7 @@ const ChatPage = ({chatMessages, setChatMessages, displayChat, socket, auth})=>{
     return(
         <div>
             <form onSubmit={onSubmit}>
+                <h3>Chat with { auth.id }</h3>
                 <input onChange= {(ev)=>setMessage(ev.target.value) } value = {message}></input>
                 <button>Send</button>
             </form>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { runInContext } from 'vm';
 
-const ProfileHome = ({ auth, bids, jobs, breakpoint })=>{
+const ProfileHome = ({ auth, bids, jobs, breakpoint, setFocus })=>{
   const [list, setList] = useState([])
   
   useEffect(() => {
@@ -31,7 +31,7 @@ const ProfileHome = ({ auth, bids, jobs, breakpoint })=>{
         <ul className = 'scrollable maxHeight2 maxWidth4'>{
           list.reduce((acc, item) => { if(!acc.includes(item)){ acc.push(item) }; return acc }, []).map(item => {
             return (
-              <li key = { `chat${ item.id }` } className = 'bgDB marginHalf padHalf border5'><a href = { `#chat${ item.id }` } className = 'colorBB'>User: { item.username }</a></li>
+              <li key = { `chat${ item.id }` } className = 'bgDB marginHalf padHalf border5'><a href = { `#chat${ item.id }` } className = 'colorBB' onClick = { ev => setFocus(item.id) }>User: { item.username }</a></li>
             )
           })
         }</ul>
