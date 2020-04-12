@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const Landing = ({ displayLogin, auth, route, breakpoint, setBreakpoint }) => {
+const Landing = ({ displayLogin, auth, route, breakpoint }) => {
   return(
     <div id='LandingRoot' className={ `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW' : 'rowNW' }` }>
       <div className='marginHalf justifyContent'>
