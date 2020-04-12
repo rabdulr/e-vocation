@@ -63,11 +63,16 @@ const AppHome = () => {
         list.innerHTML += `<li> ${message.username}: ${message.text}</li>`;
     }
 
+    //Added conditional where companies and Admin will see all posts
     useEffect(() => {
+        const token = window.localStorage.getItem('token');
         if(auth.id && auth.role === 'USER') {
-            const token = window.localStorage.getItem('token');
             axios.get('/api/getPosts', headers())
-                .then(response => setPosts(response.data))
+                .then(posts => setPosts(posts.data))
+                .catch(ex => console.log(ex))
+        } else {
+            axios.get('/api/getAllPosts', headers())
+                .then(allPosts => setPosts(allPosts.data))
                 .catch(ex => console.log(ex))
         }
     }, [auth])
@@ -80,6 +85,7 @@ const AppHome = () => {
         }
     }, [auth]);
 
+    //May need to add this to one company option versus user option
     useEffect(() => {
         if(auth.id && auth.role === 'COMPANY') {
             axios.get('/api/getBids', headers())
@@ -149,6 +155,12 @@ const AppHome = () => {
             .catch(ex => console.log(ex))
     }
 
+    const createBid = (bid) => {
+        axios.post('/api/bids/createBid', bid, headers())
+            .then(response => setBids([response.data, ...bids]))
+            .catch(ex => console.log(ex))
+    }
+
     return (
         <div id = 'container'>
             <main className = 'z0'>
@@ -158,7 +170,7 @@ const AppHome = () => {
                 { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint }/> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } breakpoint = { breakpoint } setFocus = { setFocus } /> }
-                { focus && window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} />}
+                { focus && window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} post={posts.find(post => post.id === focus)} createBid={createBid}  />}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage chatMessages = {chatMessages} setChatMessages= {setChatMessages} displayChat = {displayChat} auth = {auth} /> }
             </main>

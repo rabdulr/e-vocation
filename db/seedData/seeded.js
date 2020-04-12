@@ -43,11 +43,11 @@ const runSeed = async() => {
     const com3 = await comments.create(new Comments(item2.id, eva.id, 'Cookies? Fancy? I\'m not the cooks. You are!'));
     
     //Bids using Bids constructor
-    const bid1 = await bids.create(new Bids(item1.id, jack.id, santa.id, 'Jolly good! My elves can set a very festive holiday for you! We will do it for free!', 'Active', 0));
+    const bid1 = await bids.create(new Bids(item1.id, jack.id, santa.id, 'Jolly good! My elves can set a very festive holiday for you! We will do it for free!', 0));
     
-    const bid2 = await bids.create(new Bids(item2.id, eva.id, gordon.id, 'You have got to be joking. What kind of event is this? Who\'s attending? I need more information', 'Active', 50000));
+    const bid2 = await bids.create(new Bids(item2.id, eva.id, gordon.id, 'You have got to be joking. What kind of event is this? Who\'s attending? I need more information', 50000));
     
-    const bid3 = await bids.create(new Bids(item2.id, eva.id, santa.id, 'We can do this for free!', 'Active', 0));
+    const bid3 = await bids.create(new Bids(item2.id, eva.id, santa.id, 'We can do this for free!', 0));
     
     //Contracts using Contracts constructor
     const contract1 = await contracts.create(new Contracts(eva.id, gordon.id, item2.id, 'I will cook your damn food.', 'Completed'))
