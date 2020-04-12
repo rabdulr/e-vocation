@@ -1,35 +1,25 @@
 import React, {useState, useEffect} from 'react';
 
-const ChatPage = ({chatMessages, setChatMessages, displayChat, socket})=>{
+const ChatPage = ({chatMessages, setChatMessages, displayChat, socket, auth})=>{
     const [message, setMessage]= useState('')
-    //console.log(chatMessages)
+    //console.log(auth)
 
-    // useEffect(()=>{
-    //     const socket = io();
-    //     socket.on('message', ({text})=>{
-    //         console.log(message);
-    //         setChatMessages([...chatMessages, message]);
-    //         //displayChat({text});
-    //     })
-    // }, [])
+    const onSubmit = (ev)=>{
+        ev.preventDefault();
+        const socket = io();
+        socket.emit('message', {username: auth.username, text: message})
+    }
+    return(
+        <div>
+            <form onSubmit={onSubmit}>
+                <input onChange= {(ev)=>setMessage(ev.target.value) } value = {message}></input>
+                <button>Send</button>
+            </form>
+            <ul id = 'messages'>
 
-  const onSubmit = (ev)=>{
-      ev.preventDefault();
-      const socket = io();
-      socket.emit('message', message)
-  }
-  return(
-      <div>
-          <form onSubmit={onSubmit}>
-              <input onChange= {(ev)=>setMessage(ev.target.value) } value = {message}></input>
-              <button>Send</button>
-          </form>
-          <ul id = 'messages'>
-
-          </ul>
-      </div>
-
-  )
+            </ul>
+        </div>
+    )
 }
 
 export default ChatPage
