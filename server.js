@@ -17,7 +17,6 @@ db.sync()
         socketServer().on('connection', (socket)=>{
             socket.on("message", (message)=>{
                 socket.broadcast.emit('message', message)
-                console.log("I made it into the socket serrver 'message' event handler!" )
             })
         })
     })

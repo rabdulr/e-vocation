@@ -51,14 +51,16 @@ const AppHome = () => {
         const socket = io();
         socket.on('message', (message)=>{
             console.log(message);
+            console.log(focus)
             setChatMessages([...chatMessages, message]);
             displayChat(message);
         })
     }, [])
 
     const displayChat = (message)=>{
+        //console.log(auth)
         const list = document.querySelector('#messages')
-        list.innerHTML += `<li>${message}</li>`;
+        list.innerHTML += `<li> ${message.username}: ${message.text}</li>`;
     }
 
     useEffect(() => {
