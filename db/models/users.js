@@ -3,7 +3,7 @@ const { hash } = require("../auth");
 
 const users = {
     readAll: async() => {
-        return (await client.query('SELECT * FROM users'));
+        return (await client.query('SELECT * FROM users')).rows;
     },
     create: async({ firstName, lastName, address, city, state, zip, username, password }) => {
 

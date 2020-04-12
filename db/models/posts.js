@@ -2,7 +2,7 @@ const client = require('../client');
 
 const posts = {
     readAll: async() => {
-        return (await client.query('SELECT * FROM posts'));
+        return (await client.query('SELECT * FROM posts')).rows;
     },
     create: async({ userId, title, description, industry, siteAddress, startDate, endDate, proposedBudget }) => {
 

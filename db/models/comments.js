@@ -2,7 +2,7 @@ const client = require('../client');
 
 const comments = {
     readAll: async() => {
-        return (await client.query('SELECT * FROM comments'));
+        return (await client.query('SELECT * FROM comments')).rows;
     },
     create: async({ id, idOfPoster, comment }) => {
 

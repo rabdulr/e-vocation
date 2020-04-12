@@ -68,7 +68,7 @@ const sync = async() => {
             "userId" UUID REFERENCES users(id),
             "companyId" UUID REFERENCES companies(id),
             proposal TEXT,
-            "bidStatus" VARCHAR(25),
+            "bidStatus" VARCHAR(25) DEFAULT 'Active',
             bid INT
         );
         
