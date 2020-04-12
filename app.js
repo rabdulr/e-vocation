@@ -4,7 +4,8 @@ const path = require('path');
 const db = require("./db");
 const jwt = require("jwt-simple");
 const models = db.models;
-const {socketServer} = require('./websockets')
+const {socketServer} = require('./websockets');
+const {isAdmin, isLoggedIn} = require('./middleware')
 
 app.use(express.json());
 
@@ -14,22 +15,6 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.get('/', (req, res, next) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
-
-const isAdmin = (req, res, next) => {
-  if (req.user.role !== 'ADMIN') {
-    return next(Error('not authorized'));
-  }
-  next();
-};
-
-const isLoggedIn = (req, res, next) => {
-  if (!req.user) {
-    const error = Error('not authorized');
-    error.status = 401;
-    return next(error);
-  }
-  next();
-};
 
 // middleware for adding user info to req, using the user token
 app.use((req, res, next) => {

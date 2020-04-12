@@ -76,6 +76,7 @@ const sync = async() => {
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             "userId" UUID REFERENCES users(id),
             "companyId" UUID REFERENCES companies(id),
+            "postId" UUID REFERENCEs posts(id),
             contract TEXT,
             "contractStatus" VARCHAR(25)
         );

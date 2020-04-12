@@ -50,7 +50,7 @@ const runSeed = async() => {
     const bid3 = await bids.create(new Bids(item2.id, eva.id, santa.id, 'We can do this for free!', 'Active', 0));
     
     //Contracts using Contracts constructor
-    const contract1 = await contracts.create(new Contracts(eva.id, gordon.id, 'I will cook your damn food.', 'Completed'))
+    const contract1 = await contracts.create(new Contracts(eva.id, gordon.id, item2.id, 'I will cook your damn food.', 'Completed'))
 
     //Ratings using Ratings constructor
     const rating1 = await ratings.create(new Ratings(contract1.id, gordon.id, 5, 'You were rude, annoying, and I could not stand you. I will hire you again in a heartbeat.'))
