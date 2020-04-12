@@ -35,6 +35,10 @@
     max-height: 700px;
 }
 
+.vh100{
+    max-height: 90vh;
+}
+
 .scrollable{
     overflow-y: scroll;
 }
