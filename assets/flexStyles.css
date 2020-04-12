@@ -57,3 +57,7 @@
 .spaceBetweenCol{
     align-items: space-between;
 }
+
+.alignStretchCol{
+    align-self: stretch;
+}
