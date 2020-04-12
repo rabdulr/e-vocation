@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 app.post("/api/auth", (req, res, next) => {
     db.authenticate(req.body)
         .then((token) => {
-            socketServer().emit('message', {text: 'Socket server test: Welcome!'})
+            //socketServer().emit('message', {text: 'Socket server test: Welcome!'})
             res.send({ token })
         })
         .catch((test_err) => {

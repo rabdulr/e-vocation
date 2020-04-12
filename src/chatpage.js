@@ -1,12 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
-const ChatPage = ({chatMessages, setChatMessages})=>{
-  const [message, setMessage]= useState('')
-  console.log(chatMessages)
+const ChatPage = ({chatMessages, setChatMessages, displayChat, socket})=>{
+    const [message, setMessage]= useState('')
+    //console.log(chatMessages)
+
+    // useEffect(()=>{
+    //     const socket = io();
+    //     socket.on('message', ({text})=>{
+    //         console.log(message);
+    //         setChatMessages([...chatMessages, message]);
+    //         //displayChat({text});
+    //     })
+    // }, [])
 
   const onSubmit = (ev)=>{
       ev.preventDefault();
-      setChatMessages([...chatMessages, message]);
+      const socket = io();
+      socket.emit('message', message)
   }
   return(
       <div>
@@ -14,16 +24,8 @@ const ChatPage = ({chatMessages, setChatMessages})=>{
               <input onChange= {(ev)=>setMessage(ev.target.value) } value = {message}></input>
               <button>Send</button>
           </form>
-          <ul>
-              {
-                  chatMessages.map((message, idx) =>{
-                      return(
-                          <li key ={idx}>
-                              {message}
-                          </li>
-                      )
-                  })
-              }
+          <ul id = 'messages'>
+
           </ul>
       </div>
 
