@@ -37,6 +37,9 @@
 .colorBB{
     color: #1c5d83;
 }
+.bgAlphaBB{
+    background-color: rgba(28, 93, 131, 70%);
+}
 .borderBB{
     border: 1px solid #1c5d83;
 }
