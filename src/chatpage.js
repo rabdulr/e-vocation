@@ -2,23 +2,22 @@ import React, {useState, useEffect} from 'react';
 
 const ChatPage = ({chatMessages, setChatMessages, displayChat, socket, auth})=>{
     const [message, setMessage]= useState('')
-    //console.log(auth)
 
     const onSubmit = (ev)=>{
         ev.preventDefault();
         const socket = io();
-        socket.emit('message', {username: auth.username, text: message})
+        socket.emit('message', {username: auth.username, text: message});
         setMessage('');
     }
     return(
-        <div className = 'columnNW maxWidth5'>
-            <h3 className = 'centerText'>Chat with { auth.id }</h3>
-            <div className = 'borderDB bgBB border5 marginHalf heighthundred'>
-                <ul id = 'messages' className = 'borderDB marginHalf bgOW colorDB border10 scrollable padHalf maxHeight3'></ul>
+        <div className = 'columnNW grow1 vh80'>
+            <div className = 'columnNW borderDB bgBB border5 marginHalf vh80 grow1'>
+                <h4 className = 'centerText colorOW padHalf'>Chat with { auth.id }</h4>
+                <ul id = 'messages' className = 'columnNW borderDB bgOW colorDB border10 marginHalf padHalf grow1 vh80 scrollable'></ul>
                 <form onSubmit={onSubmit} className = 'columnNW leftMarginHalf rightMarginHalf'>
                     <div className = 'rowNW widthundred'>
-                        <input onChange= {({ target })=>setMessage(target.value) } value = {message} className = 'bottomLeft10 topLeft10 bgOW colorDB borderDB leftPadHalf widthundred' />
-                        <input type = 'submit' className = 'bgOW colorDB borderDB bottomRight10 topRight10' value = 'Send' />    
+                        <input onChange= {({ target })=>setMessage(target.value) } value = {message} placeholder = 'Type a Message...' className = 'bottomLeft10 topLeft10 bgOW colorDB borderDB leftPadHalf widthundred' />
+                        <input type = 'submit' className = 'bgOW colorDB borderDB bottomRight10 topRight10' value = 'Send' disabled = { !message }/>    
                     </div>
                 </form>
             </div>    
