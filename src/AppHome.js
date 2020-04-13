@@ -10,14 +10,15 @@ import qs from 'qs';
 import axios from 'axios';
 import moment from 'moment'
 // Components
-import NavBar from './NavBar'
-import Landing from './Landing'
-import ProfileHome from './ProfileHome'
-import PostSearch from './PostSearch'
-import PostDetail from './PostDetail'
+import NavBar from './NavBar';
+import Landing from './Landing';
+import ProfileHome from './ProfileHome';
+import ProfileSettings from './ProfileSettings';
+import PostSearch from './PostSearch';
+import PostDetail from './PostDetail';
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
-import Bids from './Bids'
+import Bids from './Bids';
 import ChatPage from './chatpage';
 
 const headers = () => {
@@ -169,8 +170,9 @@ const AppHome = () => {
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint }/>
                 { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint }/> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
-                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } breakpoint = { breakpoint } setFocus = { setFocus } /> }
-                { focus && window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} post={posts.find(post => post.id === focus)} createBid={createBid}  />}
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
+                { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } /> }
+                { window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} post={posts.find(post => post.id === focus)} createBid={createBid}  />}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage chatMessages = {chatMessages} setChatMessages= {setChatMessages} displayChat = {displayChat} auth = {auth} /> }
             </main>
