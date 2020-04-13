@@ -160,6 +160,10 @@ const AppHome = () => {
         axios.post('/api/bids/createBid', bid, headers())
             .then(response => setBids([response.data, ...bids]))
             .catch(ex => console.log(ex))
+    };
+
+    const updateUser = async (user) => {
+        return ( await axios.put(`/api/users/${user.id}`, user, headers()))
     }
 
     return (
@@ -171,7 +175,7 @@ const AppHome = () => {
                 { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint }/> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
-                { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } /> }
+                { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser}/> }
                 { window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} post={posts.find(post => post.id === focus)} createBid={createBid}  />}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage chatMessages = {chatMessages} setChatMessages= {setChatMessages} displayChat = {displayChat} auth = {auth} /> }
