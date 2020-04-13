@@ -3,7 +3,7 @@ import moment from 'moment';
 import CreateBid from './CreateBid'
 console.log('PostDetail.js')
 
-const PostDetail = ({auth, focus, post, createBid}) => {
+const PostDetail = ({auth, focus, post, createBid, bids}) => {
 
 
 
@@ -16,7 +16,7 @@ const PostDetail = ({auth, focus, post, createBid}) => {
       <p>End date: {moment(post.endDate).format('MM/DD/YYYY')}</p>
       <p>Site Address: {post.siteAddress}</p>
       <p>Proposed budget: ${post.proposedBudget}</p>
-      { auth.role === 'COMPANY' && <CreateBid post={post} auth={auth} createBid={createBid}/> }
+      { auth.role === 'COMPANY' && <CreateBid post={post} auth={auth} createBid={createBid} bids={bids}/> }
     </div>)
 }
 
