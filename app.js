@@ -112,7 +112,19 @@ app.post('/api/bids/createBid', (req, res, next) => {
   models.bids.create(req.body)
     .then(bid => res.send(bid).sendStatus(204))
     .catch(next)
-})
+});
+
+app.put('/api/users/:id', (req, res, next) => {
+  if(req.body.role === 'COMPANY'){
+    models.companies.updateCompany(req.body)
+      .then(company => res.send(company).sendStatus(201))
+      .catch(next)
+  } else {
+    models.users.updateUser(req.body)
+      .then(user => res.send(user).sendStatus(201))
+      .catch(next)
+  }
+});
 
 
 app.use((req, res, next) => {
