@@ -61,3 +61,11 @@
 .alignStretchCol{
     align-self: stretch;
 }
+
+.grow1{
+    flex-grow: 1;
+}
+
+.shrink1{
+    flex-shrink: 1;
+}

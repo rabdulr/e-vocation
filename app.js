@@ -72,6 +72,12 @@ app.get('/api/getPosts', (req, res, next) => {
     .catch(next)
 });
 
+app.get('/api/getAllPosts', (req, res, next) => {
+  models.posts.readAll()
+    .then(posts => res.send(posts))
+    .catch(next)
+})
+
 app.get('/api/getCompanies', (req, res, next) => {
   models.companies.readAll()
     .then(companies => res.send(companies))
@@ -94,13 +100,32 @@ app.get('/api/getBids', (req, res, next) => {
   models.bids.getBids(req.user.id)
     .then(bids => res.send(bids))
     .catch(next)
-})
+});
 
 app.post('/api/posts/createJobPost', (req, res, next) => {
   models.posts.create(req.body)
     .then(post => res.send(post).sendStatus(204))
     .catch(next)
-})
+});
+
+app.post('/api/bids/createBid', (req, res, next) => {
+  models.bids.create(req.body)
+    .then(bid => res.send(bid).sendStatus(204))
+    .catch(next)
+});
+
+app.put('/api/users/:id', (req, res, next) => {
+  if(req.body.role === 'COMPANY'){
+    models.companies.updateCompany(req.body)
+      .then(company => res.send(company).sendStatus(201))
+      .catch(next)
+  } else {
+    models.users.updateUser(req.body)
+      .then(user => res.send(user).sendStatus(201))
+      .catch(next)
+  }
+});
+
 
 app.use((req, res, next) => {
     const error = { message: `page not found ${req.url} for ${req.method}`, status: 404 };

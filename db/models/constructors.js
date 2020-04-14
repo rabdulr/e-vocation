@@ -40,12 +40,11 @@ class Posts {
 };
 
 class Bids {
-    constructor(postId, userId, companyId, proposal, bidStatus, bid){
+    constructor(postId, userId, companyId, proposal, bid){
         this.postId = postId
         this.userId = userId;
         this.companyId = companyId;
         this.proposal = proposal;
-        this.bidStatus = bidStatus;
         this.bid = bid;
     }
 };

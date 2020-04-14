@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { runInContext } from 'vm';
 
-const ProfileHome = ({ auth, bids, jobs, breakpoint, setFocus })=>{
+const ProfileHome = ({ auth, bids, jobs, breakpoint, route, setFocus })=>{
   const [list, setList] = useState([])
   
   useEffect(() => {
@@ -12,7 +12,7 @@ const ProfileHome = ({ auth, bids, jobs, breakpoint, setFocus })=>{
       <div className = 'columnNW'>
         <h1>{ auth.firstName } { auth.lastName }</h1>
         <div className = 'rowWrap spaceBetweenRow'>
-          <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> route('#profile/settings') } value = 'Edit Profile' />
+          <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> { setFocus(auth.id); route(`#profile/settings/${ auth.id }`) } } value = 'Edit Profile' />
           <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> route('#job-history') } value = 'History' />
         </div>  
       </div>
