@@ -51,9 +51,14 @@ const AppHome = () => {
         const socket = io();
         socket.on('message', (message)=>{
             console.log(message);
-            console.log(focus)
             setChatMessages([...chatMessages, message]);
             displayChat(message);
+        })
+        socket.on('history', (messages)=>{
+            console.log("messages: ", messages)
+            if(messages.length !== 0){
+                messages.forEach(message => displayChat(message.text))
+            }
         })
     }, [])
 

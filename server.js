@@ -14,9 +14,13 @@ db.sync()
         start(server);
     })
     .then(()=>{
+        const history = []
         socketServer().on('connection', (socket)=>{
+            socket.emit("history", history)
             socket.on("message", (message)=>{
                 socket.broadcast.emit('message', message)
+                history.push(message)
+                console.log("history:", history)
             })
         })
     })
