@@ -39,6 +39,7 @@ const AppHome = () => {
     const [jobs, setJobs] = useState([]);
     const [bids, setBids] = useState([]);
     const [auth, setAuth] = useState({});
+    const [chatBack, setChatBack] = useState('bgOW');
     const [focus, setFocus] = useState('');
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
     const [breakpoint, setBreakpoint] = useState(window.innerWidth < 641 ? 'sm'
@@ -59,7 +60,9 @@ const AppHome = () => {
 
     const displayChat = (message)=>{
         const list = document.querySelector('#messages')
-        list.innerHTML += `<li> ${message.username}: ${message.text}</li>`;
+        list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.text}</li>`;
+        setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
+        document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
     }
 
     //Added conditional where companies and Admin will see all posts
@@ -176,7 +179,7 @@ const AppHome = () => {
                 { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser}/> }
                 { window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} post={posts.find(post => post.id === focus)} createBid={createBid} bids={bids} />}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
-                { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} /> }
+                { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } chatBack = { chatBack } setChatBack = { setChatBack }/> }
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>
