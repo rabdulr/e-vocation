@@ -10,7 +10,6 @@ db.sync()
         const server = app.listen(PORT, () => {
             console.log(`Listening on port ${PORT}`)
         });
-
         start(server);
     })
     .then(()=>{
@@ -20,7 +19,6 @@ db.sync()
             socket.on("message", (message)=>{
                 socket.broadcast.emit('message', message)
                 history.push(message)
-                console.log("history:", history)
             })
         })
     })

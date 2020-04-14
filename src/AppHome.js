@@ -41,7 +41,6 @@ const AppHome = () => {
     const [auth, setAuth] = useState({});
     const [focus, setFocus] = useState('');
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
-    const [chatMessages, setChatMessages] = useState([])
     const [breakpoint, setBreakpoint] = useState(window.innerWidth < 641 ? 'sm'
         : window.innerWidth < 769 ? 'md'
         : window.innerWidth < 1025 ? 'lg'
@@ -51,20 +50,14 @@ const AppHome = () => {
     useEffect(()=>{
         const socket = io();
         socket.on('message', (message)=>{
-            console.log(message);
-            setChatMessages([...chatMessages, message]);
             displayChat(message);
         })
         socket.on('history', (messages)=>{
-            console.log("messages: ", messages)
-            if(messages.length !== 0){
-                messages.forEach(message => displayChat(message.text))
-            }
+            messages.forEach(message => displayChat(message))
         })
     }, [])
 
     const displayChat = (message)=>{
-        //console.log(auth)
         const list = document.querySelector('#messages')
         list.innerHTML += `<li> ${message.username}: ${message.text}</li>`;
     }
@@ -183,7 +176,7 @@ const AppHome = () => {
                 { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser}/> }
                 { window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} post={posts.find(post => post.id === focus)} createBid={createBid} bids={bids} />}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
-                { window.location.hash === `#chat${ focus }` && <ChatPage chatMessages = {chatMessages} setChatMessages= {setChatMessages} displayChat = {displayChat} auth = {auth} /> }
+                { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} /> }
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>
