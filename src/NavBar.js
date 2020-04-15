@@ -22,6 +22,7 @@ const NavBar = ({ auth, setAuth, displayLogin, route, breakpoint }) => {
         { (auth.role === 'USER' || auth.role === 'ADMIN') && <a href = { '#posts' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Posts</a> }
         <a href = { '#jobs' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Jobs</a>
         { (auth.role === 'COMPANY' || auth.role === 'ADMIN') && <a href = { '#bids' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Bids</a> }
+        <a href = { '#contracts' } onClick = { ({ target }) => setDropVis(!dropVis)} className = 'bottomBorderOW widthundred centerText padQuarter'>Contracts</a>
       </section> }
     </div>
     
