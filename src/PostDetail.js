@@ -5,8 +5,6 @@ console.log('PostDetail.js')
 
 const PostDetail = ({auth, focus, post, createBid, bids}) => {
 
-
-
   return (
     <div id = 'PostDetailRoot'>
       <h1>{post.title}</h1>

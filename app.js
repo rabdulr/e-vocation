@@ -97,7 +97,7 @@ app.post('/api/createCompany', (req, res, next) => {
 });
 
 app.get('/api/getBids', (req, res, next) => {
-  models.bids.getBids(req.user.id)
+  models.bids.readAll()
     .then(bids => res.send(bids))
     .catch(next)
 });
