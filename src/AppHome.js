@@ -20,6 +20,7 @@ import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
 import Bids from './Bids';
 import ChatPage from './ChatPage';
+import Contracts from './Contracts';
 
 const headers = () => {
     const token = window.localStorage.getItem('token');
@@ -38,7 +39,9 @@ const AppHome = () => {
     const [posts, setPosts] = useState([]);
     const [jobs, setJobs] = useState([]);
     const [bids, setBids] = useState([]);
+    const [contracts, setContracts] = useState([]);
     const [auth, setAuth] = useState({});
+    const [ratings, setRatings] = useState([]);
     const [chatBack, setChatBack] = useState('bgOW');
     const [focus, setFocus] = useState('');
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
@@ -67,6 +70,9 @@ const AppHome = () => {
 
     //Added conditional where companies and Admin will see all posts
     useEffect(() => {
+        if(!auth.id){
+            route('#');
+        }
         const token = window.localStorage.getItem('token');
         if(auth.id && auth.role === 'USER') {
             axios.get('/api/getPosts', headers())
@@ -87,11 +93,23 @@ const AppHome = () => {
         }
     }, [auth]);
 
+    useEffect(() => {
+        axios.get('/api/ratings/getRatings', headers())
+            .then(ratings => setRatings(ratings.data))
+            .catch(ex => console.log(ex))
+    }, [auth])
+
     //May need to add this to one company option versus user option
     useEffect(() => {
         axios.get('/api/getBids', headers())
             .then(bids => setBids(bids.data))
             .catch(ex => console.log(ex));
+    }, [auth]);
+
+    useEffect(() => {
+        axios.get('/api/contracts/getContracts', headers())
+            .then(contracts => setContracts(contracts.data))
+            .catch(ex => console.log(ex))
     }, [auth])
 
     useEffect(() => {
@@ -171,9 +189,10 @@ const AppHome = () => {
                 { auth.id && window.location.hash === '#posts' && <PostSearch posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
                 { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser}/> }
-                { window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} post={posts.find(post => post.id === focus)} createBid={createBid} bids={bids} />}
+                { window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} post={posts.find(post => post.id === focus)} createBid={createBid} bids={bids} companies={companies}/>}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } chatBack = { chatBack } setChatBack = { setChatBack }/> }
+                { window.location.hash === `#contracts` && <Contracts contracts={contracts} ratings={ratings} auth={auth} companies={companies}/>}
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>

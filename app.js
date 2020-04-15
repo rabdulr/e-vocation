@@ -102,6 +102,18 @@ app.get('/api/getBids', (req, res, next) => {
     .catch(next)
 });
 
+app.get('/api/ratings/getRatings', (req, res, next) => {
+  models.ratings.read()
+    .then(ratings => res.send(ratings))
+    .catch(next)
+});
+
+app.get('/api/contracts/getContracts', (req, res, next) => {
+  models.contracts.readAll()
+    .then(contracts => res.send(contracts))
+    .catch(next)
+})
+
 app.post('/api/posts/createJobPost', (req, res, next) => {
   models.posts.create(req.body)
     .then(post => res.send(post).sendStatus(204))

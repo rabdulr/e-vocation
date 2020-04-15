@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import CreateBid from './CreateBid'
+import BidList from './BidList'
 console.log('PostDetail.js')
 
-const PostDetail = ({auth, focus, post, createBid, bids}) => {
+const PostDetail = ({auth, focus, post, createBid, bids, companies}) => {
+
+  const [filteredBids, setFilteredBids] = useState(bids.filter(bid => bid.postId === post.id))
 
   return (
     <div id = 'PostDetailRoot'>
@@ -14,7 +17,8 @@ const PostDetail = ({auth, focus, post, createBid, bids}) => {
       <p>End date: {moment(post.endDate).format('MM/DD/YYYY')}</p>
       <p>Site Address: {post.siteAddress}</p>
       <p>Proposed budget: ${post.proposedBudget}</p>
-      { auth.role === 'COMPANY' && <CreateBid post={post} auth={auth} createBid={createBid} bids={bids}/> }
+      { auth.role === 'COMPANY' && <CreateBid post={post} auth={auth} createBid={createBid} bids={filteredBids}/> }
+      { auth.role === 'USER' && <BidList bids = {filteredBids} companies = {companies} /> }
     </div>)
 }
 
