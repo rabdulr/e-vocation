@@ -24,7 +24,7 @@ const SignInForm = ({ displayLogin, login, toggleForm }) => {
         const info = isCompany ? { firstName, lastName, address, city, state, zip, username, password, companyName, industry }
             : { firstName, lastName, address, city, state, zip, username, password };
         if(isCompany){
-            await axios.post('api/createCompany', info);
+            await axios.post('api/companies/createCompany', info);
             login({ username, password });
         }else{
             await axios.post('api/createUser', info);
