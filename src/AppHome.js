@@ -19,7 +19,7 @@ import PostDetail from './PostDetail';
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
 import Bids from './Bids';
-import ChatPage from './chatpage';
+import ChatPage from './ChatPage';
 import Contracts from './Contracts';
 
 const headers = () => {
@@ -70,6 +70,9 @@ const AppHome = () => {
 
     //Added conditional where companies and Admin will see all posts
     useEffect(() => {
+        if(!auth.id){
+            route('#');
+        }
         const token = window.localStorage.getItem('token');
         if(auth.id && auth.role === 'USER') {
             axios.get('/api/getPosts', headers())
