@@ -75,11 +75,11 @@ const AppHome = () => {
         }
         const token = window.localStorage.getItem('token');
         if(auth.id && auth.role === 'USER') {
-            axios.get('/api/getPosts', headers())
+            axios.get('/api/posts/getPosts', headers())
                 .then(posts => setPosts(posts.data))
                 .catch(ex => console.log(ex))
         } else {
-            axios.get('/api/getAllPosts', headers())
+            axios.get('/api/posts/getAllPosts', headers())
                 .then(allPosts => setPosts(allPosts.data))
                 .catch(ex => console.log(ex))
         }
@@ -87,7 +87,7 @@ const AppHome = () => {
 
     useEffect(() => {
         if(auth.id && auth.role === 'USER') {
-            axios.get('/api/getCompanies', headers())
+            axios.get('/api/companies/getCompanies', headers())
                 .then(response => setCompanies(response.data))
                 .catch(ex => console.log(ex))
         }
@@ -101,7 +101,7 @@ const AppHome = () => {
 
     //May need to add this to one company option versus user option
     useEffect(() => {
-        axios.get('/api/getBids', headers())
+        axios.get('/api/bids/getBids', headers())
             .then(bids => setBids(bids.data))
             .catch(ex => console.log(ex));
     }, [auth]);
