@@ -189,7 +189,7 @@ const AppHome = () => {
                 { window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} post={posts.find(post => post.id === focus)} createBid={createBid} bids={bids} />}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } chatBack = { chatBack } setChatBack = { setChatBack }/> }
-                { window.location.hash === `#contracts` && <Contracts contracts={contracts} ratings={ratings} auth={auth}/>}
+                { window.location.hash === `#contracts` && <Contracts contracts={contracts} ratings={ratings} auth={auth} companies={companies}/>}
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>
