@@ -89,15 +89,9 @@ const AppHome = () => {
 
     //May need to add this to one company option versus user option
     useEffect(() => {
-        if(auth.id && auth.role === 'COMPANY') {
-            axios.get('/api/getBids', headers())
-                .then(bids => setBids(bids.data))
-                .catch(ex => console.log(ex));
-        }else{                                      //Edit when Jobs exist
-            axios.get('/api/getPosts', headers())
-            .then(jobs => setJobs(jobs.data))
+        axios.get('/api/getBids', headers())
+            .then(bids => setBids(bids.data))
             .catch(ex => console.log(ex));
-        }
     }, [auth])
 
     useEffect(() => {
