@@ -19,6 +19,10 @@ const sync = async() => {
         DROP TABLE IF EXISTS users;
         DROP TABLE IF EXISTS companies;
         DROP TABLE IF EXISTS chats;
+        DROP TYPE IF EXISTS post_status;
+
+        CREATE TYPE post_status AS ENUM ('Active', 'Ended', 'Pending', 'Completed');
+        
 
         CREATE TABLE users (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -61,7 +65,7 @@ const sync = async() => {
             "endDate" DATE,
             "siteAddress" TEXT,
             "proposedBudget" INT,
-            status VARCHAR(25) DEFAULT 'Active'
+            status post_status
         );
 
         CREATE TABLE bids (
