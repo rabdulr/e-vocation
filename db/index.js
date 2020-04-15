@@ -18,6 +18,7 @@ const sync = async() => {
         DROP TABLE IF EXISTS posts;
         DROP TABLE IF EXISTS users;
         DROP TABLE IF EXISTS companies;
+        DROP TABLE IF EXISTS chats;
 
         CREATE TABLE users (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -71,7 +72,7 @@ const sync = async() => {
             "bidStatus" VARCHAR(25) DEFAULT 'Active',
             bid INT
         );
-        
+
         CREATE TABLE contracts (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             "userId" UUID REFERENCES users(id),
@@ -94,7 +95,14 @@ const sync = async() => {
             "datePosted" DATE NOT NULL DEFAULT CURRENT_DATE,
             comment TEXT
         );
-        
+        CREATE TABLE chats (
+            id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+            id1 UUID,
+            id2 UUID,
+            time timestamp NOT NULL DEFAULT NOW(),
+            message TEXT
+        );
+
     `;
     await client.query(SQL);
 

@@ -19,7 +19,7 @@ import PostDetail from './PostDetail';
 import LoginForm from './LoginForm';
 import SignInForm from './SignInForm';
 import Bids from './Bids';
-import ChatPage from './chatpage';
+import ChatPage from './ChatPage';
 
 const headers = () => {
     const token = window.localStorage.getItem('token');
