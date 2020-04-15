@@ -70,6 +70,9 @@ const AppHome = () => {
 
     //Added conditional where companies and Admin will see all posts
     useEffect(() => {
+        if(!auth.id){
+            route('#');
+        }
         const token = window.localStorage.getItem('token');
         if(auth.id && auth.role === 'USER') {
             axios.get('/api/getPosts', headers())
