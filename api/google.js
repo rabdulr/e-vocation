@@ -53,7 +53,7 @@ router.get('/', (req, res) => {
         client_id: keys.client.id
     })}`;
 
-    res.send(url)
+    res.redirect(url)
 })
 
 module.exports = {router}

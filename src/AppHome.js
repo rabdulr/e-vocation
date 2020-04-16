@@ -179,12 +179,6 @@ const AppHome = () => {
         return ( await axios.put(`/api/users/${user.id}`, user, headers()))
     };
 
-    const getGoogleInfo = () => {
-        axios.get('/api/google/')
-            .then(response => window.open(response.data))
-            .catch(ex => console.log(ex))
-    }
-
     return (
         <div id = 'container'>
             <main className = 'z0 columnNW'>
@@ -199,7 +193,9 @@ const AppHome = () => {
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } chatBack = { chatBack } setChatBack = { setChatBack }/> }
                 { window.location.hash === `#contracts` && <Contracts contracts={contracts} ratings={ratings} auth={auth} companies={companies}/>}
-                <button onClick={getGoogleInfo}>Google Log In</button>
+                <form method="GET" action={`/api/google`}>
+                    <button>Google Log In</button>
+                </form>
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>
