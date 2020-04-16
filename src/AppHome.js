@@ -180,9 +180,8 @@ const AppHome = () => {
     };
 
     const getGoogleInfo = () => {
-        console.log('hi');
-        axios.get('/api/google/callback')
-            .then(response => console.log(response.data))
+        axios.get('/api/google/')
+            .then(response => window.open(response.data))
             .catch(ex => console.log(ex))
     }
 
