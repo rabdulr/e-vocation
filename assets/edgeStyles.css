@@ -175,6 +175,9 @@
 .border10{
     border-radius: 10px;
 }
+.border15{
+    border-radius: 15px;
+}
 .border50{
     border-radius: 50%;
 }
@@ -203,4 +206,17 @@
 }
 .bottomLeft10{
     border-bottom-left-radius: 10px;
+}
+
+.topRight15{
+    border-top-right-radius: 15px;
+}
+.topLeft15{
+    border-top-left-radius: 15px;
+}
+.bottomRight15{
+    border-bottom-right-radius: 15px;
+}
+.bottomLeft15{
+    border-bottom-left-radius: 15px;
 }

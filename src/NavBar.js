@@ -7,22 +7,22 @@ const NavBar = ({ auth, setAuth, displayLogin, route, breakpoint }) => {
   const logout = () => {
     window.localStorage.removeItem('token');
     setAuth({});
-    route('#');
   };
 
   return (
     <div>
       <nav id = 'navBar' className = 'rowNW spaceBetweenRow'>
-        <a href = '#' onClick = { ({ target }) => { setDropVis(false); route(target.href) } }>Kreg's Least</a>
-        { !auth.id && <div onClick = { ({ target }) => { setDropVis(false); displayLogin() } }>Login/Sign Up</div> }
+        <a href = '#' onClick = { () => setDropVis(false) }>Kreg's Least</a>
+        { !auth.id && <div onClick = { () => { setDropVis(false); displayLogin() } }>Login/Sign Up</div> }
         { auth.id && <a  onClick = { () => setDropVis(!dropVis) }>{ auth.username }</a> }
-        { auth.id && <div onClick = { ({ target }) => { setDropVis(false); logout() } }>Log Out</div> }
+        { auth.id && <a href = { '#' } onClick = { () => { setDropVis(false); logout() } }>Log Out</a> }
       </nav>
       { dropVis && <section className = { `columnNW z1 frosted bgAlphaDB colorOW widthundred` }>
-        <a href = { `#profile/${ auth.id }` } onClick = { ({ target }) => { setDropVis(!dropVis); route(target.href) } } className = 'bottomBorderOW widthundred centerText padQuarter'>Profile</a>
-        <a href = { '#posts' } onClick = { ({ target }) => { setDropVis(!dropVis); route(target.href) } } className = 'bottomBorderOW widthundred centerText padQuarter'>Posts</a>
-        <a href = { '#jobs' } onClick = { ({ target }) => { setDropVis(!dropVis); route(target.href) } } className = 'bottomBorderOW widthundred centerText padQuarter'>Jobs</a>
-        { auth.role === 'COMPANY' && <a href = { '#bids' } onClick = { ({ target }) => { setDropVis(!dropVis); route(target.href) } } className = 'bottomBorderOW widthundred centerText padQuarter'>Bids</a> }
+        <a href = { `#profile/${ auth.id }` } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Profile</a>
+        { (auth.role === 'USER' || auth.role === 'ADMIN') && <a href = { '#posts' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Posts</a> }
+        <a href = { '#jobs' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Jobs</a>
+        { (auth.role === 'COMPANY' || auth.role === 'ADMIN') && <a href = { '#bids' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Bids</a> }
+        <a href = { '#contracts' } onClick = { ({ target }) => setDropVis(!dropVis)} className = 'bottomBorderOW widthundred centerText padQuarter'>Contracts</a>
       </section> }
     </div>
     
