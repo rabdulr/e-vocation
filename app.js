@@ -80,6 +80,8 @@ app.use('/api/bids', api.bids.router);
 
 app.use('/api/ratings', api.ratings.router);
 
+app.use('/api/google', api.google.router);
+
 app.post('/api/createUser', (req, res, next) => {
   models.users.create(req.body)
   .then(user => res.send(user))
