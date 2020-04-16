@@ -177,6 +177,13 @@ const AppHome = () => {
 
     const updateUser = async (user) => {
         return ( await axios.put(`/api/users/${user.id}`, user, headers()))
+    };
+
+    const getGoogleInfo = () => {
+        console.log('hi');
+        axios.get('/api/google/callback')
+            .then(response => console.log(response.data))
+            .catch(ex => console.log(ex))
     }
 
     return (
@@ -193,6 +200,7 @@ const AppHome = () => {
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } chatBack = { chatBack } setChatBack = { setChatBack }/> }
                 { window.location.hash === `#contracts` && <Contracts contracts={contracts} ratings={ratings} auth={auth} companies={companies}/>}
+                <button onClick={getGoogleInfo}>Google Log In</button>
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>
