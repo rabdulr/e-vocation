@@ -17,7 +17,6 @@ const PostForm = ({ auth, createJobPost, userId, setUserId, togglePost }) => {
         ev.preventDefault();
         const address = `${siteAddress}, ${siteCity}, ${siteState}, ${siteZip}`
 
-        //This seems to cause a bug with headers, but it also works. on front end and commits to db as intended
         const post = { userId, title, description, industry, address, startDate, endDate, proposedBudget };
         createJobPost(post);
 
