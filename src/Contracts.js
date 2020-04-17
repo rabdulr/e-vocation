@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Contracts = ({contracts, ratings, auth, companies}) => {
+const Contracts = ({contracts, ratings, auth, users}) => {
     return(
         <div>
             <h3>Number of Contracts: { contracts.length }</h3>

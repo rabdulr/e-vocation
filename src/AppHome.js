@@ -33,7 +33,8 @@ const headers = () => {
 
 const AppHome = () => {
     // const [users, setUsers] = useState([]);
-    const [companies, setCompanies] = useState([]);
+    //const [companies, setCompanies] = useState([]);                           //shakeup change
+    const [users, setUsers] = useState([]);                                           //testing...
     // const [ratings, setRatings] = useState([]);
     const [logDisplay, setLogDisplay] = useState({ on: false, form: 'login' });
     const [posts, setPosts] = useState([]);
@@ -42,7 +43,7 @@ const AppHome = () => {
     const [contracts, setContracts] = useState([]);
     const [auth, setAuth] = useState({});
     const [ratings, setRatings] = useState([]);
-    const [chatBack, setChatBack] = useState('bgOW');
+    //const [chatBack, setChatBack] = useState('bgOW');
     const [focus, setFocus] = useState('');
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
     const [breakpoint, setBreakpoint] = useState(window.innerWidth < 641 ? 'sm'
@@ -64,7 +65,7 @@ const AppHome = () => {
     const displayChat = (message)=>{
         const list = document.querySelector('#messages')
         list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.text}</li>`;
-        setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
+        //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
         document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
     }
 
@@ -85,10 +86,20 @@ const AppHome = () => {
         }
     }, [auth])
 
+    /*
     useEffect(() => {
         if(auth.id && auth.role === 'USER') {
             axios.get('/api/companies/getCompanies', headers())
                 .then(response => setCompanies(response.data))
+                .catch(ex => console.log(ex))
+        }
+    }, [auth]);
+    */
+
+   useEffect(() => {
+        if(auth.id){
+            axios.get('/api/users/getUsers', headers())
+                .then(response => setUsers(response.data))
                 .catch(ex => console.log(ex))
         }
     }, [auth]);
@@ -189,13 +200,11 @@ const AppHome = () => {
                 { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
                 { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser}/> }
-                { window.location.hash === `#post/${focus}` && <PostDetail auth = {auth} focus = {focus} post={posts.find(post => post.id === focus)} createBid={createBid} bids={bids} companies={companies}/>}
+                { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users }/>}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } chatBack = { chatBack } setChatBack = { setChatBack }/> }
-                { window.location.hash === `#contracts` && <Contracts contracts={contracts} ratings={ratings} auth={auth} companies={companies}/>}
-                <form method="GET" action={`/api/google`}>
-                    <button>Google Log In</button>
-                </form>
+                { window.location.hash === `#contracts` && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users}/>}
+                { window.location.hash === '' && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>
