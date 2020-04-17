@@ -14,7 +14,7 @@ router.put('/:id', (req, res, next) => {
   }
 });
 
-router.put('/getUsers', (req, res, next) => {
+router.get('/getUsers', (req, res, next) => {
     users.readAll()
     .then(users => res.send(users).sendStatus(201))
     .catch(next);
