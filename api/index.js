@@ -4,5 +4,6 @@ module.exports = {
     companies: require('./companies'),
     users: require('./users'),
     bids: require('./bids'),
-    ratings: require('./ratings')
+    ratings: require('./ratings'),
+    google: require('./google')
 }
