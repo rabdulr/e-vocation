@@ -28,8 +28,9 @@ class Users {
 // };
 
 class Posts {
-    constructor(userId, title, description, industry, siteAddress, startDate, endDate, proposedBudget){
+    constructor(userId, acceptedId, title, description, industry, siteAddress, startDate, endDate, proposedBudget, status){
         this.userId = userId;
+        this.acceptedId = acceptedId;
         this.title = title;
         this.description = description;
         this.industry = industry;
@@ -37,6 +38,7 @@ class Posts {
         this.startDate = startDate;
         this.endDate = endDate;
         this.proposedBudget = proposedBudget;
+        this.status = status;
     }
 };
 
