@@ -17,7 +17,7 @@ const sync = async() => {
         DROP TABLE IF EXISTS bids;
         DROP TABLE IF EXISTS posts;
         DROP TABLE IF EXISTS users;
-        DROP TABLE IF EXISTS companies;
+
         DROP TABLE IF EXISTS chats;
         DROP TYPE IF EXISTS post_status;
 
@@ -28,6 +28,7 @@ const sync = async() => {
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             "firstName" VARCHAR(100),
             "lastName" VARCHAR(100),
+            "companyName" VARCHAR(100) DEFAULT NULL,
             address VARCHAR(100),
             city VARCHAR(100),
             state VARCHAR(25),
@@ -38,25 +39,10 @@ const sync = async() => {
             CHECK (char_length(username) > 0)
         );
 
-        CREATE TABLE companies (
-            id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-            "companyName" VARCHAR(100),
-            username VARCHAR(100) NOT NULL UNIQUE,
-            address VARCHAR(100),
-            city VARCHAR(100),
-            state VARCHAR(25),
-            zip VARCHAR(10),
-            industry VARCHAR(100),
-            "firstName" VARCHAR(100),
-            "lastName" VARCHAR(100),
-            password VARCHAR(100) NOT NULL,
-            role VARCHAR(25) DEFAULT 'COMPANY',
-            CHECK (char_length(username) > 0)
-        );
-
         CREATE TABLE posts (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             "userId" UUID REFERENCES users(id),
+            "acceptedId" UUID DEFAULT NULL REFERENCES users(id),
             title VARCHAR(100),
             description TEXT,
             industry TEXT,
@@ -71,7 +57,7 @@ const sync = async() => {
         CREATE TABLE bids (
             "postId" UUID REFERENCES posts(id),
             "userId" UUID REFERENCES users(id),
-            "companyId" UUID REFERENCES companies(id),
+            "bidderId" UUID REFERENCES users(id),
             proposal TEXT,
             "bidStatus" VARCHAR(25) DEFAULT 'Active',
             bid INT
@@ -80,7 +66,7 @@ const sync = async() => {
         CREATE TABLE contracts (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             "userId" UUID REFERENCES users(id),
-            "companyId" UUID REFERENCES companies(id),
+            "bidderId" UUID REFERENCES users(id),
             "postId" UUID REFERENCEs posts(id),
             contract TEXT,
             "contractStatus" VARCHAR(25)
@@ -99,6 +85,7 @@ const sync = async() => {
             "datePosted" DATE NOT NULL DEFAULT CURRENT_DATE,
             comment TEXT
         );
+
         CREATE TABLE chats (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             id1 UUID,

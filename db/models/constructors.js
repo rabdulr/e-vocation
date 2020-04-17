@@ -1,7 +1,8 @@
 class Users {
-    constructor(firstName, lastName, address, city, state, zip, username, password){
+    constructor(firstName, lastName, companyName, address, city, state, zip, username, password){
         this.firstName = firstName;
         this.lastName = lastName;
+        this.companyName = companyName;
         this.address = address;
         this.city = city;
         this.state = state;
@@ -11,20 +12,20 @@ class Users {
     }
 };
 
-class Companies {
-    constructor(companyName, username, address, city, state, zip, industry, firstName, lastName, password){
-        this.companyName = companyName;
-        this.username = username;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.industry = industry;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-    }
-};
+// class Companies {
+//     constructor(companyName, username, address, city, state, zip, industry, firstName, lastName, password){
+//         this.companyName = companyName;
+//         this.username = username;
+//         this.address = address;
+//         this.city = city;
+//         this.state = state;
+//         this.zip = zip;
+//         this.industry = industry;
+//         this.firstName = firstName;
+//         this.lastName = lastName;
+//         this.password = password;
+//     }
+// };
 
 class Posts {
     constructor(userId, title, description, industry, siteAddress, startDate, endDate, proposedBudget){
@@ -40,19 +41,19 @@ class Posts {
 };
 
 class Bids {
-    constructor(postId, userId, companyId, proposal, bid){
+    constructor(postId, userId, bidderId, proposal, bid){
         this.postId = postId
         this.userId = userId;
-        this.companyId = companyId;
+        this.bidderId = bidderId;
         this.proposal = proposal;
         this.bid = bid;
     }
 };
 
 class Contracts {
-    constructor(userId, companyId, postId, contract, contractStatus){
+    constructor(userId, bidderId, postId, contract, contractStatus){
         this.userId = userId;
-        this.companyId = companyId;
+        this.bidderId = bidderId;
         this.postId = postId;
         this.contract = contract;
         this.contractStatus = contractStatus
@@ -78,7 +79,6 @@ class Comments {
 
 module.exports = {
     Users,
-    Companies,
     Posts,
     Bids,
     Contracts,
