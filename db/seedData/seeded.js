@@ -1,24 +1,24 @@
 
 const client = require('../client');
-const { companies, users, posts, bids, contracts, ratings, comments } = require('../models');
-const { Users, Companies, Posts, Bids, Contracts, Ratings, Comments } = require('../models/constructors')
+const { users, posts, bids, contracts, ratings, comments } = require('../models');
+const { Users, Posts, Bids, Contracts, Ratings, Comments } = require('../models/constructors')
     
 const runSeed = async() => {
     //Users using Users constructor
-    const jack = await users.create(new Users('Jack', 'Skellington', '123 Halloween', 'Halloween Town', 'CA', '93405', 'Jack', 'JackPass'));
+    const jack = await users.create(new Users('Jack', 'Skellington', null, '123 Halloween', 'Halloween Town', 'CA', '93405', 'Jack', 'JackPass'));
     
-    const eva = await users.create(new Users('Eva', 'Winters', '888 Palm', 'San Luis Obispo', 'CA', '93401', 'Eva', 'EvasPass'));
+    const eva = await users.create(new Users('Eva', 'Winters', null, '888 Palm', 'San Luis Obispo', 'CA', '93401', 'Eva', 'EvasPass'));
 
-    const guy = await users.create(new Users('Guy', 'Fieri', '321 Favor Blvd', 'Flavortown', 'CA', '90017', 'Guy', 'FLAVORTOWN'));
+    const guy = await users.create(new Users('Guy', 'Fieri', null, '321 Favor Blvd', 'Flavortown', 'CA', '90017', 'Guy', 'FLAVORTOWN'));
     
-    const admin = await users.create(new Users('Capstone', 'Admin', 'Local Host', 'Atascadero', 'CA', '93422', 'Admin', 'AdminPass'));
+    const admin = await users.create(new Users('Capstone', 'Admin', null, 'Local Host', 'Atascadero', 'CA', '93422', 'Admin', 'AdminPass'));
     
     await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['ADMIN', admin.id]);
     
     //Companies using Companies constructor
-    const santa = await companies.create(new Companies('Christmas', 'Christmas', '1 North Pole', 'North Pole', 'AK', '99501', 'Packaging', 'Santa', 'Claus', 'SantaPass'));
+    const santa = await users.create(new Users('Santa', 'Claus', 'Christmas', '1 North Pole', 'North Pole', 'AK', '99501', 'Santa', 'SantaPass'));
     
-    const gordon = await companies.create(new Companies('Hell\'s Kitchen', 'Gordon', '888 Higuera', 'San Luis Obispo', 'CA', '93401', 'Catering', 'Gordon', 'Ramsey', 'GordonPass'));
+    const gordon = await users.create(new Users( 'Gordon', 'Ramsey', 'Hell\'s Kitchen', '888 Higuera', 'San Luis Obispo', 'CA', '93401', 'Gordon', 'GordonPass'));
     
     //Posts using Posts constructor
     const item1 = await posts.create(new Posts(jack.id, 'Create Santa Land', 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing', 'Packaging', `${jack.address}, ${jack.city}, ${jack.state}, ${jack.zip}`, new Date('2020-9-20'), new Date('2020-10-25'), 1000, 'Active'));

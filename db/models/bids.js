@@ -4,14 +4,14 @@ const bids = {
     readAll: async() => {
         return (await client.query('SELECT * FROM bids')).rows;
     },
-    create: async({ postId, userId, companyId, proposal, bid }) => {
+    create: async({ postId, userId, bidderId, proposal, bid }) => {
 
-        const SQL =`INSERT INTO bids ("postId", "userId", "companyId", proposal, bid) values ($1, $2, $3, $4, $5) RETURNING *`;
+        const SQL =`INSERT INTO bids ("postId", "userId", "bidderId", proposal, bid) values ($1, $2, $3, $4, $5) RETURNING *`;
 
-        return (await client.query(SQL, [ postId, userId, companyId, proposal, bid ])).rows[0];
+        return (await client.query(SQL, [ postId, userId, bidderId, proposal, bid ])).rows[0];
     },
-    getBids: async(companyId) => {
-        return (await client.query(`SELECT * FROM bids, posts WHERE "postId" = id AND "companyId"=$1`, [companyId])).rows;
+    getBids: async(bidderId) => {
+        return (await client.query(`SELECT * FROM bids, posts WHERE "postId" = id AND "bidderId"=$1`, [bidderId])).rows;
     }
 }
 
