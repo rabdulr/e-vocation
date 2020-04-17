@@ -4,7 +4,7 @@ import CreateBid from './CreateBid'
 import BidList from './BidList'
 console.log('PostDetail.js')
 
-const PostDetail = ({auth, focus, post, createBid, bids, companies}) => {
+const PostDetail = ({auth, focus, post, createBid, bids, users}) => {
 
   const [filteredBids, setFilteredBids] = useState(bids.filter(bid => bid.postId === post.id))
 
@@ -18,7 +18,7 @@ const PostDetail = ({auth, focus, post, createBid, bids, companies}) => {
       <p>Site Address: {post.siteAddress}</p>
       <p>Proposed budget: ${post.proposedBudget}</p>
       { auth.role === 'COMPANY' && <CreateBid post={post} auth={auth} createBid={createBid} bids={filteredBids}/> }
-      { auth.role === 'USER' && <BidList bids = {filteredBids} companies = {companies} /> }
+      { auth.role === 'USER' && <BidList bids = {filteredBids} users = {users} /> }
     </div>)
 }
 
