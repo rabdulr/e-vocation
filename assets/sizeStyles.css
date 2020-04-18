@@ -50,6 +50,10 @@
     height: 74vh;
 }
 
+.vh62{
+    height: 61.5vh;
+}
+
 .scrollable{
     overflow-y: scroll;
 }
