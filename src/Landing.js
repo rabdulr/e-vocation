@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import Fuse from 'fuse.js';
+import moment from 'moment';
 
-const Landing = ({ displayLogin, auth, route, breakpoint }) => {
+const Landing = ({ displayLogin, auth, route, breakpoint, posts }) => {
   const [ searchTerms, setSearchTerms ] = useState([]);     //only for the searchBar
   const [ searchContent, setSearchContent ] = useState([]); //this is the actual search data
+  const [ searchList, setSearchList ] = useState([]);
+  const [ searchReturn, setSearchReturn ] = useState([])
+
+  const options = {
+    includeScore: true,
+    keys: ['title', 'description', 'industry'],
+    threshold: 0.6
+  };
 
   const updateTerms = barVal => {
     setSearchTerms(barVal.split(' ').map(word => word));
@@ -14,9 +24,19 @@ const Landing = ({ displayLogin, auth, route, breakpoint }) => {
     }, []));
   };
 
+  useEffect(()=> {
+    if(posts)
+      setSearchList(posts)    
+  }, [posts])
+
+  const fuse = new Fuse(searchList, options);
+
+  const result = fuse.search(searchTerms.toString())
+
   const submitSearch = ({ target }) => {
     event.preventDefault();
     //do something with searchContent
+    setSearchReturn(result)
   };
 
   return(
@@ -28,6 +48,17 @@ const Landing = ({ displayLogin, auth, route, breakpoint }) => {
           <input placeholder='search jobs' value = { searchTerms.join(' ') } onChange = { ({ target }) => updateTerms(target.value) } className = 'bgLB colorDB topLeft15 bottomLeft15 borderDB padHalf widthundred' />  
           <input type = 'submit' value = 'Search' className = 'bgDB colorOW borderDB topRight15 bottomRight15 padHalf' />
         </form>
+        <ul>
+          {
+            searchReturn.map(search => {
+              return(
+                <li key={ search.item.id }>
+                  {search.item.title} - posted: { moment(search.item.datePosted).format('MM/DD/YYYY')}
+                </li>
+              )
+            })
+          }
+        </ul>
       </div>
       <div className='marginHalf'>
         <h2>Find Local Labor without Having Kids!</h2>
