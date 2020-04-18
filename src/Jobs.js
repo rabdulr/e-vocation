@@ -2,14 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 const Jobs = ({ posts, breakpoint, bids, users }) => {
 
-    const getName = (id) => {
-        return users.find(user => {
-            if(user.id === id){
-                return user.username;
-            }
-        });
-    };
-
     return (
         <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>
             <h2 className = 'centerText colorDB topMargin1'>Active Jobs</h2>
