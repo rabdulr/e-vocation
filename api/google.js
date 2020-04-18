@@ -2,18 +2,21 @@
 const router = require('express').Router();
 const qs = require('querystring');
 const axios = require('axios');
-const keys = require('./google_keys.json');
+require('dotenv').config('../.env');
+
 
 const redirect_uri = 'http://localhost:3000/api/google/callback';
 const emailScope = 'https://www.googleapis.com/auth/userinfo.email';
 const userScope = 'https://www.googleapis.com/auth/userinfo.profile';
 
+console.log(process.env.GOOGLE_CLIENT_ID)
+
 router.get('/callback', async (req, res, next) => {
     try {
         const { data } = await axios.post( 'https://www.googleapis.com/oauth2/v4/token', {
             code: req.query.code,
-            client_id: keys.client.id,
-            client_secret: keys.client.secret,
+            client_id: process.env.GOOGLE_CLIENT_ID,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET,
             grant_type: 'authorization_code',
             redirect_uri,
         });
@@ -50,7 +53,7 @@ router.get('/', (req, res) => {
         response_type: 'code',
         scope: `${emailScope} ${userScope}`,
         redirect_uri,
-        client_id: keys.client.id
+        client_id: process.env.GOOGLE_CLIENT_ID
     })}`;
 
     res.redirect(url)
