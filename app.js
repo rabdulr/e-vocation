@@ -35,11 +35,16 @@ app.use((req, res, next) => {
       });
   });
 
+//chats api
+app.post('/api/chat', (req,res,next)=>{
+    //add stuff here
+
+});
+
 //authentication routes
 app.post("/api/auth", (req, res, next) => {
     db.authenticate(req.body)
         .then((token) => {
-            //socketServer().emit('message', {text: 'Socket server test: Welcome!'})
             res.send({ token })
         })
         .catch((test_err) => {
