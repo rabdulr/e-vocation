@@ -22,7 +22,7 @@ const sync = async() => {
         DROP TYPE IF EXISTS post_status;
 
         CREATE TYPE post_status AS ENUM ('Active', 'Ended', 'Pending', 'Completed');
-        
+
 
         CREATE TABLE users (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -88,8 +88,8 @@ const sync = async() => {
 
         CREATE TABLE chats (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-            id1 UUID,
-            id2 UUID,
+            "senderId" UUID,
+            "receiverId" UUID,
             time timestamp NOT NULL DEFAULT NOW(),
             message TEXT
         );
