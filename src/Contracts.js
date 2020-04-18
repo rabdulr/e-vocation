@@ -6,14 +6,12 @@ const Contracts = ({ contracts, ratings, auth, users }) => {
     const [tab, setTab] = useState('Active');
 
     const changeTab = (current, href) => {
-        console.log(current, tab, current === tab)
         if(!(tab === current)){
             setTab(`${ tab === 'Active' ? 'Completed' : 'Active' }`);
         }
         
     }
-
-    console.log('Contracts.contracts:', contracts)
+    
     return(
         <div className = 'marginHalf'>
             <div className = 'rowNW'>
