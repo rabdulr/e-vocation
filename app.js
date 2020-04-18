@@ -39,6 +39,7 @@ app.use((req, res, next) => {
 app.post('/api/chat', (req,res,next)=>{
     //add stuff here
 
+
 });
 
 //authentication routes
@@ -86,6 +87,8 @@ app.use('/api/bids', api.bids.router);
 app.use('/api/ratings', api.ratings.router);
 
 app.use('/api/google', api.google.router);
+
+app.use('/api/chats', api.chats.router);
 
 app.post('/api/createUser', (req, res, next) => {
   models.users.create(req.body)
