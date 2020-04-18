@@ -35,6 +35,7 @@ const sync = async() => {
             zip VARCHAR(10),
             username VARCHAR(100) NOT NULL UNIQUE,
             password VARCHAR(100) NOT NULL,
+            "googleId" VARCHAR(50) DEFAULT NULL,
             role VARCHAR(20) DEFAULT 'USER',
             CHECK (char_length(username) > 0)
         );

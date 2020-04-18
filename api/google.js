@@ -3,13 +3,12 @@ const router = require('express').Router();
 const qs = require('querystring');
 const axios = require('axios');
 require('dotenv').config('../.env');
+const {users} = require('../db/models')
 
 
 const redirect_uri = 'http://localhost:3000/api/google/callback';
 const emailScope = 'https://www.googleapis.com/auth/userinfo.email';
 const userScope = 'https://www.googleapis.com/auth/userinfo.profile';
-
-console.log(process.env.GOOGLE_CLIENT_ID)
 
 router.get('/callback', async (req, res, next) => {
     try {
@@ -32,20 +31,22 @@ router.get('/callback', async (req, res, next) => {
             lastName: _user.family_name,
             location: _user.locale
         };
-        console.log(_user)
+
+        const user = await users.findUser(values);
         
-        res.redirect('/#/');
+        if(user){
+            //get token and return to the main page
+            res.redirect('/#');
+        } else {
+            //create user, send token, and send to main page
+            const newUser = await users.createGoogleUser(values)
+        }
+        console.log(values, user)
+        
     }
     catch (error) {
         next(error);
     }
-});
-
-//not sure if this needed as there is no specific destination
-router.get('/:destination', (req, res) => {
-    req.session.destination = req.params.destination ? req.params.destination : null;
-
-    res.redirect('/api/google')
 });
 
 router.get('/', (req, res) => {
