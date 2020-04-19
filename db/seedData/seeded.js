@@ -25,11 +25,11 @@ const runSeed = async() => {
 
     const item2 = await posts.create(new Posts(eva.id, gordon.id, 'Cater My Event', 'I am hosting an event that needs to be catered to 1000 people and the food needs to be excellent. Anything less is a travesty', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-8-31'), new Date('2020-8-31'), 1000000, 'Active'));
     
-    const item3 = await posts.create(new Posts(eva.id, null, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000, 'Active'));
+    const item3 = await posts.create(new Posts(eva.id, gordon.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000, 'Active'));
     
-    const item4 = await posts.create(new Posts(eva.id, null, 'Create a Post','This site is cool, but i\'m so confused... someone help me make a post', 'Tech', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000, 'Completed'));
+    const item4 = await posts.create(new Posts(eva.id, admin.id, 'Create a Post','This site is cool, but i\'m so confused... someone help me make a post', 'Tech', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000, 'Completed'));
 
-    const item5 = await posts.create(new Posts(eva.id, null, 'Delete a post','Ok, so now i feel really silly and am looking to remove a post. Someone help?', 'Tech', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000, 'Active'));
+    const item5 = await posts.create(new Posts(eva.id, admin.id, 'Delete a post','Ok, so now i feel really silly and am looking to remove a post. Someone help?', 'Tech', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000, 'Completed'));
 
     const item6 = await posts.create(new Posts(guy.id, null, 'Surprise Birthday Party','I am throwing a birthday party for my son and I need a clown and fireworks expert', 'Entertainment', `${guy.address}, ${guy.city}, ${guy.state}, ${guy.zip}`, new Date('2020-4-31'), new Date('2020-4-31'), 10000, 'Active'));
 
@@ -48,9 +48,21 @@ const runSeed = async() => {
     const bid2 = await bids.create(new Bids(item2.id, eva.id, gordon.id, 'You have got to be joking. What kind of event is this? Who\'s attending? I need more information', 50000));
     
     const bid3 = await bids.create(new Bids(item2.id, eva.id, santa.id, 'We can do this for free!', 0));
+
+    const bid4 = await bids.create(new Bids(item3.id, eva.id, gordon.id, 'This is a weird request. But it sounds interesting', 500));
+
+    const bid5 = await bids.create(new Bids(item4.id, eva.id, admin.id, 'This should never have been posted.', 0));
+
+    const bid6 = await bids.create(new Bids(item5.id, eva.id, admin.id, 'Seriously learn how to internet. You should not be here.', 0));
     
     //Contracts using Contracts constructor
     const contract1 = await contracts.create(new Contracts(eva.id, gordon.id, item2.id, 'I will cook your damn food.', 'Completed'))
+
+    const contract2 = await contracts.create(new Contracts(eva.id, gordon.id, item3.id, "Fancy hot dogs? You'll get what you get. Calm down.", 'Active'))
+
+    const contract3 = await contracts.create(new Contracts(eva.id, admin.id, item5.id, "You again? Use Google. Google is your friend.", 'Completed'))
+
+    const contract4 = await contracts.create(new Contracts(eva.id, admin.id, item4.id, "You must be new here. Check your chat messages", 'Completed'))
 
     //Ratings using Ratings constructor
     const rating1 = await ratings.create(new Ratings(contract1.id, gordon.id, 5, 'You were rude, annoying, and I could not stand you. I will hire you again in a heartbeat.'))

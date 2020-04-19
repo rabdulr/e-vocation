@@ -69,7 +69,7 @@ const sync = async() => {
             "bidderId" UUID REFERENCES users(id),
             "postId" UUID REFERENCEs posts(id),
             contract TEXT,
-            "contractStatus" VARCHAR(25)
+            "contractStatus" post_status
         );
 
         CREATE TABLE ratings (
