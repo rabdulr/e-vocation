@@ -35,13 +35,6 @@ app.use((req, res, next) => {
       });
   });
 
-//chats api
-app.post('/api/chat', (req,res,next)=>{
-    //add stuff here
-
-
-});
-
 //authentication routes
 app.post("/api/auth", (req, res, next) => {
     db.authenticate(req.body)
@@ -104,6 +97,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
     console.log(err.status);
     res.status(err.status || 500).send({ message: err.message });
+    console.log(err.message)
 });
 
 module.exports = app
