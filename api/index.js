@@ -5,5 +5,6 @@ module.exports = {
     users: require('./users'),
     bids: require('./bids'),
     ratings: require('./ratings'),
-    google: require('./google')
+    google: require('./google'),
+    chats: require('./chats')
 }

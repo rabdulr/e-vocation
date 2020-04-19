@@ -79,11 +79,20 @@ class Comments {
     }
 }
 
+class Chats {
+    constructor(senderId, receiverId, message){
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.message = message;
+    }
+}
+
 module.exports = {
     Users,
     Posts,
     Bids,
     Contracts,
     Ratings,
-    Comments
+    Comments,
+    Chats
 }
