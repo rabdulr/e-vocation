@@ -17,8 +17,8 @@ const users = {
 
         return (await client.query(SQL, [firstName, lastName, companyName, address, city, state, zip, username, id])).rows[0];
     },
-    findUser: async({googleId}) => {
-        return (await client.query('SELECT * FROM users where "googleId"=$1', [googleId])).rows[0];
+    findUser: async({email}) => {
+        return (await client.query(`SELECT * FROM users WHERE username=$1`, [email])).rows[0];
     },
     createGoogleUser: async({ googleId, email, firstName, lastName }) => {
 

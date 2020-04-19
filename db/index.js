@@ -34,10 +34,17 @@ const sync = async() => {
             state VARCHAR(25),
             zip VARCHAR(10),
             username VARCHAR(100) NOT NULL UNIQUE,
-            password VARCHAR(100) NOT NULL,
-            "googleId" VARCHAR(50) DEFAULT NULL,
+            password VARCHAR(100),
+            "googleId" VARCHAR(50),
             role VARCHAR(20) DEFAULT 'USER',
-            CHECK (char_length(username) > 0)
+            CHECK (char_length(username) > 0),
+            CONSTRAINT password_google_notnull CHECK (
+                NOT (
+                    ( password IS NULL or password = '')
+                    AND
+                    ( "googleId" is NULL or "googleId" = '')
+                )
+            )
         );
 
         CREATE TABLE posts (

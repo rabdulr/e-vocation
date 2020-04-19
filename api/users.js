@@ -20,4 +20,11 @@ router.get('/getUsers', (req, res, next) => {
     .catch(next);
 });
 
+// router.get('/findUser', (req, res, next) => {
+//   console.log(req.values);
+//   users.findUser(req.values)
+//     .then(users => res.send(users).status(201))
+//     .catch(next);
+// })
+
 module.exports = {router};

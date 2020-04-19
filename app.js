@@ -40,7 +40,7 @@ app.post("/api/auth", (req, res, next) => {
     db.authenticate(req.body)
         .then((token) => {
             //socketServer().emit('message', {text: 'Socket server test: Welcome!'})
-            res.send({ token })
+            res.send({ token });
         })
         .catch((test_err) => {
             console.log("Error from db.authenticate: ",test_err)

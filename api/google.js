@@ -3,6 +3,7 @@ const router = require('express').Router();
 const qs = require('querystring');
 const axios = require('axios');
 require('dotenv').config('../.env');
+const jwt = require("jwt-simple");
 const {users} = require('../db/models')
 
 
@@ -24,6 +25,7 @@ router.get('/callback', async (req, res, next) => {
                     Authorization: `Bearer ${data.access_token}`,
                 },
         });
+
         const values = {
             googleId: _user.id,
             email: _user.email,
@@ -35,13 +37,28 @@ router.get('/callback', async (req, res, next) => {
         const user = await users.findUser(values);
         
         if(user){
-            //get token and return to the main page
-            res.redirect('/#');
+            //get/create token and return to the main page
+            const token = await jwt.encode({ id: user.id, role: user.role, username: user.username, firstName: user.firstName, lastName: user.lastName }, process.env.JWT)
+            res.write(`
+            <script>
+            console.log('hello, again');
+            console.log(localStorage)
+                localStorage.setItem('token', 'test')
+            </script>
+            `)
         } else {
             //create user, send token, and send to main page
-            const newUser = await users.createGoogleUser(values)
+            const newUser = await users.createGoogleUser(values);
+            const token = await jwt.encode({ id: newUser.id, role: newUser.role, username: newUser.username, firstName: newUser.firstName, lastName: newUser.lastName }, process.env.JWT);
+            res.write(`
+                <script>
+                    console.log('hello');
+                    console.log(localStorage)
+                    window.localStorage.setItem('token', ${token});
+                </script>
+                `);
         }
-        console.log(values, user)
+        
         
     }
     catch (error) {
