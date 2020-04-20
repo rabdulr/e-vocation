@@ -22,6 +22,7 @@ import SignInForm from './SignInForm';
 import Bids from './Bids';
 import ChatPage from './ChatPage';
 import Contracts from './Contracts';
+import GoogleNewUser from './GoogleNewUser'
 
 const headers = () => {
     const token = window.localStorage.getItem('token');
@@ -72,10 +73,14 @@ const AppHome = () => {
 
     //Added conditional where companies and Admin will see all posts
     useEffect(() => {
+        const token = window.localStorage.getItem('token');
         if(!auth.id){
+            if(token){
+                exchangeTokenForAuth();
+                return;
+            }
             route('#');
         }
-        const token = window.localStorage.getItem('token');
         if(auth.id && auth.role === 'USER') {
             axios.get('/api/posts/getPosts', headers())
                 .then(posts => setPosts(posts.data))
@@ -146,9 +151,10 @@ const AppHome = () => {
         window.addEventListener('resize', checkBreakPoint);
     }, [checkBreakPoint]);
 
-    useEffect(() => {
-        exchangeTokenForAuth();
-    }, []);
+    // Not sure what this use effect is for
+    // useEffect(() => {
+    //     exchangeTokenForAuth();
+    // }, []);
 
     const displayLogin = () => {
         setLogDisplay({ ...logDisplay, on: !logDisplay.on });
@@ -188,7 +194,8 @@ const AppHome = () => {
     };
 
     const updateUser = async (user) => {
-        return ( await axios.put(`/api/users/${user.id}`, user, headers()))
+        const response = await axios.put(`/api/users/${user.id}`, user, headers());
+        setAuth(response.data);
     };
 
     return (
@@ -206,7 +213,8 @@ const AppHome = () => {
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } chatBack = { chatBack } setChatBack = { setChatBack }/> }
                 { window.location.hash === `#contracts` && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users}/> }
-                { window.location.hash === '' && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
+                { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
+                { window.location.hash === '' && !auth.id && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>

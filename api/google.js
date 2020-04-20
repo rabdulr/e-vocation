@@ -37,26 +37,28 @@ router.get('/callback', async (req, res, next) => {
         const user = await users.findUser(values);
         
         if(user){
-            //get/create token and return to the main page
+            //Able to create token but page refresh is not occurring on front end
             const token = await jwt.encode({ id: user.id, role: user.role, username: user.username, firstName: user.firstName, lastName: user.lastName }, process.env.JWT)
             res.write(`
             <script>
-            console.log('hello, again');
-            console.log(localStorage)
-                localStorage.setItem('token', 'test')
+                const token = '${token}';
+                const myStorage = window.localStorage;
+                myStorage.setItem('token', token);
+                window.location.replace("http://localhost:3000/")
             </script>
-            `)
+            `);
         } else {
-            //create user, send token, and send to main page
+            //Able to create token but page refresh is not occurring on front end
             const newUser = await users.createGoogleUser(values);
             const token = await jwt.encode({ id: newUser.id, role: newUser.role, username: newUser.username, firstName: newUser.firstName, lastName: newUser.lastName }, process.env.JWT);
             res.write(`
                 <script>
-                    console.log('hello');
-                    console.log(localStorage)
-                    window.localStorage.setItem('token', ${token});
+                    const token = '${token}';
+                    const myStorage = window.localStorage;
+                    myStorage.setItem('token', token);
+                    window.location.replace("http://localhost:3000/#google")
                 </script>
-                `);
+            `);
         }
         
         

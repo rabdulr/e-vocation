@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const {companies, users} = require('../db/models');
+const {users} = require('../db/models');
 
 router.put('/:id', (req, res, next) => {
-  if(req.body.role === 'COMPANY'){
-    companies.updateCompany(req.body)
-      .then(company => res.send(company).sendStatus(201))
-      .catch(next)
-  } else {
+  console.log(req.body)
     users.updateUser(req.body)
       .then(user => res.send(user).sendStatus(201))
       .catch(next)
-  }
 });
 
 router.get('/getUsers', (req, res, next) => {
@@ -19,12 +14,5 @@ router.get('/getUsers', (req, res, next) => {
     .then(users => res.send(users).sendStatus(201))
     .catch(next);
 });
-
-// router.get('/findUser', (req, res, next) => {
-//   console.log(req.values);
-//   users.findUser(req.values)
-//     .then(users => res.send(users).status(201))
-//     .catch(next);
-// })
 
 module.exports = {router};

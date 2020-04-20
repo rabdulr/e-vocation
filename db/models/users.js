@@ -13,7 +13,7 @@ const users = {
     },
     updateUser: async({ firstName, lastName, companyName, address, city, state, zip, username, id }) => {
 
-        const SQL =`UPDATE users SET "firstName"=$1, lastName"=$2, "companyName"=$3, address=$4, city=$5, state=$6, zip=$7, username=$8 WHERE id=$9 RETURNING *`;
+        const SQL =`UPDATE users SET "firstName"=$1, "lastName"=$2, "companyName"=$3, address=$4, city=$5, state=$6, zip=$7, username=$8 WHERE id=$9 RETURNING *`;
 
         return (await client.query(SQL, [firstName, lastName, companyName, address, city, state, zip, username, id])).rows[0];
     },
