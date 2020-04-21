@@ -1,27 +1,37 @@
 import React, { useEffect, useState } from 'react';
 
-const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
-    const [id, setId] = useState(auth.id);
-    const [role, setRole] = useState(auth.role);
-    const [username, setUsername] = useState(auth.username);
-    const [password, setPassword] = useState('');
-    const [firstName, setFirstName] = useState(auth.firstName);
-    const [lastName, setlastName] = useState(auth.lastName);
-    const [address, setAddress] = useState(auth.address);
-    const [city, setCity] = useState(auth.city);
-    const [state, setState] = useState(auth.state);
-    const [zip, setZip] = useState(auth.zip);
+const GoogleNewUser = ({ auth, route, breakpoint, updateUser}) => {
+    const [id, setId] = useState('');
+    const [role, setRole] = useState('');
+    const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setlastName] = useState('');
+    const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [zip, setZip] = useState('');
+
+    useEffect(() => {
+        setId(auth.id);
+        setRole(auth.role);
+        setUsername(auth.username);
+        setFirstName(auth.firstName);
+        setlastName(auth.lastName);
+    }, [auth])
 
     const onSubmit = ({ target }) => {
         event.preventDefault();
-        const updatedInfo = {id, role, username, password, firstName, lastName, address, city, state, zip}
+        const updatedInfo = {id, role, username, firstName, lastName, address, city, state, zip}
         updateUser(updatedInfo)
+        route('#')
     }
 
     return (
         <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>
             <div className = 'columnNW bgAlphaBB marginHalf pad1 border10'>
-                <h3 className = 'colorOW widthundred centerText marginHalf'>{ auth.username } Settings</h3>
+                <h3 className = 'colorOW widthundred centerText marginHalf'>{ auth.username }</h3>
+                <br />
+                <h3>Please Finish Setting Up Your Account</h3>
                 <form onSubmit = { onSubmit }>
                     <div className = 'rowNW colorOW spaceBetweenRow topMarginHalf'>
                         <div>First Name</div>
@@ -47,19 +57,8 @@ const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
                         <div>Zip Code</div>
                         <input placeholder = 'New Zip...' className = 'bgDB colorOW borderOW padQuarter' value={zip} onChange={({target})=> setZip(target.value)}/>
                     </div>
-                    <div className = 'rowNW colorOW spaceBetweenRow topMarginHalf'>
-                        <div>Change Username</div>
-                        <input placeholder = 'New Username...' className = 'bgDB colorOW borderOW padQuarter' value={username} onChange={({target})=> setUsername(target.value)}/>
-                    </div>
-                    <div className = 'rowNW colorOW spaceBetweenRow topMarginHalf'>
-                        <div>Change Password</div>
-                        <input placeholder = 'New Password...' className = 'bgDB colorOW borderOW padQuarter' value={password} onChange={({target})=> setPassword(target.value)}/>
-                    </div>
                     <div className = 'colorOW widthundred topMarginHalf'>
                         <input type = 'submit' value = 'Save Changes' className = 'bgDB colorOW borderOW padQuarter' />
-                    </div>
-                    <div className = 'colorOW widthundred topMarginHalf'>
-                        <input type = 'button' value = 'Delete Account' className = 'bgDB colorOW borderOW padQuarter' />
                     </div>
                 </form>
             </div>
@@ -67,4 +66,4 @@ const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
     )
 };
 
-export default ProfileSettings;
+export default GoogleNewUser;

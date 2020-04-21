@@ -3,13 +3,13 @@ const router = require('express').Router();
 const qs = require('querystring');
 const axios = require('axios');
 require('dotenv').config('../.env');
+const jwt = require("jwt-simple");
+const {users} = require('../db/models')
 
 
 const redirect_uri = 'http://localhost:3000/api/google/callback';
 const emailScope = 'https://www.googleapis.com/auth/userinfo.email';
 const userScope = 'https://www.googleapis.com/auth/userinfo.profile';
-
-console.log(process.env.GOOGLE_CLIENT_ID)
 
 router.get('/callback', async (req, res, next) => {
     try {
@@ -25,6 +25,7 @@ router.get('/callback', async (req, res, next) => {
                     Authorization: `Bearer ${data.access_token}`,
                 },
         });
+
         const values = {
             googleId: _user.id,
             email: _user.email,
@@ -32,20 +33,39 @@ router.get('/callback', async (req, res, next) => {
             lastName: _user.family_name,
             location: _user.locale
         };
-        console.log(_user)
+
+        const user = await users.findUser(values);
         
-        res.redirect('/#/');
+        if(user){
+            //Able to create token but page refresh is not occurring on front end
+            const token = await jwt.encode({ id: user.id, role: user.role, username: user.username, firstName: user.firstName, lastName: user.lastName }, process.env.JWT)
+            res.write(`
+            <script>
+                const token = '${token}';
+                const myStorage = window.localStorage;
+                myStorage.setItem('token', token);
+                window.location.replace("http://localhost:3000/")
+            </script>
+            `);
+        } else {
+            //Able to create token but page refresh is not occurring on front end
+            const newUser = await users.createGoogleUser(values);
+            const token = await jwt.encode({ id: newUser.id, role: newUser.role, username: newUser.username, firstName: newUser.firstName, lastName: newUser.lastName }, process.env.JWT);
+            res.write(`
+                <script>
+                    const token = '${token}';
+                    const myStorage = window.localStorage;
+                    myStorage.setItem('token', token);
+                    window.location.replace("http://localhost:3000/#google")
+                </script>
+            `);
+        }
+        
+        
     }
     catch (error) {
         next(error);
     }
-});
-
-//not sure if this needed as there is no specific destination
-router.get('/:destination', (req, res) => {
-    req.session.destination = req.params.destination ? req.params.destination : null;
-
-    res.redirect('/api/google')
 });
 
 router.get('/', (req, res) => {
