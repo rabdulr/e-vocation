@@ -39,8 +39,7 @@ app.use((req, res, next) => {
 app.post("/api/auth", (req, res, next) => {
     db.authenticate(req.body)
         .then((token) => {
-            //socketServer().emit('message', {text: 'Socket server test: Welcome!'})
-            res.send({ token });
+            res.send({ token })
         })
         .catch((test_err) => {
             console.log("Error from db.authenticate: ",test_err)
@@ -82,6 +81,8 @@ app.use('/api/ratings', api.ratings.router);
 
 app.use('/api/google', api.google.router);
 
+app.use('/api/chats', api.chats.router);
+
 app.post('/api/createUser', (req, res, next) => {
   models.users.create(req.body)
   .then(user => res.send(user))
@@ -96,6 +97,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
     console.log(err.status);
     res.status(err.status || 500).send({ message: err.message });
+    console.log(err.message)
 });
 
 module.exports = app

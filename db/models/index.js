@@ -4,5 +4,6 @@ module.exports = {
     bids: require('./bids'),
     contracts: require('./contracts'),
     ratings: require('./ratings'),
-    comments: require('./comments')
+    comments: require('./comments'),
+    chats: require('./chats')
 };
