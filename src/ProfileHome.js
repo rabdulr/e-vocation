@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { runInContext } from 'vm';
 
-const ProfileHome = ({ auth, bids, jobs, breakpoint, route, setFocus })=>{
+const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus })=>{
   const [list, setList] = useState([]);
   
   useEffect(() => {
-    auth.role === 'COMPANY' ? setList([...bids]) : setList([...jobs]);
+    auth.role === 'COMPANY' ? setList([...bids]) : setList([...posts]);
   }, []);
 
   return(
