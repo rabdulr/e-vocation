@@ -62,7 +62,7 @@ router.get('/callback', async (req, res, next) => {
             const token = await jwt.encode({ id: newUser.id, role: newUser.role, username: newUser.username, firstName: newUser.firstName, lastName: newUser.lastName }, process.env.JWT);
             res.write(`
                 <script>
-                    const homeRedirect = '${homeRedirect}/#google';
+                    const homeRedirect = '${homeRedirect}#google';
                     const token = '${token}';
                     const myStorage = window.localStorage;
                     myStorage.setItem('token', token);
