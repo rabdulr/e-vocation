@@ -83,7 +83,7 @@ const AppHome = () => {
         if(auth.id){
             axios.get('/api/posts/getAllPosts', headers())
                 .then(allPosts => setPosts(allPosts.data))
-                .catch(ex => console.log(ex))
+                .catch(ex => console.log('AppHome.getAllPosts:', ex))
         }
     }, [auth]);
 
@@ -91,7 +91,7 @@ const AppHome = () => {
         if(auth.id){
             axios.get('/api/users/getUsers', headers())
                 .then(response => setUsers(response.data))
-                .catch(ex => console.log(ex))
+                .catch(ex => console.log('AppHome.getUsers:', ex))
         }
     }, [auth]);
 
@@ -99,7 +99,7 @@ const AppHome = () => {
         if(auth.id) {
             axios.get('/api/ratings/getRatings', headers())
                 .then(ratings => setRatings(ratings.data))
-                .catch(ex => console.log(ex))
+                .catch(ex => console.log('AppHome.getRatings:', ex))
         }
     }, [auth])
 
@@ -107,7 +107,7 @@ const AppHome = () => {
         if(auth.id) {
             axios.get('/api/bids/getBids', headers())
                 .then(bids => setBids(bids.data))
-                .catch(ex => console.log(ex));
+                .catch(ex => console.log('AppHome.getBids:', ex));
         }
     }, [auth]);
 
@@ -115,7 +115,7 @@ const AppHome = () => {
         if(auth.id) {
             axios.get('/api/contracts/getContracts', headers())
                 .then(contracts => setContracts(contracts.data))
-                .catch(ex => console.log(ex))
+                .catch(ex => console.log('AppHome.getContracts:', ex))
         }
     }, [auth])
 
@@ -158,7 +158,7 @@ const AppHome = () => {
     const exchangeTokenForAuth = async() => {
         const response = await axios.get('/api/auth', headers())
         .then(user => setAuth(user.data))
-        .catch(ex => console.log(ex));
+        .catch(ex => console.log('AppHome.exchangeTokenForAuth:', ex));
     }
 
     const route = hashVal => {
@@ -170,13 +170,13 @@ const AppHome = () => {
             .then(response => {
                 setPosts([response.data, ...posts])
             })
-            .catch(ex => console.log(ex))
+            .catch(ex => console.log('AppHome.CreateJobPost:', ex))
     }
 
     const createBid = (bid) => {
         axios.post('/api/bids/createBid', bid, headers())
             .then(response => setBids([response.data, ...bids]))
-            .catch(ex => console.log(ex))
+            .catch(ex => console.log('AppHome.createBid:', ex))
     };
 
     const updateUser = async (user) => {

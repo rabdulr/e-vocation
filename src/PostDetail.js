@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import CreateBid from './CreateBid'
 import BidList from './BidList'
-console.log('PostDetail.js')
 
 const PostDetail = ({auth, focus, post, createBid, bids, users}) => {
 

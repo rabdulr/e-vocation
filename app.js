@@ -21,7 +21,7 @@ app.get('/', (req, res, next) => {
 app.use((req, res, next) => {
     const token = req.headers.authorization;
     if (!token) {
-        return next();
+      return next();
     }
     db.findUserFromToken(token)
       .then((auth) => {
@@ -43,7 +43,7 @@ app.post("/api/auth", (req, res, next) => {
         })
         .catch((test_err) => {
             console.log("Error from db.authenticate: ",test_err)
-            const error = Error("not authorized");
+            const error = Error("app.js.api/auth: not authorized");
             error.status = 401;
             next(error);
         });
@@ -93,9 +93,9 @@ app.use((req, res, next) => {
   });
 
 app.use((err, req, res, next) => {
-    console.log(err.status);
+    console.log('app Error Status:', err.status);
     res.status(err.status || 500).send({ message: err.message });
-    console.log(err.message)
+    console.log('Error Message:', err.message)
 });
 
 module.exports = app

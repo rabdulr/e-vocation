@@ -3,7 +3,7 @@ const router = express.Router();
 const {users} = require('../db/models');
 
 router.put('/:id', (req, res, next) => {
-  console.log(req.body)
+  console.log('api.users.router.put.req.body:', req.body)
     users.updateUser(req.body)
       .then(user => res.send(user).sendStatus(201))
       .catch(next)
