@@ -38,7 +38,7 @@ const Landing = ({ displayLogin, auth, route, breakpoint, posts }) => {
     //do something with searchContent
     setSearchReturn(result)
   };
-
+  
   return(
     <div id='LandingRoot' className={ `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW' : 'rowNW' }` }>
       <div className='marginHalf'>

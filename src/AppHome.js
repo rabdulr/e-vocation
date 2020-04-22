@@ -81,26 +81,10 @@ const AppHome = () => {
             }
             route('#');
         }
-        if(auth.id && auth.role === 'USER') {
-            axios.get('/api/posts/getPosts', headers())
-                .then(posts => setPosts(posts.data))
-                .catch(ex => console.log(ex))
-        } else {
-            axios.get('/api/posts/getAllPosts', headers())
-                .then(allPosts => setPosts(allPosts.data))
-                .catch(ex => console.log(ex))
-        }
+        axios.get('/api/posts/getAllPosts', headers())
+            .then(allPosts => setPosts(allPosts.data))
+            .catch(ex => console.log(ex))
     }, [auth])
-
-    /*
-    useEffect(() => {
-        if(auth.id && auth.role === 'USER') {
-            axios.get('/api/companies/getCompanies', headers())
-                .then(response => setCompanies(response.data))
-                .catch(ex => console.log(ex))
-        }
-    }, [auth]);
-    */
 
    useEffect(() => {
         if(auth.id){
@@ -150,11 +134,6 @@ const AppHome = () => {
     useEffect(() => {
         window.addEventListener('resize', checkBreakPoint);
     }, [checkBreakPoint]);
-
-    // Not sure what this use effect is for
-    // useEffect(() => {
-    //     exchangeTokenForAuth();
-    // }, []);
 
     const displayLogin = () => {
         setLogDisplay({ ...logDisplay, on: !logDisplay.on });
