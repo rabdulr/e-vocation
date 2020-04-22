@@ -14,7 +14,7 @@ const PostSearch = ({auth, posts, route, breakpoint, createJobPost, setFocus}) =
   }, [auth])
 
   const togglePost = () => {
-    console.log(postDisplay);
+    console.log('PostSearch.togglePost:', postDisplay);
     setPostDisplay(!postDisplay);
   }
 

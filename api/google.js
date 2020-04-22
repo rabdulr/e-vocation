@@ -42,7 +42,7 @@ router.get('/callback', async (req, res, next) => {
 
         const homeRedirect = (process.env.NODE_ENV === 'production') ? 'https://capstone-arfla.herokuapp.com' : 'http://localhost:3000';
 
-        console.log(homeRedirect)
+        console.log('home redirect:', homeRedirect);
         
         if(user){
             //Able to create token but page refresh is not occurring on front end
