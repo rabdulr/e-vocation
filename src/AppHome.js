@@ -34,13 +34,10 @@ const headers = () => {
 };
 
 const AppHome = () => {
-    // const [users, setUsers] = useState([]);
-    //const [companies, setCompanies] = useState([]);                           //shakeup change
-    const [users, setUsers] = useState([]);                                           //testing...
+    const [users, setUsers] = useState([]);
     // const [ratings, setRatings] = useState([]);
     const [logDisplay, setLogDisplay] = useState({ on: false, form: 'login' });
     const [posts, setPosts] = useState([]);
-    const [jobs, setJobs] = useState([]);
     const [bids, setBids] = useState([]);
     const [contracts, setContracts] = useState([]);
     const [auth, setAuth] = useState({});
@@ -81,9 +78,9 @@ const AppHome = () => {
             route('#');
         }
         axios.get('/api/posts/getAllPosts', headers())
-            .then(allPosts => setPosts(allPosts.data))
-            .catch(ex => console.log(ex))
-    }, [auth])
+        .then(allPosts => setPosts(allPosts.data))
+        .catch(ex => console.log(ex))
+    }, [auth]);
 
    useEffect(() => {
         if(auth.id){
@@ -183,9 +180,9 @@ const AppHome = () => {
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint }/>
                 { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} /> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
-                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } jobs = { jobs } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
                 { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser}/> }
-                { window.location.hash === '#jobs' && <Jobs posts = { posts } breakpoint = { breakpoint } bids = { bids } users = { users }/> }
+                { window.location.hash === '#jobs' && <Jobs posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users }/> }
                 { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users }/>}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } /> }

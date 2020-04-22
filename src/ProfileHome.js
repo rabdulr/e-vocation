@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { runInContext } from 'vm';
 import ProfileCalendar from './ProfileCalendar'
 
-const ProfileHome = ({ auth, bids, jobs, breakpoint, route, setFocus })=>{
+const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus })=>{
   const [list, setList] = useState([]);
   
-  useEffect(() => { 
-    auth.role === 'COMPANY' ? setList([...bids]) : setList([...jobs]);
-  }, []);  
-  
+  useEffect(() => {
+    auth.role === 'COMPANY' ? setList([...bids]) : setList([...posts]);
+  }, []);
+
   return(
     <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW alignCenter' : 'rowWrap spaceBetweenRow' } margin1` }>
       <div className = 'columnNW'>
