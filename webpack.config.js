@@ -10,8 +10,7 @@ module.exports = {
             presets: ['@babel/preset-react']
           }
         }
-      },
-      // { test: /\.(html|css)$/, loader: 'raw-loader' }
+      }
     ]
   }
 };
