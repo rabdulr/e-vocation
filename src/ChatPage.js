@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-const ChatPage = ({chatMessages, setChatMessages, displayChat, socket, auth, chatBack, setChatBack})=>{
+const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth })=>{
     const [message, setMessage]= useState('')
 
     const onSubmit = (ev)=>{
