@@ -12,7 +12,6 @@ catch(ex){
 }
 
 const redirect_uri = (process.env.NODE_ENV === 'production') ? 'https://capstone-arfla.herokuapp.com/api/google/callback' : 'http://localhost:3000/api/google/callback';
-console.log(process.env.NODE_ENV)
 const emailScope = 'https://www.googleapis.com/auth/userinfo.email';
 const userScope = 'https://www.googleapis.com/auth/userinfo.profile';
 
