@@ -71,7 +71,6 @@ const AppHome = () => {
         document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
     }
 
-    //Added conditional where companies and Admin will see all posts
     useEffect(() => {
         const token = window.localStorage.getItem('token');
         if(!auth.id){
@@ -116,7 +115,6 @@ const AppHome = () => {
             .catch(ex => console.log(ex))
     }, [auth])
 
-    //May need to add this to one company option versus user option
     useEffect(() => {
         axios.get('/api/bids/getBids', headers())
             .then(bids => setBids(bids.data))
@@ -150,11 +148,6 @@ const AppHome = () => {
     useEffect(() => {
         window.addEventListener('resize', checkBreakPoint);
     }, [checkBreakPoint]);
-
-    // Not sure what this use effect is for
-    // useEffect(() => {
-    //     exchangeTokenForAuth();
-    // }, []);
 
     const displayLogin = () => {
         setLogDisplay({ ...logDisplay, on: !logDisplay.on });
@@ -211,7 +204,7 @@ const AppHome = () => {
                 { window.location.hash === '#jobs' && <Jobs posts = { posts } breakpoint = { breakpoint } bids = { bids } users = { users }/> }
                 { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users }/>}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
-                { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } chatBack = { chatBack } setChatBack = { setChatBack }/> }
+                { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } /> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
                 { window.location.hash === '' && !auth.id && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
