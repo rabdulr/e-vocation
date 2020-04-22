@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { runInContext } from 'vm';
+import ProfileCalendar from './ProfileCalendar'
 
 const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus })=>{
   const [list, setList] = useState([]);
@@ -12,6 +13,7 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
     <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW alignCenter' : 'rowWrap spaceBetweenRow' } margin1` }>
       <div className = 'columnNW'>
         <h1>{ auth.firstName } { auth.lastName }</h1>
+        <ProfileCalendar  Calendar />
         <div className = 'rowWrap spaceBetweenRow'>
           <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> { setFocus(auth.id); console.log('list', list); route(`#profile/settings/${ auth.id }`) } } value = 'Edit Profile' />
           <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> route('#job-history') } value = 'History' />
