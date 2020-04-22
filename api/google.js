@@ -12,7 +12,7 @@ catch(ex){
 }
 
 
-const redirect_uri = 'http://localhost:3000/api/google/callback';
+const redirect_uri = 'https://capstone-arfla.herokuapp.com/api/google/callback';
 const emailScope = 'https://www.googleapis.com/auth/userinfo.email';
 const userScope = 'https://www.googleapis.com/auth/userinfo.profile';
 
@@ -49,7 +49,7 @@ router.get('/callback', async (req, res, next) => {
                 const token = '${token}';
                 const myStorage = window.localStorage;
                 myStorage.setItem('token', token);
-                window.location.replace("http://localhost:3000/")
+                window.location.replace("https://capstone-arfla.herokuapp.com/")
             </script>
             `);
         } else {
@@ -61,7 +61,7 @@ router.get('/callback', async (req, res, next) => {
                     const token = '${token}';
                     const myStorage = window.localStorage;
                     myStorage.setItem('token', token);
-                    window.location.replace("http://localhost:3000/#google")
+                    window.location.replace("https://capstone-arfla.herokuapp.com/#google")
                 </script>
             `);
         }
