@@ -145,8 +145,9 @@ const AppHome = () => {
     };
 
     const exchangeTokenForAuth = async() => {
-        const response = await axios.get('/api/auth', headers());
-        setAuth(response.data);
+        const response = await axios.get('/api/auth', headers())
+        .then(user => setAuth(user.data))
+        .catch(ex => console.log(ex));
     }
 
     const route = hashVal => {
