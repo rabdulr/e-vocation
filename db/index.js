@@ -4,7 +4,7 @@ const moment = require('moment')
 
 const { authenticate, compare, findUserFromToken, hash } = require("./auth");
 
-const models = { companies, users, posts, bids, contracts, chats } = require('./models');
+const models = { users, posts, bids, contracts, chats } = require('./models');
 
 const { runSeed } = require('./seedData/seeded')
 

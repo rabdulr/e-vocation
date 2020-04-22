@@ -20,12 +20,16 @@ const SignInForm = ({ displayLogin, login, toggleForm }) => {
         createAccount();
     }
 
+    //this needs to be edited to properly set role instead of creating a company.
     const createAccount = async() => {
         const info = isCompany ? { firstName, lastName, address, city, state, zip, username, password, companyName, industry }
             : { firstName, lastName, address, city, state, zip, username, password };
         if(isCompany){
-            await axios.post('api/companies/createCompany', info);
+            console.log('this is not a thing right now!');
+            /*
+            await axios.post('api/REPLACE WITH CORRECT ROUTE', info);
             login({ username, password });
+            */
         }else{
             await axios.post('api/createUser', info);
             login({ username, password });

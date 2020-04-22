@@ -71,8 +71,6 @@ app.use('/api/contracts', api.contracts.router);
 
 app.use('/api/posts', api.posts.router);
 
-app.use('/api/companies', api.companies.router);
-
 app.use('/api/users', api.users.router);
 
 app.use('/api/bids', api.bids.router);
