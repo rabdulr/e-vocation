@@ -2,9 +2,14 @@
 const router = require('express').Router();
 const qs = require('querystring');
 const axios = require('axios');
-require('dotenv').config('../.env');
 const jwt = require("jwt-simple");
 const {users} = require('../db/models')
+try{
+    require('dotenv').config('../.env');
+}
+catch(ex){
+    console.log(ex);
+}
 
 
 const redirect_uri = 'http://localhost:3000/api/google/callback';
