@@ -11,8 +11,8 @@ catch(ex){
     console.log(ex);
 }
 
-
-const redirect_uri = 'https://capstone-arfla.herokuapp.com/api/google/callback';
+const redirect_uri = (process.env.NODE_ENV === 'development') ? 'https://capstone-arfla.herokuapp.com/api/google/callback' : 'http://localhost:3000/api/google/callback';
+console.log(redirect_uri);
 const emailScope = 'https://www.googleapis.com/auth/userinfo.email';
 const userScope = 'https://www.googleapis.com/auth/userinfo.profile';
 
@@ -40,16 +40,19 @@ router.get('/callback', async (req, res, next) => {
         };
 
         const user = await users.findUser(values);
+
+        const homeRedirect = (process.env.NODE_ENV === 'development') ? 'https://capstone-arfla.herokuapp.com/' : 'http://localhost:3000'
         
         if(user){
             //Able to create token but page refresh is not occurring on front end
             const token = await jwt.encode({ id: user.id, role: user.role, username: user.username, firstName: user.firstName, lastName: user.lastName }, process.env.JWT)
             res.write(`
             <script>
+                const homeRedirect = ${homeRedirect};
                 const token = '${token}';
                 const myStorage = window.localStorage;
                 myStorage.setItem('token', token);
-                window.location.replace("https://capstone-arfla.herokuapp.com/")
+                window.location.replace(homeRedirect)
             </script>
             `);
         } else {
@@ -58,10 +61,11 @@ router.get('/callback', async (req, res, next) => {
             const token = await jwt.encode({ id: newUser.id, role: newUser.role, username: newUser.username, firstName: newUser.firstName, lastName: newUser.lastName }, process.env.JWT);
             res.write(`
                 <script>
+                    const homeRedirect = '${homeRedirect}/#google';
                     const token = '${token}';
                     const myStorage = window.localStorage;
                     myStorage.setItem('token', token);
-                    window.location.replace("https://capstone-arfla.herokuapp.com/#google")
+                    window.location.replace(homeRedirect)
                 </script>
             `);
         }
