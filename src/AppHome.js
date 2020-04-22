@@ -77,9 +77,14 @@ const AppHome = () => {
             }
             route('#');
         }
-        axios.get('/api/posts/getAllPosts', headers())
-        .then(allPosts => setPosts(allPosts.data))
-        .catch(ex => console.log(ex))
+    }, [auth]);
+
+    useEffect(() => {
+        if(auth.id){
+            axios.get('/api/posts/getAllPosts', headers())
+                .then(allPosts => setPosts(allPosts.data))
+                .catch(ex => console.log(ex))
+        }
     }, [auth]);
 
    useEffect(() => {
@@ -91,21 +96,27 @@ const AppHome = () => {
     }, [auth]);
 
     useEffect(() => {
-        axios.get('/api/ratings/getRatings', headers())
-            .then(ratings => setRatings(ratings.data))
-            .catch(ex => console.log(ex))
+        if(auth.id) {
+            axios.get('/api/ratings/getRatings', headers())
+                .then(ratings => setRatings(ratings.data))
+                .catch(ex => console.log(ex))
+        }
     }, [auth])
 
     useEffect(() => {
-        axios.get('/api/bids/getBids', headers())
-            .then(bids => setBids(bids.data))
-            .catch(ex => console.log(ex));
+        if(auth.id) {
+            axios.get('/api/bids/getBids', headers())
+                .then(bids => setBids(bids.data))
+                .catch(ex => console.log(ex));
+        }
     }, [auth]);
 
     useEffect(() => {
-        axios.get('/api/contracts/getContracts', headers())
-            .then(contracts => setContracts(contracts.data))
-            .catch(ex => console.log(ex))
+        if(auth.id) {
+            axios.get('/api/contracts/getContracts', headers())
+                .then(contracts => setContracts(contracts.data))
+                .catch(ex => console.log(ex))
+        }
     }, [auth])
 
     useEffect(() => {
