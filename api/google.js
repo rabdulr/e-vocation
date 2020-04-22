@@ -40,7 +40,7 @@ router.get('/callback', async (req, res, next) => {
 
         const user = await users.findUser(values);
 
-        const homeRedirect = (process.env.NODE_ENV === 'production') ? 'https://capstone-arfla.herokuapp.com/' : 'http://localhost:3000';
+        const homeRedirect = (process.env.NODE_ENV === 'production') ? 'https://capstone-arfla.herokuapp.com' : 'http://localhost:3000';
 
         console.log(homeRedirect)
         
@@ -62,7 +62,7 @@ router.get('/callback', async (req, res, next) => {
             const token = await jwt.encode({ id: newUser.id, role: newUser.role, username: newUser.username, firstName: newUser.firstName, lastName: newUser.lastName }, process.env.JWT);
             res.write(`
                 <script>
-                    const homeRedirect = '${homeRedirect}#google';
+                    const homeRedirect = '${homeRedirect}/#google';
                     const token = '${token}';
                     const myStorage = window.localStorage;
                     myStorage.setItem('token', token);
