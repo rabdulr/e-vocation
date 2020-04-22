@@ -12,21 +12,6 @@ class Users {
     }
 };
 
-// class Companies {
-//     constructor(companyName, username, address, city, state, zip, industry, firstName, lastName, password){
-//         this.companyName = companyName;
-//         this.username = username;
-//         this.address = address;
-//         this.city = city;
-//         this.state = state;
-//         this.zip = zip;
-//         this.industry = industry;
-//         this.firstName = firstName;
-//         this.lastName = lastName;
-//         this.password = password;
-//     }
-// };
-
 class Posts {
     constructor(userId, acceptedId, title, description, industry, siteAddress, startDate, endDate, proposedBudget, status){
         this.userId = userId;
