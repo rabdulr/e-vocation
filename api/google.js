@@ -12,7 +12,6 @@ catch(ex){
 }
 
 const redirect_uri = (process.env.NODE_ENV === 'development') ? 'https://capstone-arfla.herokuapp.com/api/google/callback' : 'http://localhost:3000/api/google/callback';
-console.log(redirect_uri);
 const emailScope = 'https://www.googleapis.com/auth/userinfo.email';
 const userScope = 'https://www.googleapis.com/auth/userinfo.profile';
 
@@ -41,14 +40,16 @@ router.get('/callback', async (req, res, next) => {
 
         const user = await users.findUser(values);
 
-        const homeRedirect = (process.env.NODE_ENV === 'development') ? 'https://capstone-arfla.herokuapp.com/' : 'http://localhost:3000'
+        const homeRedirect = (process.env.NODE_ENV === 'development') ? 'https://capstone-arfla.herokuapp.com/' : 'http://localhost:3000';
+
+        console.log(homeRedirect)
         
         if(user){
             //Able to create token but page refresh is not occurring on front end
             const token = await jwt.encode({ id: user.id, role: user.role, username: user.username, firstName: user.firstName, lastName: user.lastName }, process.env.JWT)
             res.write(`
             <script>
-                const homeRedirect = ${homeRedirect};
+                const homeRedirect = '${homeRedirect}';
                 const token = '${token}';
                 const myStorage = window.localStorage;
                 myStorage.setItem('token', token);
