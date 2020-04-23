@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-const Jobs = ({ posts, breakpoint, bids, users }) => {
+const Jobs = ({ auth, posts, breakpoint, bids, users, route }) => {
+
+    useEffect(() => {
+        if(!(auth.id)){
+            route('#');
+        }
+    }, []);
 
     return (
         <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>

@@ -12,6 +12,12 @@ const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
     const [state, setState] = useState(auth.state);
     const [zip, setZip] = useState(auth.zip);
 
+    useEffect(() => {
+        if(!(auth.id)){
+            route('#');
+        }
+    }, []);
+    
     const onSubmit = ({ target }) => {
         event.preventDefault();
         const updatedInfo = {id, role, username, password, firstName, lastName, address, city, state, zip}

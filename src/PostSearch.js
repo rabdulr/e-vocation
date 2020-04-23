@@ -8,6 +8,12 @@ const PostSearch = ({auth, posts, route, breakpoint, createJobPost, setFocus}) =
   const [postDisplay, setPostDisplay] = useState(false);
 
   useEffect(() => {
+    if(!(auth.id)){
+        route('#');
+    }
+  }, []);
+  
+  useEffect(() => {
     if(auth){
       setUserId(auth.id)
     }
