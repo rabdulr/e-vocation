@@ -4,6 +4,11 @@ import moment from 'moment'
 const Bids = ({bids, route, breakpoint, auth}) => {
     const [bidList, setBidList] = useState([]);
 
+    useEffect(() => {
+      if(!(auth.id)){
+        route('#');
+      }
+    }, [])
     //Have this set just to make sure we get the info in
     //Might be able to take it out
     useEffect(() => {

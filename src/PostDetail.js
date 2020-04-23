@@ -3,9 +3,14 @@ import moment from 'moment';
 import CreateBid from './CreateBid'
 import BidList from './BidList'
 
-const PostDetail = ({auth, focus, post, createBid, bids, users}) => {
-
+const PostDetail = ({auth, focus, post, createBid, bids, users, route}) => {
   const [filteredBids, setFilteredBids] = useState(bids.filter(bid => bid.postId === post.id))
+
+  useEffect(() => {
+    if(!(auth.id)){
+        route('#');
+    }
+  }, []);
 
   return (
     <div id = 'PostDetailRoot'>

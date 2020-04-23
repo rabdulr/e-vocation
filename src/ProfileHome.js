@@ -4,6 +4,12 @@ import ProfileCalendar from './ProfileCalendar'
 
 const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus })=>{
   const [list, setList] = useState([]);
+
+  useEffect(() => {
+    if(!(auth.id)){
+        route('#');
+    }
+  }, []);
   
   useEffect(() => {
     auth.role === 'COMPANY' ? setList([...bids]) : setList([...posts]);
@@ -16,7 +22,7 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
         <ProfileCalendar  Calendar />
         <div className = 'rowWrap spaceBetweenRow'>
           <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> { setFocus(auth.id); route(`#profile/settings/${ auth.id }`) } } value = 'Edit Profile' />
-          <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> route('#job-history') } value = 'History' />
+          <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> route(`#job-history/${ auth.id }`) } value = 'History' />
         </div>  
       </div>
       { list.length > 0 && <div className = 'columnNW'>
