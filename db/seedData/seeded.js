@@ -19,6 +19,12 @@ const runSeed = async() => {
 
     const gordon = await users.create(new Users( 'Gordon', 'Ramsey', 'Hell\'s Kitchen', '888 Higuera', 'San Luis Obispo', 'CA', '93401', 'Gordon', 'GordonPass'));
 
+    await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['COMPANY', gordon.id]);
+
+    await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['COMPANY', santa.id]);
+
+
+
     //Posts using Posts constructor
     const item1 = await posts.create(new Posts(jack.id, null, 'Create Santa Land', 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing', 'Packaging', `${jack.address}, ${jack.city}, ${jack.state}, ${jack.zip}`, new Date('2020-9-20'), new Date('2020-10-25'), 1000, 'Active'));
 
