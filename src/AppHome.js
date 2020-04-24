@@ -70,10 +70,14 @@ const AppHome = () => {
     }, [])
 
     const displayChat = (message)=>{
-        const list = document.querySelector('#messages')
-        list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.text}</li>`;
-        //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
-        document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
+        console.log("params.id", params.id)
+        if (params.id === "General Chat"){
+            const list = document.querySelector('#messages')
+            list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.text}</li>`;
+            //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
+            document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
+        }
+
     }
 
     useEffect(() => {
@@ -192,6 +196,8 @@ const AppHome = () => {
         setAuth(response.data);
     };
 
+    //checking what params i can use for chatt
+    console.log("params:", params )
     return (
         <div id = 'container'>
             <main className = 'z0 columnNW'>
@@ -206,13 +212,13 @@ const AppHome = () => {
                 { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
                 { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route }/> }
-                { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } /> }
+                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params}/> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
                 { window.location.hash === '' && !auth.id && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
             </main>
             <footer className = 'centerText'>
-                © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>
+                © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#view=chat">HelpChat</a>
             </footer>
         </div>
     );
