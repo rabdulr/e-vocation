@@ -5,11 +5,11 @@ const users = {
     readAll: async() => {
         return (await client.query('SELECT * FROM users')).rows;
     },
-    create: async({ firstName, lastName, companyName, address, city, state, zip, username, password }) => {
+    create: async({ firstName, lastName, companyName, address, city, state, zip, role, username, password }) => {
 
-        const SQL =`INSERT INTO users ("firstName", "lastName", "companyName", address, city, state, zip, username, password) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
+        const SQL =`INSERT INTO users ("firstName", "lastName", "companyName", address, city, state, zip, role, username, password) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`;
 
-        return (await client.query(SQL, [firstName, lastName, companyName, address, city, state, zip, username, await hash(password)])).rows[0];
+        return (await client.query(SQL, [firstName, lastName, companyName, address, city, state, zip, role, username, await hash(password)])).rows[0];
     },
     updateUser: async({ firstName, lastName, companyName, address, city, state, zip, username, id }) => {
 

@@ -21,19 +21,17 @@ const SignInForm = ({ displayLogin, login, toggleForm }) => {
     }
 
     //this needs to be edited to properly set role instead of creating a company.
+
+    /*
+        - Company Mode toggle
+        - Company Info if toggled
+        - 
+    */
     const createAccount = async() => {
-        const info = isCompany ? { firstName, lastName, address, city, state, zip, username, password, companyName, industry }
-            : { firstName, lastName, address, city, state, zip, username, password };
-        if(isCompany){
-            console.log('this is not a thing right now!');
-            /*
-            await axios.post('api/REPLACE WITH CORRECT ROUTE', info);
-            login({ username, password });
-            */
-        }else{
-            await axios.post('api/createUser', info);
-            login({ username, password });
-        }
+        const info = isCompany ? { firstName, lastName, address, city, state, zip, role : 'COMPANY', username, password, companyName, industry }
+            : { firstName, lastName, address, city, state, zip, role : 'USER', username, password };
+        await axios.post('api/createUser', info);
+        login({ username, password });
     };
 
     return (
@@ -44,7 +42,7 @@ const SignInForm = ({ displayLogin, login, toggleForm }) => {
             <h2 className = 'colorLB'>Sign Up</h2>
             <form className = 'columnNW borderAO bgBB colorOW pad1 margin1 border5 maxWidth3 scrollable maxHeight3' onSubmit={ onSubmit }>
                 <div className = 'rowNW spaceBetweenRow widthundred'>
-                    <div>Company Account: </div>
+                    <div>Default Company Mode: </div>
                     <input type = 'checkbox' onClick = { () => setisCompany(!isCompany) } />
                 </div>
                 <div className = 'rowNW spaceBetweenRow topMargin1 widthundred'>
