@@ -30,7 +30,7 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
         <ul className = 'scrollable maxHeight2 bgLB border5 maxWidth4'>{ 
           list.filter((item, idx) => idx < 5).map(item => {
             return (
-              <li key = { `bid${ Math.ceil(Math.random() * 1000) }${ auth.role === 'COMPANY' ? item.companyId : item.userId }` } className = 'bgAlphaDB colorLB border10 pad1 marginHalf'>{ auth.role === 'COMPANY' ? item.proposal : item.description }</li>
+              <li key = { `bid${ Math.ceil(Math.random() * 1000) }${ auth.role === 'COMPANY' ? item.bidderId : item.userId }` } className = 'bgAlphaDB colorLB border10 pad1 marginHalf'>{ auth.role === 'COMPANY' ? item.proposal : item.description }</li>
             )
           })
         }</ul>  
@@ -40,7 +40,7 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
         <ul className = 'scrollable maxHeight2 maxWidth4'>{
           list.reduce((acc, item) => { if(!acc.includes(item)){ acc.push(item) }; return acc }, []).map(item => {
             return (
-              <li key = { `chat${ Math.ceil(Math.random() * 1000) }${ auth.role === 'COMPANY' ? item.companyId : item.userId }` } className = 'bgDB marginHalf padHalf border5'><a href = { `#chat${ auth.role === 'COMPANY' ? item.companyId : item.userId }` } className = 'colorBB' onClick = { ev => setFocus(auth.role === 'COMPANY' ? item.companyId : item.userId) }>{ auth.role === 'COMPANY' ? item.companyId : item.userId }</a></li>
+              <li key = { `chat${ Math.ceil(Math.random() * 1000) }${ auth.role === 'COMPANY' ? item.bidderId : item.userId }` } className = 'bgDB marginHalf padHalf border5'><a href = { `#chat${ auth.role === 'COMPANY' ? item.bidderId : item.userId }` } className = 'colorBB' onClick = { ev => setFocus(auth.role === 'COMPANY' ? item.bidderId : item.userId) }>{ auth.role === 'COMPANY' ? item.bidderId : item.userId }</a></li>
             )
           })
         }</ul>

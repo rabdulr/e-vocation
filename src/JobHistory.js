@@ -21,7 +21,7 @@ const JobHistory = ({ auth, route, posts, breakpoint }) => {
             }</ul>
             <h4>Acquired Jobs</h4>
             <ul>{
-                posts.filter(post => post.companyId === auth.id).map(post => {
+                posts.filter(post => post.bidderId === auth.id).map(post => {
                     return (
                         <li key = { `job${ post.id }` }>{ post.id }</li>
                     )

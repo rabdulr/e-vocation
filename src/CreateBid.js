@@ -6,7 +6,7 @@ const CreateBid = ({post, auth, createBid, bids}) => {
     const [proposal, setProposal] = useState('');
     const [bid, setBid] = useState('');
     const [bidState, setBidState] = useState(false);
-    const [currentBid, setCurrentBid] = useState(bids.find(bid => bid.postId === post.id && bid.companyId === auth.id))
+    const [currentBid, setCurrentBid] = useState({})
 
     const onSubmit =  (ev) => {
       ev.preventDefault();
@@ -17,6 +17,9 @@ const CreateBid = ({post, auth, createBid, bids}) => {
     };
 
     useEffect(() => {
+      if(bids) {
+        setCurrentBid(bids.find(bid => bid.postId === post.id && bid.bidderId === auth.id))
+      }
       if(currentBid){
         setBidState(true);
       }
