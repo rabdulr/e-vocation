@@ -5,8 +5,8 @@ import { Bids } from '../db/models/constructors';
 const CreateBid = ({post, auth, createBid, bids}) => {
     const [proposal, setProposal] = useState('');
     const [bid, setBid] = useState('');
-    const [bidState, setBidState] = useState(false);
-    const [currentBid, setCurrentBid] = useState({})
+    const [bidState, setBidState] = useState('false');
+    const [currentBid, setCurrentBid] = useState(bids.find(bid => bid.postId === post.id && bid.bidderId === auth.id))
 
     const onSubmit =  (ev) => {
       ev.preventDefault();
@@ -17,20 +17,15 @@ const CreateBid = ({post, auth, createBid, bids}) => {
     };
 
     useEffect(() => {
-      if(bids) {
-        setCurrentBid(bids.find(bid => bid.postId === post.id && bid.bidderId === auth.id))
-      }
       if(currentBid){
-        setBidState(true);
+        setBidState('true');
       }
-    }, [bids]);
-
-
+    }, [currentBid])
 
     return(
       <div>
           {
-            bidState === false && 
+            bidState === 'false' && 
               <form onSubmit={onSubmit} className = 'columnNW bgLB border5 pad1'>
                 <div className = 'rowNW spaceBetweenRow'>
                   <div className = 'colorDB'>Proposal: </div>
@@ -44,9 +39,9 @@ const CreateBid = ({post, auth, createBid, bids}) => {
               </form>  
           }
           {
-            bidState === true && 
+            bidState === 'true' && 
             <div>
-              <h3>Status: {currentBid.status}</h3>
+              <h3>Status: {currentBid.bidStatus}</h3>
               <p>
                 Submitted Proposal: {currentBid.proposal}
               </p>
