@@ -4,7 +4,7 @@
     Fix Sign Up Form to reflect changes to user data structure
     Formatting For Production on Key Platforms (Chrome > Firefox > Safari > Edge)
     Contract Submission
-    Bid Submission
+    Bid Submission - already created, had to change nav bar to see items
     Profile Features
     Settings for users
     Format Search
