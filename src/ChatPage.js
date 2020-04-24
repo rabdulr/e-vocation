@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 
-const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, params })=>{
+const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, params, headers })=>{
     const [message, setMessage]= useState('')
-    console.log("auth: ",auth)
+    const messageObj = {senderId: auth.id, receiverId: params.id, username: auth.username, message: message};
+
+
     if (!params.id){
         params.id = "General Chat"
     }
@@ -10,8 +13,14 @@ const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, pa
     const onSubmit = (ev)=>{
         ev.preventDefault();
         const socket = io();
-        socket.emit('message', {senderId: auth.id, recieverId: params.id, username: auth.username, text: message});
+        socket.emit('message', messageObj);
         setMessage('');
+
+        //put message in db if direct message
+        if(params.id !== 'General Chat'){
+            axios.post('/api/chats/createChat', messageObj)
+        }
+
     }
     return(
         <div className = 'columnNW grow1 vh80'>
