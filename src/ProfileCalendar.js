@@ -14,7 +14,7 @@ export default function ProfileCalendar(){
   // render() {
     return (
       <FullCalendar 
-       ref ={(ref)=>el=ref}
+        ref = {(ref)=>el=ref}
         dateClick = {()=>alert("clicked! WOW!!!")} 
         plugins={[ dayGridPlugin, interactionPlugin ]} 
       />

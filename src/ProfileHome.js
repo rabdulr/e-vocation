@@ -4,7 +4,7 @@ import ProfileCalendar from './ProfileCalendar'
 
 const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus })=>{
   const [list, setList] = useState([]);
-  // const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
 
   // console.log(posts)
   // console.log(auth.id)
@@ -20,9 +20,10 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
     auth.role === 'COMPANY' ? setList([...bids]) : setList([...posts]);
   }, []);
 
-  // useEffect(()=>{
-  //   setEvents(posts.filter(post=>post.userId===auth.id))
-  // }, []);
+  useEffect(()=>{
+    setEvents(posts.filter(post=>post.userId===auth.id))
+    // console.log(el)
+  }, []);
 
   return(
     <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW alignCenter' : 'rowWrap spaceBetweenRow' } margin1` }>
