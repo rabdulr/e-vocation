@@ -71,7 +71,14 @@ const AppHome = () => {
 
     const displayChat = (message)=>{
         console.log("params.id", params.id)
+        console.log("auth", auth)
         if (params.id === "General Chat"){
+            const list = document.querySelector('#messages')
+            list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
+            //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
+            document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
+        }
+        else if((params.id === message.senderId) && (auth.id === message.receiverId)){
             const list = document.querySelector('#messages')
             list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
             //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
@@ -196,7 +203,7 @@ const AppHome = () => {
         setAuth(response.data);
     };
 
-    //checking what params i can use for chatt
+    //checking what params i can use for chat
     console.log("params:", params )
     return (
         <div id = 'container'>
