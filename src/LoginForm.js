@@ -8,7 +8,7 @@ const LoginForm = ({ displayLogin, login, toggleForm }) => {
         ev.preventDefault();
         displayLogin();
         login({ username, password })
-            .catch(ex => console.log(ex))
+            .catch(ex => console.log('LoginForm.onSubmit:', ex))
     }
     
     return (

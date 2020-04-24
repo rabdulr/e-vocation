@@ -1,6 +1,13 @@
 //Todo :
 /*
-    Jobs Tab
+    Job History Page
+    Fix Sign Up Form to reflect changes to user data structure
+    Formatting For Production on Key Platforms (Chrome > Firefox > Safari > Edge)
+    Contract Submission
+    Bid Submission
+    Profile Features
+    Settings for users
+    Format Search
 
     Search Engine or Search Bar (Keywords? Tags?)
 */
@@ -15,6 +22,7 @@ import Landing from './Landing';
 import ProfileHome from './ProfileHome';
 import ProfileSettings from './ProfileSettings';
 import Jobs from './Jobs';
+import JobHistory from './JobHistory';
 import PostSearch from './PostSearch';
 import PostDetail from './PostDetail';
 import LoginForm from './LoginForm';
@@ -77,35 +85,46 @@ const AppHome = () => {
             }
             route('#');
         }
-        axios.get('/api/posts/getAllPosts', headers())
-        .then(allPosts => setPosts(allPosts.data))
-        .catch(ex => console.log(ex))
+    }, [auth]);
+
+    useEffect(() => {
+        if(auth.id){
+            axios.get('/api/posts/getAllPosts', headers())
+                .then(allPosts => setPosts(allPosts.data))
+                .catch(ex => console.log('AppHome.getAllPosts:', ex))
+        }
     }, [auth]);
 
    useEffect(() => {
         if(auth.id){
             axios.get('/api/users/getUsers', headers())
                 .then(response => setUsers(response.data))
-                .catch(ex => console.log(ex))
+                .catch(ex => console.log('AppHome.getUsers:', ex))
         }
     }, [auth]);
 
     useEffect(() => {
-        axios.get('/api/ratings/getRatings', headers())
-            .then(ratings => setRatings(ratings.data))
-            .catch(ex => console.log(ex))
+        if(auth.id) {
+            axios.get('/api/ratings/getRatings', headers())
+                .then(ratings => setRatings(ratings.data))
+                .catch(ex => console.log('AppHome.getRatings:', ex))
+        }
     }, [auth])
 
     useEffect(() => {
-        axios.get('/api/bids/getBids', headers())
-            .then(bids => setBids(bids.data))
-            .catch(ex => console.log(ex));
+        if(auth.id) {
+            axios.get('/api/bids/getBids', headers())
+                .then(bids => setBids(bids.data))
+                .catch(ex => console.log('AppHome.getBids:', ex));
+        }
     }, [auth]);
 
     useEffect(() => {
-        axios.get('/api/contracts/getContracts', headers())
-            .then(contracts => setContracts(contracts.data))
-            .catch(ex => console.log(ex))
+        if(auth.id) {
+            axios.get('/api/contracts/getContracts', headers())
+                .then(contracts => setContracts(contracts.data))
+                .catch(ex => console.log('AppHome.getContracts:', ex))
+        }
     }, [auth])
 
     useEffect(() => {
@@ -147,7 +166,7 @@ const AppHome = () => {
     const exchangeTokenForAuth = async() => {
         const response = await axios.get('/api/auth', headers())
         .then(user => setAuth(user.data))
-        .catch(ex => console.log(ex));
+        .catch(ex => console.log('AppHome.exchangeTokenForAuth:', ex));
     }
 
     const route = hashVal => {
@@ -159,13 +178,13 @@ const AppHome = () => {
             .then(response => {
                 setPosts([response.data, ...posts])
             })
-            .catch(ex => console.log(ex))
+            .catch(ex => console.log('AppHome.CreateJobPost:', ex))
     }
 
     const createBid = (bid) => {
         axios.post('/api/bids/createBid', bid, headers())
             .then(response => setBids([response.data, ...bids]))
-            .catch(ex => console.log(ex))
+            .catch(ex => console.log('AppHome.createBid:', ex))
     };
 
     const updateUser = async (user) => {
@@ -182,10 +201,11 @@ const AppHome = () => {
                 { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} /> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
-                { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser}/> }
-                { window.location.hash === '#jobs' && <Jobs posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users }/> }
-                { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users }/>}
-                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint }/> }
+                { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser} route = { route }/> }
+                { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }
+                { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
+                { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
+                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route }/> }
                 { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } /> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}

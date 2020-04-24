@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react';
 import CompletedContracts from './CompletedContracts';
 import ActiveContracts from './ActiveContracts';
 
-const Contracts = ({ contracts, ratings, auth, users }) => {
+const Contracts = ({ contracts, ratings, auth, users, route }) => {
     const [tab, setTab] = useState('Active');
+
+    useEffect(() => {
+        if(!(auth.id)){
+            route('#');
+        }
+    }, [])
 
     const changeTab = (current, href) => {
         if(!(tab === current)){

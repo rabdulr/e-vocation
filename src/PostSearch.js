@@ -8,13 +8,19 @@ const PostSearch = ({auth, posts, route, breakpoint, createJobPost, setFocus}) =
   const [postDisplay, setPostDisplay] = useState(false);
 
   useEffect(() => {
+    if(!(auth.id)){
+        route('#');
+    }
+  }, []);
+  
+  useEffect(() => {
     if(auth){
       setUserId(auth.id)
     }
   }, [auth])
 
   const togglePost = () => {
-    console.log(postDisplay);
+    console.log('PostSearch.togglePost:', postDisplay);
     setPostDisplay(!postDisplay);
   }
 

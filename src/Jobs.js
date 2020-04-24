@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-const Jobs = ({ posts, breakpoint, bids, users }) => {
+const Jobs = ({ auth, posts, breakpoint, bids, users, route }) => {
+
+    useEffect(() => {
+        if(!(auth.id)){
+            route('#');
+        }
+    }, []);
 
     return (
         <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>
@@ -22,7 +28,7 @@ const Jobs = ({ posts, breakpoint, bids, users }) => {
                                 bids.filter(bid => bid.postId === post.id).map((bid, idx) => {
                                     const currentBidder = users.find(user => bid.bidderId === user.id)
                                     return (
-                                        <li className = 'columnNW topMargin1'>
+                                        <li key = { `job${ bid.postId }` } className = 'columnNW topMargin1'>
                                             <h4>Bidder { idx + 1 }:</h4>
                                             <div className = 'leftPad1'>{ currentBidder.username } - { currentBidder.companyName }</div>
                                             <div className = 'rowNW spaceBetweenRow leftPad1'>Offer: ${ bid.bid }</div>
