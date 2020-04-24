@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction';
 
-export default class DemoApp extends React.Component {
-  render() {
+export default function ProfileCalendar(){
+
+  let el;
+
+  useEffect(() => {
+    console.log(el.calendar)
+  }, []);
+
+  // render() {
     return (
-      <FullCalendar defaultView="dayGridMonth" plugins={[ dayGridPlugin ]} />
+      <FullCalendar 
+       ref ={(ref)=>el=ref}
+        dateClick = {()=>alert("clicked! WOW!!!")} 
+        plugins={[ dayGridPlugin, interactionPlugin ]} 
+      />
     )
-  }
+  // }
 }
+
