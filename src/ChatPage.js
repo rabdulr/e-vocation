@@ -10,11 +10,11 @@ const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, pa
         params.id = "General Chat"
     }
 
-    useEffect(() => {
-        if(!(window.localStorage.token)){
-            route('#');
-        }
-    }, []);
+    // useEffect(() => {
+    //     if(!(window.localStorage.token)){
+    //         route('#');
+    //     }
+    // }, []);
 
     const onSubmit = (ev)=>{
         ev.preventDefault();
