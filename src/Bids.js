@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment'
+import moment from 'moment';
 
-const Bids = ({bids, route, breakpoint, auth}) => {
+const Bids = ({bids, route, breakpoint, auth, posts, setFocus }) => {
     const [bidList, setBidList] = useState([]);
 
     useEffect(() => {
@@ -17,25 +17,29 @@ const Bids = ({bids, route, breakpoint, auth}) => {
         }
     }, [bids]);
 
+
   return(
     <div id="PostSearchRoot" className = 'marginHalf columnNW alignCenter maxWidth4'>
       <h2 className = 'colorDB '>Bids</h2>
       <ul className = 'widthundred scrollable maxHeight4'>{ 
-        bidList.map(bid => {
+        bidList.filter(bid => bid.bidderId === auth.id).map(bid => {
+          const currentPost = posts.find(post => post.id === bid.postId)
           return (
           <li key = { `post${ bid.postId }` } className = 'colorDB'>
-            <h4 className = 'leftMarginHalf'>{ bid.title }</h4>
+            <a href={`#post/${bid.postId}`} onClick = {()=>{setFocus(bid.postId)}}>
+              <h4 className = 'leftMarginHalf colorDB'>{ currentPost.title }</h4>
+            </a>
             <div className = 'borderBB bgLB padHalf border10 marginHalf'>
-              <div>{ bid.description }</div>
-              <div className = 'topMarginHalf'>Asking Price: $<span className = 'colorAO font700'>{ bid.proposedBudget }</span></div>
+              <div>{ currentPost.description }</div>
+              <div className = 'topMarginHalf'>Asking Price: $<span className = 'colorAO font700'>{ currentPost.proposedBudget }</span></div>
               <br />
-              Start Date: { bid.startDate }
+              Start Date: { moment(currentPost.startDate).format('MM/DD/YYYY') }
               <br />
-              End Date: { bid.endDate }
+              End Date: { moment(currentPost.endDate).format('MM/DD/YYYY') }
               <br />
-              Site Address: { bid.siteAddress }
+              Site Address: { currentPost.siteAddress }
               <br />
-              Status: { bid.status }
+              Status: { currentPost.status }
             </div>
             <div>
                 <h4>Current Proposal</h4>
