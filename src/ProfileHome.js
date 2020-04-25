@@ -24,7 +24,7 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
     <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW alignCenter' : 'rowWrap spaceBetweenRow' } margin1` }>
       <div className = 'columnNW'>
         <h1>{ auth.firstName } { auth.lastName }</h1>
-        <ProfileCalendar  auth={auth} posts={posts} />
+        <ProfileCalendar  auth={auth} posts={posts} setFocus = {setFocus}/>
         <div className = 'rowWrap spaceBetweenRow'>
           <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> { setFocus(auth.id); route(`#profile/settings/${ auth.id }`) } } value = 'Edit Profile' />
           <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> route(`#job-history/${ auth.id }`) } value = 'History' />

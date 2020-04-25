@@ -26,19 +26,19 @@ const runSeed = async() => {
 
 
     //Posts using Posts constructor
-    const item1 = await posts.create(new Posts(jack.id, null, 'Create Santa Land', 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing', 'Packaging', `${jack.address}, ${jack.city}, ${jack.state}, ${jack.zip}`, new Date('2020-9-20'), new Date('2020-10-25'), 1000, 'Active'));
+    const item1 = await posts.create(new Posts(jack.id, null, 'Create Santa Land', 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing', 'Packaging', `${jack.address}, ${jack.city}, ${jack.state}, ${jack.zip}`, new Date('2020-5-20'), new Date('2020-5-25'), 1000, 'Active'));
 
-    const item2 = await posts.create(new Posts(eva.id, gordon.id, 'Cater My Event', 'I am hosting an event that needs to be catered to 1000 people and the food needs to be excellent. Anything less is a travesty', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-8-31'), new Date('2020-8-31'), 1000000, 'Active'));
+    const item2 = await posts.create(new Posts(eva.id, gordon.id, 'Cater My Event', 'I am hosting an event that needs to be catered to 1000 people and the food needs to be excellent. Anything less is a travesty', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-5-31'), new Date('2020-5-31'), 1000000, 'Active'));
 
-    const item3 = await posts.create(new Posts(eva.id, gordon.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000, 'Active'));
+    const item3 = await posts.create(new Posts(eva.id, gordon.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-5-10'), new Date('2020-5-10'), 10000, 'Active'));
 
-    const item4 = await posts.create(new Posts(eva.id, admin.id, 'Create a Post','This site is cool, but i\'m so confused... someone help me make a post', 'Tech', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000, 'Completed'));
+    const item4 = await posts.create(new Posts(eva.id, admin.id, 'Create a Post','This site is cool, but i\'m so confused... someone help me make a post', 'Tech', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-5-1'), new Date('2020-5-1'), 10000, 'Completed'));
 
-    const item5 = await posts.create(new Posts(eva.id, admin.id, 'Delete a post','Ok, so now i feel really silly and am looking to remove a post. Someone help?', 'Tech', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-7-31'), new Date('2020-7-31'), 10000, 'Completed'));
+    const item5 = await posts.create(new Posts(eva.id, admin.id, 'Delete a post','Ok, so now i feel really silly and am looking to remove a post. Someone help?', 'Tech', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, new Date('2020-5-2'), new Date('2020-5-2'), 10000, 'Completed'));
 
-    const item6 = await posts.create(new Posts(guy.id, null, 'Surprise Birthday Party','I am throwing a birthday party for my son and I need a clown and fireworks expert', 'Entertainment', `${guy.address}, ${guy.city}, ${guy.state}, ${guy.zip}`, new Date('2020-4-31'), new Date('2020-4-31'), 10000, 'Active'));
+    const item6 = await posts.create(new Posts(guy.id, null, 'Surprise Birthday Party','I am throwing a birthday party for my son and I need a clown and fireworks expert', 'Entertainment', `${guy.address}, ${guy.city}, ${guy.state}, ${guy.zip}`, new Date('2020-5-14'), new Date('2020-5-14'), 10000, 'Active'));
 
-    const item7 = await posts.create(new Posts(guy.id, null, 'Taste Test','I need new tasters for my ULTRA-SPICY sauce after previous tasters hospitalized', 'Food', `${guy.address}, ${guy.city}, ${guy.state}, ${guy.zip}`, new Date('2020-5-11'), new Date('2020-6-11'), 10000, 'Active'));
+    const item7 = await posts.create(new Posts(guy.id, null, 'Taste Test','I need new tasters for my ULTRA-SPICY sauce after previous tasters hospitalized', 'Food', `${guy.address}, ${guy.city}, ${guy.state}, ${guy.zip}`, new Date('2020-5-26'), new Date('2020-5-26'), 10000, 'Active'));
 
     //await client.query('UPDATE posts SET status=$1 WHERE "userId"=$2 RETURNING *', ['Completed', eva.id]);
 
