@@ -1,8 +1,14 @@
 import React, {useState, useEffect} from 'react';
 
-const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth })=>{
+const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, route })=>{
     const [message, setMessage]= useState('')
 
+    useEffect(() => {
+        if(!(auth.id)){
+            route('#');
+        }
+    }, []);
+    
     const onSubmit = (ev)=>{
         ev.preventDefault();
         const socket = io();

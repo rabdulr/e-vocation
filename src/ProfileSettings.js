@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
+    const [mode, setMode] = useState(auth.role !== 'ADMIN' ? auth.role : null);
     const [id, setId] = useState(auth.id);
     const [role, setRole] = useState(auth.role);
     const [username, setUsername] = useState(auth.username);
@@ -13,11 +14,18 @@ const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
     const [zip, setZip] = useState(auth.zip);
 
     useEffect(() => {
+        console.log(mode);
+        console.log(auth.role);
         if(!(auth.id)){
             route('#');
         }
     }, []);
     
+    const userMode = ({ target }) => {
+        event.preventDefault();
+        console.log(target.value.toUpperCase());
+    }
+
     const onSubmit = ({ target }) => {
         event.preventDefault();
         const updatedInfo = {id, role, username, password, firstName, lastName, address, city, state, zip}
@@ -28,6 +36,12 @@ const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
         <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>
             <div className = 'columnNW bgAlphaBB marginHalf pad1 border10'>
                 <h3 className = 'colorOW widthundred centerText marginHalf'>{ auth.username } Settings</h3>
+                { mode && <div>
+                    <div>
+                        <input type = 'button' value = 'User' onClick = { ev => { userMode(ev) } } />
+                        <input type = 'button' value = 'Company' onClick = { ev => { userMode(ev) } } />
+                    </div>
+                </div> }
                 <form onSubmit = { onSubmit }>
                     <div className = 'rowNW colorOW spaceBetweenRow topMarginHalf'>
                         <div>First Name</div>
@@ -62,10 +76,10 @@ const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
                         <input placeholder = 'New Password...' className = 'bgDB colorOW borderOW padQuarter' value={password} onChange={({target})=> setPassword(target.value)}/>
                     </div>
                     <div className = 'colorOW widthundred topMarginHalf'>
-                        <input type = 'submit' value = 'Save Changes' className = 'bgDB colorOW borderOW padQuarter' />
+                        <input type = 'submit' value = 'Save Changes' className = 'bgDB colorOW borderOW padQuarter widthundred' />
                     </div>
                     <div className = 'colorOW widthundred topMarginHalf'>
-                        <input type = 'button' value = 'Delete Account' className = 'bgDB colorOW borderOW padQuarter' />
+                        <input type = 'button' value = 'Delete Account' className = 'bgDB colorOW borderOW padQuarter widthundred' />
                     </div>
                 </form>
             </div>
