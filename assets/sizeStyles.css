@@ -42,6 +42,14 @@
     max-height: 100%;
 }
 
+.vh6{
+    height: 6vh;
+}
+
+.vh10{
+    height: 10vh;
+}
+
 .vh80{
     height: 80vh;
 }
