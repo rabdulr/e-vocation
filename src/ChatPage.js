@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, params, headers })=>{
+const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, params, headers, route })=>{
     const [message, setMessage]= useState('')
     const messageObj = {senderId: auth.id, receiverId: params.id, username: auth.username, message: message};
 
@@ -9,6 +9,12 @@ const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, pa
     if (!params.id){
         params.id = "General Chat"
     }
+
+    useEffect(() => {
+        if(!(auth.id)){
+            route('#');
+        }
+    }, []);
 
     const onSubmit = (ev)=>{
         ev.preventDefault();
