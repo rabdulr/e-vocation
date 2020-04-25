@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Fuse from 'fuse.js';
 import moment from 'moment';
 
-const Landing = ({ displayLogin, auth, route, breakpoint, posts }) => {
+const Landing = ({ displayLogin, auth, route, breakpoint, posts, setFocus }) => {
   const [ searchTerms, setSearchTerms ] = useState([]);     //only for the searchBar
   const [ searchContent, setSearchContent ] = useState([]); //this is the actual search data
   const [ searchList, setSearchList ] = useState([]);
@@ -52,7 +52,7 @@ const Landing = ({ displayLogin, auth, route, breakpoint, posts }) => {
           searchReturn.map(search => {
             return(
               <li key={ search.item.id }>
-                { search.item.title } - posted: { moment(search.item.datePosted).format('MM/DD/YYYY') }
+                <a href={`#post/${search.item.id}`} onClick={()=>{setFocus(search.item.id)}}><h5 className = 'leftMarginHalf colorDB'>{search.item.title}</h5></a> - posted: { moment(search.item.datePosted).format('MM/DD/YYYY') }
               </li>
             )
           })

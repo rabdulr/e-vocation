@@ -198,7 +198,7 @@ const AppHome = () => {
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint }/>
-                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} /> }
+                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} setFocus={ setFocus }/> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
                 { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser} route = { route }/> }
