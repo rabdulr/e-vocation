@@ -62,25 +62,24 @@ const AppHome = () => {
     useEffect(()=>{
         const socket = io();
         socket.on('message', (message)=>{
-            displayChat(message);
+            console.log("auth!!!", auth)
+            displayChat(message, auth);
         })
         socket.on('history', (messages)=>{
-            messages.forEach(message => displayChat(message))
+            messages.forEach(message => displayChat(message, auth))
         })
-    }, [])
+    }, [auth])
 
-    const displayChat = async (message)=>{
-        //console.log("params.id", params.id)
-        //console.log("auth", auth)
-        await exchangeTokenForAuth()
-        //console.log("auth after exchange", auth)
+    const displayChat = (message, auth)=>{
         if (params.id === "General Chat"){
             const list = document.querySelector('#messages')
             list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
             //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
             document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
         }
-        else if((params.id === message.senderId) && (auth.id === message.receiverId)){
+        else if((params.id === message.senderId) && (auth.id === message.receiverId) ||
+            (auth.id === message.senderId) && ( params.id === message.receiverId)){
+
             const list = document.querySelector('#messages')
             list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
             //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
