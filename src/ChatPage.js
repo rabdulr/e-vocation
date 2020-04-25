@@ -11,7 +11,7 @@ const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, pa
     }
 
     useEffect(() => {
-        if(!(auth.id)){
+        if(!(window.localStorage.token)){
             route('#');
         }
     }, []);
