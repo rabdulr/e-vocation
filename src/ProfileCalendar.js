@@ -5,7 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
 import moment from 'moment'
 
-function ProfileCalendar({auth, posts}){
+function ProfileCalendar({auth, posts, setFocus}){
   let calendarEl;//the div for the calendar
 
   const [ events, setEvents ] = useState([]);//the events
@@ -14,7 +14,7 @@ function ProfileCalendar({auth, posts}){
   const setUpCalendar = ()=> {
     const _calendar = new Calendar(calendarEl, {
       plugins: [ dayGridPlugin, interactionPlugin ],
-      // events: events
+      eventClick: (what) => setFocus(what.event._def.publicId)
     });
     _calendar.render();
     //console.log(calendar);
@@ -22,14 +22,28 @@ function ProfileCalendar({auth, posts}){
   };
 
   useEffect(()=>{
-    setEvents(posts.filter(post=>post.userId===auth.id).map(pozt => {
-      console.log('mapping')
+    setEvents(posts.filter(post=>(post.userId === auth.id || post.acceptedId === auth.id)).map(pozt => {
+      if(pozt.userId === auth.id){
         return({
+          id: pozt.id,
           title: pozt.title,
           start: moment(pozt.startDate).format('YYYY-MM-DD'),
           end: moment(pozt.endDate).format('YYYY-MM-DD'),
+          url: `#post/${pozt.id}`,
+          color: 'blue',
         })
+      } else {
+        return({
+          id: pozt.id,
+          title: pozt.title,
+          start: moment(pozt.startDate).format('YYYY-MM-DD'),
+          end: moment(pozt.endDate).format('YYYY-MM-DD'),
+          url: `#post/${pozt.id}`,
+          color: 'orange',
+        })
+      }
     }))
+    console.log(posts)
     console.log(events)
   }, [calendar]);
 
