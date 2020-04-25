@@ -71,10 +71,6 @@ const AppHome = () => {
     }, [auth])
 
     const displayChat = (message, auth)=>{
-        //console.log("params.id", params.id)
-        console.log("auth!!", auth)
-        //await exchangeTokenForAuth()
-        //console.log("auth after exchange", auth)
         if (params.id === "General Chat"){
             const list = document.querySelector('#messages')
             list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
@@ -210,7 +206,6 @@ const AppHome = () => {
 
     //checking what params i can use for chat
     //console.log("params:", params )
-    console.log("auth:", auth)
     return (
         <div id = 'container'>
             <main className = 'z0 columnNW'>
