@@ -10,11 +10,15 @@ const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, pa
         params.id = "General Chat"
     }
 
-    // useEffect(() => {
-    //     if(!(window.localStorage.token)){
-    //         route('#');
-    //     }
-    // }, []);
+
+    useEffect( () => {
+        console.log("authID: ", auth.id)
+        console.log("params.id", params.id)
+        axios.get(`/api/chats/getChats/${auth.id}/${params.id}`)
+        .then(chatHistory => console.log("chatHistory: ", chatHistory.data))
+
+
+    }, []);
 
     const onSubmit = (ev)=>{
         ev.preventDefault();
