@@ -63,18 +63,30 @@ const AppHome = () => {
     useEffect(()=>{
         const socket = io();
         socket.on('message', (message)=>{
-            displayChat(message);
+            console.log("auth!!!", auth)
+            displayChat(message, auth);
         })
         socket.on('history', (messages)=>{
-            messages.forEach(message => displayChat(message))
+            messages.forEach(message => displayChat(message, auth))
         })
-    }, [])
+    }, [auth])
 
-    const displayChat = (message)=>{
-        const list = document.querySelector('#messages')
-        list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.text}</li>`;
-        //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
-        document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
+    const displayChat = (message, auth)=>{
+        if (params.id === "General Chat"){
+            const list = document.querySelector('#messages')
+            list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
+            //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
+            document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
+        }
+        else if((params.id === message.senderId) && (auth.id === message.receiverId) ||
+            (auth.id === message.senderId) && ( params.id === message.receiverId)){
+
+            const list = document.querySelector('#messages')
+            list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
+            //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
+            document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
+        }
+
     }
 
     useEffect(() => {
@@ -194,27 +206,29 @@ const AppHome = () => {
         setAuth(response.data);
     };
 
+    //checking what params i can use for chat
+    //console.log("params:", params )
     return (
         <div id = 'container'>
             <main className = 'z0 columnNW'>
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint }/>
-                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} /> }
+                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} setFocus={ setFocus }/> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } setPosts = {setPosts} breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
                 { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser} route = { route }/> }
                 { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }
                 { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
                 { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
-                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route }/> }
-                { window.location.hash === `#chat${ focus }` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } /> }
+                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } setFocus={ setFocus }/> }
+                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params} headers = {headers}/> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
                 { window.location.hash === '' && !auth.id && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
             </main>
             <footer className = 'centerText'>
-                © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#chat">HelpChat</a>
+                © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#view=chat">HelpChat</a>
             </footer>
         </div>
     );
