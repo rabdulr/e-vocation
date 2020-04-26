@@ -22,7 +22,7 @@ const PostDetail = ({auth, focus, post, createBid, bids, users, route}) => {
       <p>Site Address: {post.siteAddress}</p>
       <p>Proposed budget: ${post.proposedBudget}</p>
       { auth.role === 'COMPANY' && <CreateBid post={post} auth={auth} createBid={createBid} bids={filteredBids}/> }
-      { auth.role === 'USER' && <BidList bids = {filteredBids} users = {users} /> }
+      { auth.role === 'USER' && auth.id === post.userId && <BidList bids = {filteredBids} users = {users} /> }
     </div>)
 }
 
