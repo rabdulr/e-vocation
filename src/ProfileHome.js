@@ -6,10 +6,6 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
   const [list, setList] = useState([]);
   const [events, setEvents] = useState([]);
 
-  // console.log(posts)
-  // console.log(auth.id)
-
-
   useEffect(() => {
     if(!(auth.id)){
         route('#');
@@ -19,11 +15,6 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
   useEffect(() => {
     setList([...bids]);
   }, []);
-
-  useEffect(() => {
-    console.log("starting list: ",list)
-  }, [list]);
-
 
   return(
     <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW alignCenter' : 'rowWrap spaceBetweenRow' } margin1` }>
@@ -52,9 +43,6 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
             ((auth.role === 'COMPANY') && (item.bidderId === auth.id) && !acc.includes(item.userId)) ? acc.push(item.userId)
             : ((auth.role === 'USER') && (item.userId === auth.id) && !acc.includes(item.bidderId)) ? acc.push(item.bidderId) : ' ';
 
-            console.log(`item.bidder: ${item.bidderId}`)
-            console.log(`auth.id: ${auth.id}`)
-            console.log("list.acc", acc);
             return acc
           }, []).map(item => {
             return (
