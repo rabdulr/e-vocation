@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import CreateBid from './CreateBid'
 import BidList from './BidList'
+import {getAllPosts} from './appMethods'
 
 const PostDetail = ({auth, focus, post, createBid, bids, users, route}) => {
+
+  const [ posts, setPosts] = useState({})
   const [filteredBids, setFilteredBids] = useState(bids.filter(bid => bid.postId === post.id))
 
   useEffect(() => {

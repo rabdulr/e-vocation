@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react';
 import qs from 'qs';
 import axios from 'axios';
 import moment from 'moment'
+import { headers, getAllPosts } from './appMethods'
 // Components
 import NavBar from './NavBar';
 import Landing from './Landing';
@@ -31,15 +32,6 @@ import Bids from './Bids';
 import ChatPage from './ChatPage';
 import Contracts from './Contracts';
 import GoogleNewUser from './GoogleNewUser'
-
-const headers = () => {
-    const token = window.localStorage.getItem('token');
-    return {
-        headers: {
-            authorization: token
-        }
-    };
-};
 
 const AppHome = () => {
     const [users, setUsers] = useState([]);
@@ -58,6 +50,15 @@ const AppHome = () => {
         : window.innerWidth < 1025 ? 'lg'
         : window.innerWidth < 2441 ? 'xl'
         : 'xxl' );
+
+    const headers = () => {
+        const token = window.localStorage.getItem('token');
+        return {
+            headers: {
+                authorization: token
+            }
+        };
+    };
 
     useEffect(()=>{
         const socket = io();
@@ -89,9 +90,10 @@ const AppHome = () => {
 
     useEffect(() => {
         if(auth.id){
-            axios.get('/api/posts/getAllPosts', headers())
-                .then(allPosts => setPosts(allPosts.data))
-                .catch(ex => console.log('AppHome.getAllPosts:', ex))
+            getAllPosts(setPosts)
+            //     axios.get('/api/posts/getAllPosts', headers())
+            //         .then(allPosts => setPosts(allPosts.data))
+            //         .catch(ex => console.log('AppHome.getAllPosts:', ex))
         }
     }, [auth]);
 
@@ -200,7 +202,7 @@ const AppHome = () => {
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint }/>
                 { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} /> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
-                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } setPosts = {setPosts} breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
                 { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser} route = { route }/> }
                 { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }
                 { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
