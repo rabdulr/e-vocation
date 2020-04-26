@@ -17,7 +17,6 @@ const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, pa
         axios.get(`/api/chats/getChats/${auth.id}/${params.id}`)
         .then(chatHistory => console.log("chatHistory: ", chatHistory.data))
 
-
     }, []);
 
     const onSubmit = (ev)=>{
@@ -30,7 +29,6 @@ const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, pa
         if(params.id !== 'General Chat'){
             axios.post('/api/chats/createChat', messageObj)
         }
-
     }
     return(
         <div className = 'columnNW grow1 vh80'>

@@ -17,8 +17,13 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
   }, []);
 
   useEffect(() => {
-    auth.role === 'COMPANY' ? setList([...bids]) : setList([...posts]);
+    setList([...bids]);
   }, []);
+
+  useEffect(() => {
+    console.log("starting list: ",list)
+  }, [list]);
+
 
   return(
     <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW alignCenter' : 'rowWrap spaceBetweenRow' } margin1` }>
@@ -43,9 +48,17 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
       { list.length > 0 && <div className = 'columnNW'>
         <h3>Conversations</h3>
         <ul className = 'scrollable maxHeight2 maxWidth4'>{
-          list.reduce((acc, item) => { if(!acc.includes(item)){ acc.push(item) }; return acc }, []).map(item => {
+          list.reduce((acc, item) => {
+            ((auth.role === 'COMPANY') && (item.bidderId === auth.id) && !acc.includes(item.userId)) ? acc.push(item.userId)
+            : ((auth.role === 'USER') && (item.userId === auth.id) && !acc.includes(item.bidderId)) ? acc.push(item.bidderId) : ' ';
+
+            console.log(`item.bidder: ${item.bidderId}`)
+            console.log(`auth.id: ${auth.id}`)
+            console.log("list.acc", acc);
+            return acc
+          }, []).map(item => {
             return (
-              <li key = { `chat${ Math.ceil(Math.random() * 1000) }${ auth.role === 'COMPANY' ? item.bidderId : item.userId }` } className = 'bgDB marginHalf padHalf border5'><a href = { `#view=chat&id=${ auth.role === 'COMPANY' ? item.bidderId : item.userId }` } className = 'colorBB' onClick = { ev => setFocus(auth.role === 'COMPANY' ? item.bidderId : item.userId) }>{ auth.role === 'COMPANY' ? item.bidderId : item.userId }</a></li>
+              <li key = { `chat${ Math.ceil(Math.random() * 1000) }${ item }` } className = 'bgDB marginHalf padHalf border5'><a href = {`#view=chat&id=${item}` } className = 'colorBB' onClick = { ev => setFocus( item) }>{  item }</a></li>
             )
           })
         }</ul>
