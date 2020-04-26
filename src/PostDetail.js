@@ -11,7 +11,7 @@ const PostDetail = ({auth, focus, post, createBid, bids, users, route}) => {
         route('#');
     }
   }, []);
-
+  console.log(post.siteAddress.split(', '))
   return (
     <div id = 'PostDetailRoot'>
       <h1>{post.title}</h1>
