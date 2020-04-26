@@ -43,6 +43,7 @@ const Landing = ({ displayLogin, auth, route, breakpoint, posts, setFocus }) => 
     <div id='LandingRoot' className={ `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW' : 'rowNW' }` }>
       <div className='marginHalf'>
         <h2>Find a Job Near You. Gluten-Free!</h2>
+        <div id='map'></div>
         <p>so many jobs!</p>
         <form onSubmit = { submitSearch } className = 'rowNW widthundred marginRightHalf'>
           <input placeholder='search jobs' value = { searchTerms.join(' ') } onChange = { ({ target }) => updateTerms(target.value) } className = 'bgLB colorDB topLeft15 bottomLeft15 borderDB padHalf widthundred' />  

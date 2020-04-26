@@ -23,8 +23,6 @@ const runSeed = async() => {
 
     await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['COMPANY', santa.id]);
 
-console.log(jack)
-
     //Posts using Posts constructor
     const item1 = await posts.createSeed(new Posts(jack.id, null, 'Create Santa Land', 'Make Halloween Town into an amazing winter wonderland! We are a bunch of ghouls and monsters who know nothing', 'Packaging', `${jack.address}, ${jack.city}, ${jack.state}, ${jack.zip}`, `${jack.latitude}`, `${jack.longitude}`, new Date('2020-5-20'), new Date('2020-5-25'), 1000, 'Active'));
 

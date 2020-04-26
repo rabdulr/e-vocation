@@ -6,8 +6,6 @@ const posts = {
     },
     create: async({userId, acceptedId, title, description, industry, address, coord, startDate, endDate, proposedBudget }) => {
 
-        console.log('From DB: ', userId, acceptedId, title, description, industry, address, coord, startDate, endDate, proposedBudget);
-
         const SQL =`INSERT INTO posts ("userId", "acceptedId", title, description, industry, "siteAddress", latitude, longitude, "startDate", "endDate", "proposedBudget", status) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`;
 
         return (await client.query(SQL, [ userId, acceptedId, title, description, industry, address, coord.lat, coord.lng, startDate, endDate, proposedBudget, 'Active'])).rows[0];

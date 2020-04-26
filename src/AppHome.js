@@ -145,6 +145,36 @@ const AppHome = () => {
         })
     }, []);
 
+    useEffect(() => {
+        if(auth)
+            initMap();
+    }, [auth]);
+
+    let map;
+
+    const initMap = async () => {
+        map = await new google.maps.Map(document.getElementById('map'), {
+            center: {'lat': auth.latitude*1 || 35.281440, 'lng': auth.longitude*1 || -120.663700},
+            zoom: 9,
+            streetViewControl: false
+        });
+        if(posts) {
+            posts.forEach(post => dropMarker(post))
+        }
+    };
+
+    const dropMarker = async ({title, latitude, longitude, id}) => {
+        const location = {'lat': latitude*1, 'lng': longitude*1};
+        const contentString = `<a href='#post/${id}'<h4>${title}</h4></a>`
+        const infowindow = await new google.maps.InfoWindow({
+            'content': contentString
+        });
+        const marker = await new google.maps.Marker({'position': location, 'map': map, 'title': title});
+        marker.addListener('click', function() {
+            infowindow.open(map, marker)
+        })
+    }
+
     const checkBreakPoint = () => {
         //This is intended to allow dynamic style changes based on the screen width.
         const bp = window.innerWidth < 641 ? 'sm'           //mobile

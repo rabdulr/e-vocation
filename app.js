@@ -7,6 +7,15 @@ const models = db.models;
 const {socketServer} = require('./websockets');
 const {isAdmin, isLoggedIn} = require('./middleware');
 const api = require('./api');
+const ejs = require('ejs');
+try{
+  require('dotenv').config('../.env');
+}
+catch(ex){
+  console.log(ex);
+}
+
+app.engine('html', ejs.renderFile);
 
 app.use(express.json());
 
@@ -14,7 +23,7 @@ app.use('/dist', express.static(path.join(__dirname, 'dist')));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/', (req, res, next) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.render(path.join(__dirname, 'index.html'), {'GOOGLE_API': process.env.GOOGLE_API});
 });
 
 // middleware for adding user info to req, using the user token
