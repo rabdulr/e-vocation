@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 
-const Jobs = ({ auth, posts, breakpoint, bids, users, route }) => {
+const Jobs = ({ auth, posts, breakpoint, bids, users, route, result }) => {
     const [filterPosts, setFilterPosts] = useState([])
 
     useEffect(() => {
@@ -17,6 +18,7 @@ const Jobs = ({ auth, posts, breakpoint, bids, users, route }) => {
 
     return (
         <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>
+            { (auth.role === 'COMPANY' || auth.role === 'ADMIN') && <input className = 'marginHalf border10 borderAO bgDB colorOW' type = 'button' value = 'Search' onClick = { () => route('#jobs/search') }/> }
             <h2 className = 'centerText colorDB topMargin1'>Active Jobs</h2>
             <ul className = 'columnNW marginHalf scrollable maxHeight4'>{
                 filterPosts.filter(post => post.status === 'Active').map(post => {
