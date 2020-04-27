@@ -80,7 +80,7 @@ const AppHome = () => {
             (auth.id === message.senderId) && ( params.id === message.receiverId)){
 
             const list = document.querySelector('#messages')
-            list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
+            list.innerHTML += `<li class = 'padHalf'> <strong>${message.username}: </strong> ${message.message}</li>`;
             //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
             document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
         }
@@ -203,7 +203,7 @@ const AppHome = () => {
         setAuth(response.data);
     };
 
-    console.log("users:", users)
+
     return (
         <div id = 'container'>
             <main className = 'z0 columnNW'>

@@ -3,7 +3,6 @@ const router = express.Router();
 const {chats} = require('../db/models');
 
 router.get('/getChats/:senderId/:receiverId', (req, res, next) => {
-  console.log("req.params: ", req.params)
   chats.readAll(req.params)
     .then(chats => res.send(chats))
     .catch(next)
