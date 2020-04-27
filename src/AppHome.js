@@ -22,6 +22,7 @@ import Landing from './Landing';
 import ProfileHome from './ProfileHome';
 import ProfileSettings from './ProfileSettings';
 import Jobs from './Jobs';
+import JobSearch from './JobSearch';
 import JobHistory from './JobHistory';
 import PostSearch from './PostSearch';
 import PostDetail from './PostDetail';
@@ -31,6 +32,7 @@ import Bids from './Bids';
 import ChatPage from './ChatPage';
 import Contracts from './Contracts';
 import GoogleNewUser from './GoogleNewUser'
+import Fuse from 'fuse.js';
 
 const headers = () => {
     const token = window.localStorage.getItem('token');
@@ -50,7 +52,10 @@ const AppHome = () => {
     const [contracts, setContracts] = useState([]);
     const [auth, setAuth] = useState({});
     const [ratings, setRatings] = useState([]);
-    //const [chatBack, setChatBack] = useState('bgOW');
+    const [ searchReturn, setSearchReturn ] = useState([]);
+    const [ searchList, setSearchList ] = useState([]);
+    const [ searchTerms, setSearchTerms ] = useState([]);     //only for the searchBar
+    const [ searchContent, setSearchContent ] = useState([]); //this is the actual search data
     const [focus, setFocus] = useState('');
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
     const [breakpoint, setBreakpoint] = useState(window.innerWidth < 641 ? 'sm'
@@ -73,7 +78,6 @@ const AppHome = () => {
         if (params.id === "General Chat"){
             const list = document.querySelector('#messages')
             list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
-            //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
             document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
         }
         else if((params.id === message.senderId) && (auth.id === message.receiverId) ||
@@ -232,6 +236,38 @@ const AppHome = () => {
         setAuth(response.data);
     };
 
+    const updateTerms = barVal => {
+        setSearchTerms(barVal.split(' ').map(word => word));
+        setSearchContent(barVal.split(' ').reduce((acc, word) => {
+            if(!acc.includes(word)){
+                acc.push(word);
+            }
+            return acc;
+        }, []));
+    };
+
+    const submitSearch = ({ target }) => {
+        event.preventDefault();
+        //do something with searchContent
+        setSearchReturn(result);
+        route('#jobs/search');
+      };
+
+    const options = {
+        includeScore: true,
+        keys: ['title', 'description', 'industry'],
+        threshold: 0.6
+    };
+    
+    const fuse = new Fuse(searchList, options);
+
+    const result = fuse.search(searchTerms.toString());
+
+    useEffect(()=> {
+        if(posts){
+            setSearchList(posts);
+        }  
+    }, [posts]);
 
     return (
         <div id = 'container'>
@@ -239,12 +275,13 @@ const AppHome = () => {
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint }/>
-                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} setFocus={ setFocus }/> }
+                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} setFocus={ setFocus } searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } searchList = { searchList } setSearchList = { setSearchList } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } searchContent = { searchContent } setSearchContent = { setSearchContent } submitSearch = { submitSearch } updateTerms = { updateTerms } /> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } /> }
                 { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser} route = { route }/> }
                 { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }
-                { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
+                { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route } /> }
+                { (auth.role === 'COMPANY' || auth.role === 'ADMIN') && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn } setFocus = { setFocus } searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } />}
                 { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } setFocus={ setFocus }/> }
                 { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params}
