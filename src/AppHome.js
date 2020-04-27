@@ -84,7 +84,6 @@ const AppHome = () => {
             //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
             document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
         }
-
     }
 
     useEffect(() => {
