@@ -62,7 +62,6 @@ const AppHome = () => {
     useEffect(()=>{
         const socket = io();
         socket.on('message', (message)=>{
-            console.log("auth!!!", auth)
             displayChat(message, auth);
         })
         socket.on('history', (messages)=>{
@@ -204,8 +203,7 @@ const AppHome = () => {
         setAuth(response.data);
     };
 
-    //checking what params i can use for chat
-    //console.log("params:", params )
+    console.log("users:", users)
     return (
         <div id = 'container'>
             <main className = 'z0 columnNW'>
@@ -220,7 +218,8 @@ const AppHome = () => {
                 { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
                 { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } setFocus={ setFocus }/> }
-                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params} headers = {headers}/> }
+                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params}
+                 user = {users.filter(user => user.id === params.id)}/> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
                 { window.location.hash === '' && !auth.id && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }

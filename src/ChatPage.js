@@ -1,22 +1,28 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const ChatPage = ({ chatMessages, setChatMessages, displayChat, socket, auth, params, headers, route })=>{
+const ChatPage = ({displayChat, socket, auth, params, user})=>{
     const [message, setMessage]= useState('')
     const messageObj = {senderId: auth.id, receiverId: params.id, username: auth.username, message: message};
-
 
     if (!params.id){
         params.id = "General Chat"
     }
 
-
+    //get chat history from db upon launch
     useEffect( () => {
-        console.log("authID: ", auth.id)
-        console.log("params.id", params.id)
         axios.get(`/api/chats/getChats/${auth.id}/${params.id}`)
-        .then(chatHistory => console.log("chatHistory: ", chatHistory.data))
+        .then((chatHistory) =>{
+            let chatArray = chatHistory.data
+            let chatObj ={};
 
+            //display chat history
+            chatArray.forEach(chat =>{
+                (chat.senderId === auth.id ? chatObj = {username: auth.username, message: chat.message, senderId: chat.senderId, receiverId: chat.receiverId }
+                    : chatObj = {username: user[0].username, message: chat.message, senderId: chat.senderId, receiverId: chat.receiverId })
+                displayChat(chatObj, auth)
+            })
+        })
     }, []);
 
     const onSubmit = (ev)=>{
