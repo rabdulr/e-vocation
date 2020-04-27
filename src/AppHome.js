@@ -67,7 +67,6 @@ const AppHome = () => {
     useEffect(()=>{
         const socket = io();
         socket.on('message', (message)=>{
-            console.log("auth!!!", auth)
             displayChat(message, auth);
         })
         socket.on('history', (messages)=>{
@@ -85,11 +84,10 @@ const AppHome = () => {
             (auth.id === message.senderId) && ( params.id === message.receiverId)){
 
             const list = document.querySelector('#messages')
-            list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
+            list.innerHTML += `<li class = 'padHalf'> <strong>${message.username}: </strong> ${message.message}</li>`;
             //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
             document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
         }
-
     }
 
     useEffect(() => {
@@ -241,8 +239,6 @@ const AppHome = () => {
         }  
     }, [posts]);
 
-    //checking what params i can use for chat
-    //console.log("params:", params )
     return (
         <div id = 'container'>
             <main className = 'z0 columnNW'>
@@ -258,7 +254,8 @@ const AppHome = () => {
                 { (auth.role === 'COMPANY' || auth.role === 'ADMIN') && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn } setFocus = { setFocus } searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } />}
                 { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } setFocus={ setFocus }/> }
-                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params} headers = {headers}/> }
+                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params}
+                 user = {users.filter(user => user.id === params.id)}/> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
                 { window.location.hash === '' && !auth.id && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
