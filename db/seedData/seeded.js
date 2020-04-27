@@ -73,19 +73,21 @@ const runSeed = async() => {
     const rating2 = await ratings.create(new Ratings(contract1.id, eva.id, 1, 'Fancy hot dogs? You had no idea what you wanted. It was horrible working with you.'))
 
     //seeding some chat messages
-    const chat01 = await chats.create(new Chats(eva.id, santa.id, "Can i please work in the north pole with you???"))
+    const chat01 = await chats.create(new Chats(santa.id, jack.id, "Ho Ho Ho! did you get my bid proposal?"))
 
-    const chat02 = await chats.create(new Chats(santa.id, eva.id, "You annoy me, go away"))
+    const chat02 = await chats.create(new Chats(jack.id, santa.id, "sure did, but its not much of a bid being free and all"))
 
-    const chat03 = await chats.create(new Chats(eva.id, santa.id, "Really??? Dont you need helpers???"))
+    const chat03 = await chats.create(new Chats(santa.id, jack.id, "Sounds like the best bid you've gotten yet!"))
 
-    const chat04 = await chats.create(new Chats(santa.id, eva.id, "Not if its you"))
+    const chat04 = await chats.create(new Chats(jack.id, santa.id, "Yea but actually it'd be better if you bid something for tax purposes"))
 
-    const chat05 = await chats.create(new Chats(jack.id, gordon.id, "I'm here to ask you to hire me as your master chef"))
+    const chat05 = await chats.create(new Chats(santa.id, jack.id, "Ho Ho Ho! Well I couldn't do that, isn't that illigal??"))
 
-    const chat06 = await chats.create(new Chats(gordon.id, jack.id, "Oh?"))
+    const chat06 = await chats.create(new Chats(jack.id, santa.id, " Don't worry about it, you are Santa, no ones going to put you in jail"))
 
-    const chat07 = await chats.create(new Chats(jack.id, gordon.id, "Yea"))
+    const chat07 = await chats.create(new Chats(santa.id, jack.id, "TRU DAT, TRU DAT..."))
+
+    const chat08 = await chats.create(new Chats(gordon.id, eva.id, "I'm ready to cook for you."))
 
 };
 

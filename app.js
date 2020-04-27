@@ -88,9 +88,7 @@ app.use('/api/ratings', api.ratings.router);
 
 app.use('/api/google', api.google.router);
 
-console.log("1")
 app.use('/api/chats', api.chats.router);
-console.log("2")
 
 app.post('/api/createUser', (req, res, next) => {
   models.users.create(req.body)
