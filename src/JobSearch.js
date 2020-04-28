@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
-const JobSearch = ({ result, searchReturn, setFocus, submitSearch, searchTerms, updateTerms, setSearchTerms, setSearchReturn }) => {
+const JobSearch = ({ result, searchReturn, setFocus, submitSearch, searchTerms, updateTerms, setSearchTerms, setSearchReturn, landSearch, setLandSearch }) => {
 
     useEffect(() => {
-        setSearchTerms([]);
-        setSearchReturn([]);
+        if(!landSearch){
+            setSearchTerms([]);
+            setSearchReturn([]);  
+        }
+        setLandSearch(false);
     }, []);
 
     useEffect(() => {
@@ -18,7 +21,7 @@ const JobSearch = ({ result, searchReturn, setFocus, submitSearch, searchTerms, 
 
     return (
         <div>
-            <form onSubmit = { submitSearch } className = 'rowNW margin1'>
+            <form onSubmit = { () => submitSearch(false) } className = 'rowNW margin1'>
                 <input placeholder='search jobs' value = { searchTerms.join(' ') } onChange = { ({ target }) => updateTerms(target.value) } className = 'bgLB colorDB topLeft15 bottomLeft15 borderDB padHalf widthundred' />  
                 <input type = 'submit' value = 'Search' className = 'bgDB colorOW borderDB topRight15 bottomRight15 padHalf' />
             </form>
