@@ -14,7 +14,7 @@ const headers = () => {
 };
 
 const getAllPosts = async() => {
-  console.log('getAllPosts')
+  // console.log('getAllPosts')
   // console.log({setPosts})
   let sendIt = []
 
@@ -22,7 +22,7 @@ const getAllPosts = async() => {
     .then((response) => sendIt = response)
     .catch(ex => console.log('AppHome.getAllPosts:', ex))
   
-  console.log(sendIt)
+  // console.log(sendIt)
   return (sendIt)
 }
 

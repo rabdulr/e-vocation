@@ -29,7 +29,6 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, route, setFocus 
           <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> { setFocus(auth.id); route(`#profile/settings/${ auth.id }`) } } value = 'Edit Profile' />
           <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> route(`#job-history/${ auth.id }`) } value = 'History' />
         </div>
-        <ProfileCalendar  auth={auth} posts={posts} setFocus = {setFocus}/>
       </div>
       { list.length > 0 && <div className = 'columnNW'>
         <h3 className = 'topMargin1'>Most Recent { auth.role === 'COMPANY' ? 'Bids' : 'Jobs' }</h3>
