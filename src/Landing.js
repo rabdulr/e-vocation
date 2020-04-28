@@ -8,7 +8,7 @@ const Landing = ({ displayLogin, auth, route, breakpoint, posts, setFocus, searc
     setLandSearch(false);
     setSearchTerms([]);
   }, []);
-  
+
   return(
     <div id='LandingRoot' className={ `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW' : 'rowNW' }` }>
       <div className='marginHalf'>
@@ -24,7 +24,7 @@ const Landing = ({ displayLogin, auth, route, breakpoint, posts, setFocus, searc
         <div>
           <p>create an offer today</p>
           { !auth.id && <input type = 'button' className = 'bgDB colorOW padHalf borderLB border5' onClick = {() => displayLogin()} value =  ' Log In ' /> }
-          { auth.id && <input type = 'button' className = 'bgDB colorOW padHalf borderLB border5' onClick = { () => route('#jobs') } value = 'List Job'/> }
+          { auth.id && <input type = 'button' className = 'bgDB colorOW padHalf borderLB border5' onClick = { () => route('#posts') } value = 'List Job'/> }
         </div>
         
       </div>
