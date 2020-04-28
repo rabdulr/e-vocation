@@ -39,7 +39,7 @@ const ChatPage = ({displayChat, socket, auth, params, user})=>{
     return(
         <div className = 'columnNW grow1 vh80'>
             <div className = 'columnNW borderDB bgBB border5 marginHalf vh80 grow1'>
-                <h4 className = 'centerText colorOW padHalf'>Chat with { params.id }</h4>
+                <h4 className = 'centerText colorOW padHalf'>Chat with { user.length > 0 ? user[0].username : '' }</h4>
                 <ul id = 'messages' className = 'columnNW borderDB bgOW colorDB border10 marginHalf grow1 vh80 scrollable'></ul>
                 <form onSubmit={onSubmit} className = 'columnNW leftMarginHalf rightMarginHalf'>
                     <div className = 'rowNW widthundred'>

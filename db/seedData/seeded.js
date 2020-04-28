@@ -11,7 +11,7 @@ const runSeed = async() => {
 
     const guy = await users.create(new Users('Guy', 'Fieri', null, '321 Favor Blvd', 'Flavortown', 'CA', '90017', 'Guy', 'FLAVORTOWN'));
 
-    const admin = await users.create(new Users('Capstone', 'Admin', null, 'Local Host', 'Atascadero', 'CA', '93422', 'Admin', 'AdminPass'));
+    const admin = await users.create(new Users('Capstone', 'Admin', 'E-Vocation', 'Local Host', 'Atascadero', 'CA', '93422', 'Admin', 'AdminPass'));
 
     await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['ADMIN', admin.id]);
 
