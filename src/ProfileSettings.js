@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { headers } from './appMethods';
 
-const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
-    const [mode, setMode] = useState(auth.role !== 'ADMIN' ? auth.role : null);
+const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser }) => {
     const [id, setId] = useState(auth.id);
     const [role, setRole] = useState(auth.role);
     const [username, setUsername] = useState(auth.username);
@@ -14,16 +15,15 @@ const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
     const [zip, setZip] = useState(auth.zip);
 
     useEffect(() => {
-        console.log(mode);
-        console.log(auth.role);
         if(!(auth.id)){
             route('#');
         }
     }, []);
     
-    const userMode = ({ target }) => {
-        event.preventDefault();
-        console.log(target.value.toUpperCase());
+    const userMode = async ({ target }) => {
+        //If there is no companyName, set up company info before allowing the request. There should be a cancel button.
+        const response = await axios.put(`api/users/${ auth.id }`, { ...auth, role: target.value.toUpperCase() }, headers())
+        setAuth(response.data);
     }
 
     const onSubmit = ({ target }) => {
@@ -36,12 +36,15 @@ const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
         <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>
             <div className = 'columnNW bgAlphaBB marginHalf pad1 border10'>
                 <h3 className = 'colorOW widthundred centerText marginHalf'>{ auth.username } Settings</h3>
-                { mode && <div>
-                    <div>
-                        <input type = 'button' value = 'User' onClick = { ev => { userMode(ev) } } />
-                        <input type = 'button' value = 'Company' onClick = { ev => { userMode(ev) } } />
+                <div>
+                    <div className = 'rowNW colorOW spaceBetweenRow'>
+                        <div>Default Mode:</div>
+                        <div>
+                            <input type = 'button' value = 'User' className = {`${ auth.role === 'USER' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topLeft5 bottomLeft5`} onClick = { (ev) => { userMode(ev) } } />
+                            <input type = 'button' value = 'Company'  className = {`${ auth.role === 'COMPANY' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topRight5 bottomRight5`} onClick = { (ev) => { userMode(ev) } } />    
+                        </div>
                     </div>
-                </div> }
+                </div>
                 <form onSubmit = { onSubmit }>
                     <div className = 'rowNW colorOW spaceBetweenRow topMarginHalf'>
                         <div>First Name</div>

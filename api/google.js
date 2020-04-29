@@ -87,6 +87,10 @@ router.get('/', (req, res) => {
     })}`;
 
     res.redirect(url)
+});
+
+router.put('/getCoord', (req, res, next) => {
+    
 })
 
 module.exports = {router}

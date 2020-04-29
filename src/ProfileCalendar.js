@@ -6,7 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import moment from 'moment'
 import {getAllPosts} from './appMethods'
 
-function ProfileCalendar({auth, setFocus}){
+function ProfileCalendar({ auth }){
   let calendarEl;//the div for the calendar
 
   const [ posts, setPosts] = useState({})

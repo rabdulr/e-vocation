@@ -44,7 +44,7 @@ const AppHome = () => {
     const [contracts, setContracts] = useState([]);
     const [auth, setAuth] = useState({});
     const [ratings, setRatings] = useState([]);
-
+    const [mode, setMode] = useState('');
     const [ searchReturn, setSearchReturn ] = useState([]);
     const [ searchList, setSearchList ] = useState([]);
     const [ searchTerms, setSearchTerms ] = useState([]);     //only for the searchBar
@@ -56,41 +56,36 @@ const AppHome = () => {
         : window.innerWidth < 1025 ? 'lg'
         : window.innerWidth < 2441 ? 'xl'
         : 'xxl' );
+   
+    const [chatMessages, setChatMessages] = useState([]);
 
-    const headers = () => {
-        const token = window.localStorage.getItem('token');
-        return {
-            headers: {
-                authorization: token
-            }
-        };
+    useEffect(()=> {
+      if(params.view === 'chat' && auth.id){
+        axios.get(`/api/chats/getChats/${auth.id}/${params.id}`)
+          .then( response => {
+            setChatMessages(response.data);
+          });
+        //console.log('GET messages for chat', params.id);
+      }
+    }, [ params, auth ]);
+
+    const createChatMessage = (message)=> {
+      axios.post('/api/chats/createChat', {...message, senderId: auth.id})
+        .then( response => {
+          setChatMessages([...chatMessages, response.data]);
+          window.socket.emit('message', response.data );
+        });
     };
+    
 
     useEffect(()=>{
-        const socket = io();
-        socket.on('message', (message)=>{
-            displayChat(message, auth);
-        })
-        socket.on('history', (messages)=>{
-            messages.forEach(message => displayChat(message, auth))
-        })
-    }, [auth])
-
-    const displayChat = (message, auth)=>{
-        if (params.id === "General Chat"){
-            const list = document.querySelector('#messages')
-            list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
-            document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
-        }
-        else if((params.id === message.senderId) && (auth.id === message.receiverId) ||
-            (auth.id === message.senderId) && ( params.id === message.receiverId)){
-
-            const list = document.querySelector('#messages')
-            list.innerHTML += `<li class = 'padHalf'> <strong>${message.username}: </strong> ${message.message}</li>`;
-            //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
-            document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
-        }
-    }
+        window.socket = io();
+        window.socket.on('message', (message)=>{
+          if(message.receiverId === auth.id){
+            setChatMessages([...chatMessages, message ]);
+          }
+        });
+    }, [auth]);
 
     useEffect(() => {
         const token = window.localStorage.getItem('token');
@@ -105,7 +100,16 @@ const AppHome = () => {
 
     useEffect(() => {
         if(auth.id){
-            getAllPosts(setPosts)
+            axios.get('/api/posts/getAllPosts', headers())
+                .then(allPosts => {
+                    setPosts(allPosts.data);
+                    allPosts.data.forEach( post => {
+                        if(post.status === 'Active') {
+                            dropMarker(post)
+                        }
+                    } )
+                })
+                .catch(ex => console.log('AppHome.getAllPosts:', ex))
         }
     }, [auth]);
 
@@ -147,6 +151,33 @@ const AppHome = () => {
         })
     }, []);
 
+    useEffect(() => {
+        if(auth)
+            initMap();
+    }, [auth]);
+
+    let map;
+
+    const initMap = async () => {
+        map = await new google.maps.Map(document.getElementById('map'), {
+            center: {'lat': auth.latitude*1 || 35.281440, 'lng': auth.longitude*1 || -120.663700},
+            zoom: 9,
+            streetViewControl: false
+        });
+    };
+
+    const dropMarker = async ({title, latitude, longitude, id}) => {
+        const location = {'lat': latitude*1, 'lng': longitude*1};
+        const contentString = `<a href='#post/${id}'><h4>${title}</h4></a>`
+        const infowindow = await new google.maps.InfoWindow({
+            'content': contentString
+        });
+        const marker = await new google.maps.Marker({'position': location, 'map': map, 'title': title});
+        marker.addListener('click', function() {
+            infowindow.open(map, marker)
+        })
+    }
+
     const checkBreakPoint = () => {
         //This is intended to allow dynamic style changes based on the screen width.
         const bp = window.innerWidth < 641 ? 'sm'           //mobile
@@ -179,7 +210,7 @@ const AppHome = () => {
 
     const exchangeTokenForAuth = async() => {
         const response = await axios.get('/api/auth', headers())
-        .then(user => setAuth(user.data))
+        .then(user => { setAuth(user.data); console.log(user); setMode(user.data.role !== 'ADMIN' ? user.data.role : 'COMPANY') })
         .catch(ex => console.log('AppHome.exchangeTokenForAuth:', ex));
     }
 
@@ -242,23 +273,31 @@ const AppHome = () => {
         }  
     }, [posts]);
 
+
     return (
         <div id = 'container'>
             <main className = 'z0 columnNW'>
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
-                <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint }/>
-                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } searchList = { searchList } setSearchList = { setSearchList } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } searchContent = { searchContent } setSearchContent = { setSearchContent } submitSearch = { submitSearch } updateTerms = { updateTerms } landSearch = { landSearch } setLandSearch = { setLandSearch } /> }
+                <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint } mode = { mode } setMode = { setMode } />
+                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } mode = { mode } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } searchList = { searchList } setSearchList = { setSearchList } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } searchContent = { searchContent } setSearchContent = { setSearchContent } submitSearch = { submitSearch } updateTerms = { updateTerms } landSearch = { landSearch } setLandSearch = { setLandSearch } /> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost }/> }
-                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } setPosts = {setPosts} breakpoint = { breakpoint } route = { route } users = { users }/> }
-                { window.location.hash === `#profile/settings/${ auth.id }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser} route = { route }/> }
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } mode = { mode } bids = { bids } posts = { posts } setPosts = {setPosts} breakpoint = { breakpoint } route = { route } users = { users }/> }
+                { window.location.hash === `#profile/settings/${ auth.id }` && <ProfileSettings auth = { auth } setAuth = { setAuth } breakpoint = { breakpoint } updateUser={updateUser} route = { route } mode = { mode } setMode = { setMode }/> }
                 { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }  
-                { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
-                { (auth.role === 'COMPANY' || auth.role === 'ADMIN') && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn } setFocus = { setFocus } searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } />}
-                { window.location.hash.includes(`#post/`) && <PostDetail auth = { auth } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
-                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } /> }
-                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params} headers = {headers}/> }
-                 user = {users.filter(user => user.id === params.id)}/> }
+                { window.location.hash === '#jobs' && <Jobs auth = { auth } mode = { mode } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
+                { mode === 'COMPANY' && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn }  searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } />}
+                { window.location.hash.includes(`#post/`) && <PostDetail auth = { auth } mode = { mode } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
+                { mode === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } /> }
+                {
+                  params.view === 'chat' && <ChatPage
+                    auth = {auth}
+                    chatMessages={ chatMessages }
+                    createChatMessage={ createChatMessage }
+                    chatWith={ users.find(user => user.id === params.id )}
+                    /> 
+                }
+
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
                 { window.location.hash === '' && !auth.id && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
