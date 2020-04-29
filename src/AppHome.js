@@ -57,15 +57,6 @@ const AppHome = () => {
         : window.innerWidth < 2441 ? 'xl'
         : 'xxl' );
 
-    const headers = () => {
-        const token = window.localStorage.getItem('token');
-        return {
-            headers: {
-                authorization: token
-            }
-        };
-    };
-
     useEffect(()=>{
         const socket = io();
         socket.on('message', (message)=>{

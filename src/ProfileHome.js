@@ -25,7 +25,7 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, users })=>{
         <h1>{ auth.firstName } { auth.lastName }</h1>
         <ProfileCalendar auth = { auth }/>
         <div className = 'rowWrap spaceBetweenRow'>
-          <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ route(`#profile/settings/${ auth.id }`) } } value = 'Edit Profile' />
+          <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ route(`#profile/settings/${ auth.id }`) } value = 'Edit Profile' />
           <input type = 'button' className = 'bgDB colorAO borderLB border5 padQuarter' onClick={ ()=> route(`#job-history/${ auth.id }`) } value = 'History' />
         </div>
       </div>

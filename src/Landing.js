@@ -19,7 +19,7 @@ const Landing = ({ displayLogin, auth, route, breakpoint, posts, searchReturn, s
     setSearchContent(barVal.split(' ').reduce((acc, word) => {
       if(!acc.includes(word)){
         acc.push(word);
-      },
+      };
       return acc;
     }, []));
   };
@@ -52,7 +52,7 @@ const Landing = ({ displayLogin, auth, route, breakpoint, posts, searchReturn, s
           (auth.role === 'COMPANY' || auth.role === 'ADMIN') && <form onSubmit = { () => submitSearch(true) } className = 'rowNW widthundred marginRightHalf'>
           <input placeholder='search jobs' value = { searchTerms.join(' ') } onChange = { ({ target }) => updateTerms(target.value) } className = 'bgLB colorDB topLeft15 bottomLeft15 borderDB padHalf widthundred' />  
           <input type = 'submit' value = 'Search' className = 'bgDB colorOW borderDB topRight15 bottomRight15 padHalf' />
-        </form>
+        </form>}
       </div>
       <div className='marginHalf'>
         <h2>Find Local Labor without Having Kids!</h2>

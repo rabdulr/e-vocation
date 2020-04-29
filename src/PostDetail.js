@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import CreateBid from './CreateBid'
 import BidList from './BidList'
-import {getAllPosts} from './appMethods'
+import {getAllPosts, headers} from './appMethods'
 import { isString } from 'util';
 
 const PostDetail = ({auth, createBid, bids, users}) => {
@@ -18,7 +18,7 @@ const PostDetail = ({auth, createBid, bids, users}) => {
   // }, []);
 
   useEffect(()=>{
-    getAllPosts()
+    getAllPosts(headers)
       .then(gotEEm => setPost(gotEEm.data.filter(suspect => suspect.id === postId)[0]))
   },[postId])   //API call for POSTS
 

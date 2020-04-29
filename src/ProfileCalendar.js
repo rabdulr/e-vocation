@@ -6,7 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import moment from 'moment'
 import {getAllPosts} from './appMethods'
 
-function ProfileCalendar({auth, setFocus}){
+function ProfileCalendar({auth}){
   let calendarEl;//the div for the calendar
 
   const [ posts, setPosts] = useState({})
@@ -17,7 +17,6 @@ function ProfileCalendar({auth, setFocus}){
   const setUpCalendar = ()=> {
     const _calendar = new Calendar(calendarEl, {
       plugins: [ dayGridPlugin, interactionPlugin ],
-      // eventClick: (what) => setFocus(what.event._def.publicId)
     });
     _calendar.render();
     setCalendar(_calendar);
