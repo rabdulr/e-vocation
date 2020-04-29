@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 
-const Bids = ({bids, route, breakpoint, auth, posts, setFocus }) => {
+const Bids = ({ bids, route, breakpoint, auth, posts }) => {
     const [bidList, setBidList] = useState([]);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const Bids = ({bids, route, breakpoint, auth, posts, setFocus }) => {
           const currentPost = posts.find(post => post.id === bid.postId)
           return (
           <li key = { `post${ bid.postId }` } className = 'colorDB'>
-            <a href={`#post/${bid.postId}`} onClick = {()=>{setFocus(bid.postId)}}>
+            <a href={`#post/${bid.postId}`} >
               <h4 className = 'leftMarginHalf colorDB'>{ currentPost.title }</h4>
             </a>
             <div className = 'borderBB bgLB padHalf border10 marginHalf'>
