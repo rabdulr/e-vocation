@@ -27,6 +27,7 @@
     background-color: rgba(29, 35, 39, 70%);
 }
 .bottomBorderDB{
+    border-bottom: 1px solid;
     border-bottom-color: #1d2327;
 }
 

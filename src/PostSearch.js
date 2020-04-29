@@ -28,7 +28,7 @@ const PostSearch = ({auth, posts, route, breakpoint, createJobPost}) => {
     <div id="PostSearchRoot" className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowWrap' }` }>
       { postDisplay && < PostForm auth = { auth } createJobPost = { createJobPost } userId = { userId } setUserId = { setUserId } togglePost = { togglePost } /> }
       <div className = 'marginHalf columnNW alignCenter maxWidth4'>
-        <input type = 'button' value = 'Post New Job' onClick = { togglePost } className = 'EighteenPoint borderDB colorDB bgLB border15 padQuarter widthundred bottomMargin1' />
+        <input type = 'button' value = 'Post New Job' onClick = { togglePost } className = 'EighteenPoint borderDB colorOW bgBB border15 padQuarter widthundred bottomMargin1' />
         <h2 className = 'colorDB '>Posts</h2>
         <ul className = 'widthundred scrollable maxHeight4'>{ 
           posts.map(post => {
