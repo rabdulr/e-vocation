@@ -105,7 +105,14 @@ const AppHome = () => {
     useEffect(() => {
         if(auth.id){
             axios.get('/api/posts/getAllPosts', headers())
-                .then(allPosts => setPosts(allPosts.data))
+                .then(allPosts => {
+                    setPosts(allPosts.data);
+                    allPosts.data.forEach( post => {
+                        if(post.status === 'Active') {
+                            dropMarker(post)
+                        }
+                    } )
+                })
                 .catch(ex => console.log('AppHome.getAllPosts:', ex))
         }
     }, [auth]);
@@ -161,14 +168,11 @@ const AppHome = () => {
             zoom: 9,
             streetViewControl: false
         });
-        if(posts) {
-            posts.forEach(post => dropMarker(post))
-        }
     };
 
     const dropMarker = async ({title, latitude, longitude, id}) => {
         const location = {'lat': latitude*1, 'lng': longitude*1};
-        const contentString = `<a href='#post/${id}'<h4>${title}</h4></a>`
+        const contentString = `<a href='#post/${id}' onClick=${()=> {setFocus(id)}}><h4>${title}</h4></a>`
         const infowindow = await new google.maps.InfoWindow({
             'content': contentString
         });
