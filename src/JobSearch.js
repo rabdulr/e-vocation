@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
-const JobSearch = ({ result, searchReturn, setFocus, submitSearch, searchTerms, updateTerms, setSearchTerms, setSearchReturn, landSearch, setLandSearch }) => {
+const JobSearch = ({ result, searchReturn, submitSearch, searchTerms, updateTerms, setSearchTerms, setSearchReturn, landSearch, setLandSearch }) => {
 
     useEffect(() => {
         if(!landSearch){
@@ -30,7 +30,7 @@ const JobSearch = ({ result, searchReturn, setFocus, submitSearch, searchTerms, 
                 searchReturn.map(search => {
                     return(
                         <li key={ search.item.id } className = 'bgLB colorDB pad1 bottomBorderDB'>
-                            <a href={`#post/${search.item.id}`} onClick={()=>{setFocus(search.item.id)}} className = 'centerText'>
+                            <a href={`#post/${search.item.id}`} className = 'centerText'>
                                 <h4 className = 'leftMarginHalf colorDB'>{search.item.title}</h4>
                             </a>
                             <div>{ search.item.description }</div>
