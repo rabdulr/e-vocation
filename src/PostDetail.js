@@ -2,15 +2,29 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import CreateBid from './CreateBid'
 import BidList from './BidList'
+import {getAllPosts} from './appMethods'
+import { isString } from 'util';
 
-const PostDetail = ({auth, focus, post, createBid, bids, users, route}) => {
-  const [filteredBids, setFilteredBids] = useState(bids.filter(bid => bid.postId === post.id))
+const PostDetail = ({auth, createBid, bids, users}) => {
 
-  useEffect(() => {
-    if(!(auth.id)){
-        route('#');
-    }
-  }, []);
+  const [ post, setPost] = useState({})
+  const [ postId, setPostId] = useState(window.location.hash.split('#post/')[1])
+  const [filteredBids, setFilteredBids] = useState({})
+
+  // useEffect(() => {
+  //   if(!(auth.id)){
+  //       route('#');
+  //   }
+  // }, []);
+
+  useEffect(()=>{
+    getAllPosts()
+      .then(gotEEm => setPost(gotEEm.data.filter(suspect => suspect.id === postId)[0]))
+  },[postId])   //API call for POSTS
+
+  useEffect(()=>{
+    setFilteredBids(bids.filter(bid => bid.postId === post.id))
+  },[postId])
 
   return (
     <div id = 'PostDetailRoot'>

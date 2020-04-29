@@ -1,5 +1,5 @@
 class Users {
-    constructor(firstName, lastName, companyName, address, city, state, zip, username, password){
+    constructor(firstName, lastName, companyName, address, city, state, zip, latitude, longitude, username, password){
         this.firstName = firstName;
         this.lastName = lastName;
         this.companyName = companyName;
@@ -7,19 +7,23 @@ class Users {
         this.city = city;
         this.state = state;
         this.zip = zip;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.username = username;
         this.password = password;
     }
 };
 
 class Posts {
-    constructor(userId, acceptedId, title, description, industry, siteAddress, startDate, endDate, proposedBudget, status){
+    constructor(userId, acceptedId, title, description, industry, siteAddress, latitude, longitude, startDate, endDate, proposedBudget, status){
         this.userId = userId;
         this.acceptedId = acceptedId;
         this.title = title;
         this.description = description;
         this.industry = industry;
         this.siteAddress = siteAddress;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.startDate = startDate;
         this.endDate = endDate;
         this.proposedBudget = proposedBudget;
