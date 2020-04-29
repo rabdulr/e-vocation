@@ -6,8 +6,9 @@ import ProfileCalendar from './ProfileCalendar'
 //change key in same to post.id
 
 const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, route })=>{
-  const [list, setList] = useState([]);
-  const [events, setEvents] = useState([]);
+  const [ list, setList ] = useState([]);
+  const [ bidList, setBidList ] = useState([]);
+  const [ events, setEvents ] = useState([]);
   
   useEffect(() => {
     if(!(auth.id)){
@@ -18,6 +19,10 @@ const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, rou
   useEffect(() => {
     mode === 'COMPANY' ? setList([...bids]) : setList([...posts]);
   }, [mode, bids, posts]);
+
+  useEffect(() => {
+    setBidList(bids.filter(item => mode === 'COMPANY' ? item.bidderId === auth.id : item.userId === auth.id))
+  }, [bids, mode]);
 
   return(
     <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW alignCenter' : 'rowWrap spaceBetweenRow' } margin1` }>
@@ -39,13 +44,12 @@ const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, rou
           })
         }</ul>  
       </div> }
-      { list.length > 0 && <div className = 'columnNW widthundred topMargin1'>
+      { bidList.length > 0 && <div className = 'columnNW widthundred topMargin1'>
         <h3 className = 'centerText'>Conversations</h3>
         <ul className = 'scrollable widthundred maxHeight2 maxWidth4'>{
-          list.filter(item => mode === 'COMPANY' ? item.userId !== null : item.acceptedId !== null)
-          .reduce((acc, item) => {
-            if(!acc.includes(mode === 'COMPANY' ? item.userId : item.acceptedId)){
-              acc.push(mode === 'COMPANY' ? item.userId : item.acceptedId)
+          bidList.reduce((acc, item) => {
+            if(!acc.includes(mode === 'COMPANY' ? item.userId : item.bidderId)){
+              acc.push(mode === 'COMPANY' ? item.userId : item.bidderId)
             }
             return acc;
           }, [])
