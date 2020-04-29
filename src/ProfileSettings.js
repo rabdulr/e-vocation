@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { headers } from './appMethods';
 
-const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser, mode, setMode}) => {
+const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser }) => {
     const [id, setId] = useState(auth.id);
     const [role, setRole] = useState(auth.role);
     const [username, setUsername] = useState(auth.username);
@@ -21,7 +21,8 @@ const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser, mode, s
     }, []);
     
     const userMode = async ({ target }) => {
-        const response = await axios.put(`api/users/${ auth.id }`, { ...auth, role: mode }, headers())
+        //If there is no companyName, set up company info before allowing the request. There should be a cancel button.
+        const response = await axios.put(`api/users/${ auth.id }`, { ...auth, role: target.value.toUpperCase() }, headers())
         setAuth(response.data);
     }
 
@@ -39,8 +40,8 @@ const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser, mode, s
                     <div className = 'rowNW colorOW spaceBetweenRow'>
                         <div>Default Mode:</div>
                         <div>
-                            <input type = 'button' value = 'User' className = {`${ mode === 'USER' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topLeft5 bottomLeft5`} onClick = { ({ target }) => { setMode(target.value.toUpperCase()); userMode(event) } } />
-                            <input type = 'button' value = 'Company'  className = {`${ mode === 'COMPANY' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topRight5 bottomRight5`} onClick = { ({ target }) => { setMode(target.value.toUpperCase()); userMode(event) } } />    
+                            <input type = 'button' value = 'User' className = {`${ auth.role === 'USER' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topLeft5 bottomLeft5`} onClick = { (ev) => { userMode(ev) } } />
+                            <input type = 'button' value = 'Company'  className = {`${ auth.role === 'COMPANY' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topRight5 bottomRight5`} onClick = { (ev) => { userMode(ev) } } />    
                         </div>
                     </div>
                 </div>
