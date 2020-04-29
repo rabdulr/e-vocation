@@ -28,7 +28,7 @@ const ProfileHome = ({ auth, bids, posts, setPosts, breakpoint, users, route })=
           <input type = 'button' className = 'bgDB colorAO borderLB border5 fourteenPoint padHalf' onClick={ ()=> route(`#job-history/${ auth.id }`) } value = 'History' />
         </div>
       </div>
-      <ProfileCalendar  posts = { posts } auth = { auth } setFocus = { setFocus } />
+      <ProfileCalendar  posts = { posts } auth = { auth } />
       { list.length > 0 && <div className = 'columnNW'>
         <h3 className = 'topMargin1 bottomMargin1 centerText'>Most Recent { auth.role === 'COMPANY' ? 'Bids' : 'Jobs' }</h3>
         <ul className = 'scrollable maxHeight2 bgLB border5 maxWidth4'>{ 
