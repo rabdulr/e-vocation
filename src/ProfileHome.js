@@ -8,6 +8,7 @@ import ProfileCalendar from './ProfileCalendar'
 const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, route })=>{
   const [ list, setList ] = useState([]);
   const [ bidList, setBidList ] = useState([]);
+  const [ postList, setPostList ] = useState([]);
   const [ events, setEvents ] = useState([]);
   
   useEffect(() => {
@@ -19,6 +20,11 @@ const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, rou
   useEffect(() => {
     mode === 'COMPANY' ? setList([...bids]) : setList([...posts]);
   }, [mode, bids, posts]);
+
+  useEffect(() => {
+    const newList = list.filter(item => mode === 'COMPANY' ? item.bidderId === auth.id : item.userId === auth.id);
+    setPostList(newList.length >= 5 ? newList.slice(newList.length - 5, newList.length) : [...newList]);
+  }, [mode, posts, bids, list]);
 
   useEffect(() => {
     setBidList(bids.filter(item => mode === 'COMPANY' ? item.bidderId === auth.id : item.userId === auth.id))
@@ -34,10 +40,10 @@ const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, rou
         </div>
       </div>
       <ProfileCalendar  posts = { posts } auth = { auth } />
-      { list.length > 0 && <div className = 'columnNW'>
+      { postList.length > 0 && <div className = 'columnNW'>
         <h3 className = 'topMargin1 bottomMargin1 centerText'>Most Recent { mode === 'COMPANY' ? 'Bids' : 'Jobs' }</h3>
         <ul className = 'scrollable maxHeight2 bgLB border5 maxWidth4'>{ 
-          list.filter((item, idx) => idx < 5).map(item => {
+          postList.map(item => {
             return (
               <li key = { `bid${ Math.ceil(Math.random() * 1000) }${ mode === 'COMPANY' ? item.companyId : item.userId }` } className = 'bgAlphaDB colorLB border10 pad1 marginHalf'>{ mode === 'COMPANY' ? item.proposal : item.description }</li>
             )
