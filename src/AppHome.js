@@ -37,7 +37,7 @@ import Fuse from 'fuse.js';
 
 const AppHome = () => {
     const [users, setUsers] = useState([]);
-    // const [ratings, setRatings] = useState([]);
+    const [ errorMessage, setErrorMessage ] = useState({ text: '', status: 200 });
     const [logDisplay, setLogDisplay] = useState({ on: false, form: 'login' });
     const [posts, setPosts] = useState([]);
     const [bids, setBids] = useState([]);
@@ -277,8 +277,8 @@ const AppHome = () => {
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint } mode = { mode } setMode = { setMode } />
                 { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } mode = { mode } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } searchList = { searchList } setSearchList = { setSearchList } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } searchContent = { searchContent } setSearchContent = { setSearchContent } submitSearch = { submitSearch } updateTerms = { updateTerms } landSearch = { landSearch } setLandSearch = { setLandSearch } /> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost }/> }
-                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } mode = { mode } bids = { bids } posts = { posts } setPosts = {setPosts} breakpoint = { breakpoint } route = { route } users = { users }/> }
-                { window.location.hash === `#profile/settings/${ auth.id }` && <ProfileSettings auth = { auth } setAuth = { setAuth } breakpoint = { breakpoint } updateUser={updateUser} route = { route } mode = { mode } setMode = { setMode }/> }
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } mode = { mode } bids = { bids } posts = { posts } setPosts = {setPosts} breakpoint = { breakpoint } route = { route } users = { users } /> }
+                { window.location.hash === `#profile/settings/${ auth.id }` && <ProfileSettings auth = { auth } setAuth = { setAuth } breakpoint = { breakpoint } updateUser={updateUser} route = { route } mode = { mode } setMode = { setMode } errorMessage = { errorMessage } setErrorMessage = { setErrorMessage } /> }
                 { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }  
                 { window.location.hash === '#jobs' && <Jobs auth = { auth } mode = { mode } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
                 { mode === 'COMPANY' && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn }  searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } />}
