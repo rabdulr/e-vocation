@@ -43,7 +43,7 @@ const AppHome = () => {
     const [auth, setAuth] = useState({});
     const [ratings, setRatings] = useState([]);
     //const [chatBack, setChatBack] = useState('bgOW');
-    // const [focus, setFocus] = useState('');
+    // const [focus, setFocus] = useState(''); theEvilHasBeenDefeated.jpg
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
     const [breakpoint, setBreakpoint] = useState(window.innerWidth < 641 ? 'sm'
         : window.innerWidth < 769 ? 'md'
@@ -99,18 +99,6 @@ const AppHome = () => {
             route('#');
         }
     }, [auth]);
-
-    // useEffect(() => {
-    //     if(localStorage.getItem('focus')){
-    //         setFocus(localStorage.getItem('focus'))
-    //     }
-    //     console.log('on load '+focus)
-    // },[])
-    
-    // useEffect(()=>{
-    //     localStorage.setItem('focus', focus)
-    //     console.log('on focus change '+focus)
-    // },[focus])
 
     useEffect(() => {
         if(auth.id){
