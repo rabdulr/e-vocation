@@ -4,6 +4,19 @@ import axios from 'axios';
 const ChatPage = ({displayChat, socket, auth, params, user})=>{
     const [message, setMessage]= useState('')
     const messageObj = {senderId: auth.id, receiverId: params.id, username: auth.username, message: message};
+    console.log("1. auth.id: ",auth.id)
+    let tempAuth = auth.id;
+
+    //testing refresh
+    let refresh = window.localStorage.getItem('refresh');
+    console.log(refresh);
+    if (refresh===null){
+        window.location.reload();
+        window.localStorage.setItem('refresh', "1");
+    }
+
+    console.log("2. auth.id:", auth.id)
+    console.log("3. tempAuth: ", tempAuth )
 
     if (!params.id){
         params.id = "General Chat"
