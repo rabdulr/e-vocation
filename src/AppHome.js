@@ -44,7 +44,7 @@ const AppHome = () => {
     const [contracts, setContracts] = useState([]);
     const [auth, setAuth] = useState({});
     const [ratings, setRatings] = useState([]);
-
+    const [mode, setMode] = useState('');
     const [ searchReturn, setSearchReturn ] = useState([]);
     const [ searchList, setSearchList ] = useState([]);
     const [ searchTerms, setSearchTerms ] = useState([]);     //only for the searchBar
@@ -206,7 +206,7 @@ const AppHome = () => {
 
     const exchangeTokenForAuth = async() => {
         const response = await axios.get('/api/auth', headers())
-        .then(user => setAuth(user.data))
+        .then(user => { setAuth(user.data); console.log(user); setMode(user.data.role !== 'ADMIN' ? user.data.role : 'COMPANY') })
         .catch(ex => console.log('AppHome.exchangeTokenForAuth:', ex));
     }
 
@@ -275,15 +275,15 @@ const AppHome = () => {
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint }/>
-                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } searchList = { searchList } setSearchList = { setSearchList } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } searchContent = { searchContent } setSearchContent = { setSearchContent } submitSearch = { submitSearch } updateTerms = { updateTerms } landSearch = { landSearch } setLandSearch = { setLandSearch } /> }
+                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } mode = { mode } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } searchList = { searchList } setSearchList = { setSearchList } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } searchContent = { searchContent } setSearchContent = { setSearchContent } submitSearch = { submitSearch } updateTerms = { updateTerms } landSearch = { landSearch } setLandSearch = { setLandSearch } /> }
                 { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost }/> }
-                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } setPosts = {setPosts} breakpoint = { breakpoint } route = { route } users = { users }/> }
-                { window.location.hash === `#profile/settings/${ auth.id }` && <ProfileSettings auth = { auth } setAuth = { setAuth } breakpoint = { breakpoint } updateUser={updateUser} route = { route }/> }
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } mode = { mode } bids = { bids } posts = { posts } setPosts = {setPosts} breakpoint = { breakpoint } route = { route } users = { users }/> }
+                { window.location.hash === `#profile/settings/${ auth.id }` && <ProfileSettings auth = { auth } setAuth = { setAuth } breakpoint = { breakpoint } updateUser={updateUser} route = { route } mode = { mode } setMode = { setMode }/> }
                 { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }  
-                { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
-                { (auth.role === 'COMPANY' || auth.role === 'ADMIN') && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn }  searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } />}
-                { window.location.hash.includes(`#post/`) && <PostDetail auth = { auth } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
-                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } /> }
+                { window.location.hash === '#jobs' && <Jobs auth = { auth } mode = { mode } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
+                { mode === 'COMPANY' && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn }  searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } />}
+                { window.location.hash.includes(`#post/`) && <PostDetail auth = { auth } mode = { mode } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
+                { mode === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } /> }
                 { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params} headers = {headers} user = {users.filter(user => user.id === params.id)}/> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}

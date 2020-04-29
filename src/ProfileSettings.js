@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { headers } from './appMethods';
 
-const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser}) => {
-    const [mode, setMode] = useState(auth.role !== 'ADMIN' ? auth.role : null);
+const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser, mode, setMode}) => {
     const [id, setId] = useState(auth.id);
     const [role, setRole] = useState(auth.role);
     const [username, setUsername] = useState(auth.username);
@@ -22,8 +21,7 @@ const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser}) => {
     }, []);
     
     const userMode = async ({ target }) => {
-        event.preventDefault();
-        const response = await axios.put(`api/users/${ auth.id }`, { ...auth, role: mode.toUpperCase() }, headers())
+        const response = await axios.put(`api/users/${ auth.id }`, { ...auth, role: mode }, headers())
         setAuth(response.data);
     }
 
@@ -37,12 +35,15 @@ const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser}) => {
         <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>
             <div className = 'columnNW bgAlphaBB marginHalf pad1 border10'>
                 <h3 className = 'colorOW widthundred centerText marginHalf'>{ auth.username } Settings</h3>
-                { mode && <div>
-                    <div>
-                        <input type = 'button' value = 'User' onClick = { ev => { userMode(ev) } } />
-                        <input type = 'button' value = 'Company' onClick = { ev => { userMode(ev) } } />
+                <div>
+                    <div className = 'rowNW colorOW spaceBetweenRow'>
+                        <div>Default Mode:</div>
+                        <div>
+                            <input type = 'button' value = 'User' className = {`${ mode === 'USER' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topLeft5 bottomLeft5`} onClick = { ({ target }) => { setMode(target.value.toUpperCase()); userMode(event) } } />
+                            <input type = 'button' value = 'Company'  className = {`${ mode === 'COMPANY' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topRight5 bottomRight5`} onClick = { ({ target }) => { setMode(target.value.toUpperCase()); userMode(event) } } />    
+                        </div>
                     </div>
-                </div> }
+                </div>
                 <form onSubmit = { onSubmit }>
                     <div className = 'rowNW colorOW spaceBetweenRow topMarginHalf'>
                         <div>First Name</div>

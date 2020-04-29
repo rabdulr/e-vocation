@@ -11,11 +11,11 @@ const users = {
 
         return (await client.query(SQL, [firstName, lastName, companyName, address, city, state, zip, latitude, longitude, username, await hash(password)])).rows[0];
     },
-    updateUser: async({ firstName, lastName, companyName, address, city, state, zip, username, id }) => {
+    updateUser: async({ firstName, lastName, companyName, address, city, state, zip, role, username, id }) => {
 
-        const SQL =`UPDATE users SET "firstName"=$1, "lastName"=$2, "companyName"=$3, address=$4, city=$5, state=$6, zip=$7, username=$8 WHERE id=$9 RETURNING *`;
+        const SQL =`UPDATE users SET "firstName"=$1, "lastName"=$2, "companyName"=$3, address=$4, city=$5, state=$6, zip=$7, role = $8, username=$9 WHERE id=$10 RETURNING *`;
 
-        return (await client.query(SQL, [firstName, lastName, companyName, address, city, state, zip, username, id])).rows[0];
+        return (await client.query(SQL, [firstName, lastName, companyName, address, city, state, zip, role, username, id])).rows[0];
     },
     findUser: async({email}) => {
         return (await client.query(`SELECT * FROM users WHERE username=$1`, [email])).rows[0];

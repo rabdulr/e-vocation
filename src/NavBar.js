@@ -19,15 +19,9 @@ const NavBar = ({ auth, setAuth, displayLogin, route, breakpoint }) => {
       </nav>
       { dropVis && <section className = { `columnNW z1 frosted bgAlphaDB colorOW widthundred` }>
         <a href = { `#profile/${ auth.id }` } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Profile</a>
-        { 
-        // (auth.role === 'USER' || auth.role === 'ADMIN') && 
-        // Making it so that everyone can see everything
-        <a href = { '#posts' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Posts</a> }
+        <a href = { '#posts' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Posts</a>
         <a href = { '#jobs' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Jobs</a>
-        { 
-        // (auth.role === 'COMPANY' || auth.role === 'ADMIN') &&
-        // Making it so that everyone can see everything 
-        <a href = { '#bids' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Bids</a> }
+        <a href = { '#bids' } onClick = { () => setDropVis(!dropVis) } className = 'bottomBorderOW widthundred centerText padQuarter'>Bids</a> 
         <a href = { '#contracts/active' } onClick = { ({ target }) => setDropVis(!dropVis)} className = 'bottomBorderOW widthundred centerText padQuarter'>Contracts</a>
       </section> }
     </div>
