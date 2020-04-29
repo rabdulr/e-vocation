@@ -57,15 +57,6 @@ const AppHome = () => {
         : window.innerWidth < 2441 ? 'xl'
         : 'xxl' );
 
-    const headers = () => {
-        const token = window.localStorage.getItem('token');
-        return {
-            headers: {
-                authorization: token
-            }
-        };
-    };
-
     useEffect(()=>{
         const socket = io();
         socket.on('message', (message)=>{
@@ -173,7 +164,7 @@ const AppHome = () => {
 
     const dropMarker = async ({title, latitude, longitude, id}) => {
         const location = {'lat': latitude*1, 'lng': longitude*1};
-        const contentString = `<a href='#post/${id}' onClick=${()=> {setFocus(id)}}><h4>${title}</h4></a>`
+        const contentString = `<a href='#post/${id}'><h4>${title}</h4></a>`
         const infowindow = await new google.maps.InfoWindow({
             'content': contentString
         });
@@ -290,11 +281,10 @@ const AppHome = () => {
                 { window.location.hash === `#profile/settings/${ auth.id }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser} route = { route }/> }
                 { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }  
                 { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
-                { (auth.role === 'COMPANY' || auth.role === 'ADMIN') && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn } setFocus = { setFocus } searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } />}
+                { (auth.role === 'COMPANY' || auth.role === 'ADMIN') && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn }  searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } />}
                 { window.location.hash.includes(`#post/`) && <PostDetail auth = { auth } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
                 { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } /> }
-                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params} headers = {headers}/> }
-                 user = {users.filter(user => user.id === params.id)}/> }
+                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params} headers = {headers} user = {users.filter(user => user.id === params.id)}/> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
                 { window.location.hash === '' && !auth.id && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
