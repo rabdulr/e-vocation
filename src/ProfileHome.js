@@ -47,11 +47,9 @@ const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, rou
             if(!acc.includes(mode === 'COMPANY' ? item.userId : item.acceptedId)){
               acc.push(mode === 'COMPANY' ? item.userId : item.acceptedId)
             }
-            console.log(acc);
             return acc;
           }, [])
           .map(id => {
-            console.log(id)
             return (
               <li key = { `chat${ id }` } className = 'bgDB marginHalf centerText padHalf border5'><a href = { `#view=chat&id=${ id }` } className = 'colorBB'>{ mode === 'COMPANY' ? users.find(user => user.id === id).username : users.find(user => user.id === id).companyName }</a></li>
             )

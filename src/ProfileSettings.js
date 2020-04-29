@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { headers } from './appMethods';
+import DenialForm from './DenialForm';
 
-const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser }) => {
+const ProfileSettings = ({ auth, setAuth, errorMessage, setErrorMessage, route, breakpoint, updateUser }) => {
     const [id, setId] = useState(auth.id);
     const [role, setRole] = useState(auth.role);
     const [username, setUsername] = useState(auth.username);
@@ -14,34 +15,44 @@ const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser }) => {
     const [state, setState] = useState(auth.state);
     const [zip, setZip] = useState(auth.zip);
 
+    const [ toggleDenial, setToggleDenial ] = useState(false);
+
     useEffect(() => {
         if(!(auth.id)){
             route('#');
         }
     }, []);
     
+    const submitMode = ({ target }) => {
+        if(auth.companyName){
+            userMode({ target });
+        }else{
+            setErrorMessage({ text: "You Haven't Set Up Company Information Yet", status: 404 }); setToggleDenial(true);
+        };
+    };
+
     const userMode = async ({ target }) => {
-        //If there is no companyName, set up company info before allowing the request. There should be a cancel button.
         const response = await axios.put(`api/users/${ auth.id }`, { ...auth, role: target.value.toUpperCase() }, headers())
         setAuth(response.data);
-    }
+    };
 
     const onSubmit = ({ target }) => {
         event.preventDefault();
         const updatedInfo = {id, role, username, password, firstName, lastName, address, city, state, zip}
         updateUser(updatedInfo)
-    }
+    };
 
     return (
         <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>
+            { toggleDenial && <DenialForm errorMessage = { errorMessage } setToggleDenial = { setToggleDenial } /> }
             <div className = 'columnNW bgAlphaBB marginHalf pad1 border10'>
                 <h3 className = 'colorOW widthundred centerText marginHalf'>{ auth.username } Settings</h3>
                 <div>
                     <div className = 'rowNW colorOW spaceBetweenRow'>
                         <div>Default Mode:</div>
                         <div>
-                            <input type = 'button' value = 'User' className = {`${ auth.role === 'USER' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topLeft5 bottomLeft5`} onClick = { (ev) => { userMode(ev) } } />
-                            <input type = 'button' value = 'Company'  className = {`${ auth.role === 'COMPANY' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topRight5 bottomRight5`} onClick = { (ev) => { userMode(ev) } } />    
+                            <input type = 'button' value = 'User' className = {`${ auth.role === 'USER' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topLeft5 bottomLeft5`} onClick = { (ev) => { submitMode(ev) } } />
+                            <input type = 'button' value = 'Company'  className = {`${ auth.role === 'COMPANY' ? 'bgAO colorDB borderAO' : 'bgDB colorAO borderDB' } padHalf topRight5 bottomRight5`} onClick = { (ev) => { submitMode(ev) } } />    
                         </div>
                     </div>
                 </div>
