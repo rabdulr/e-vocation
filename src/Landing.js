@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Fuse from 'fuse.js';
 import moment from 'moment';
 
-const Landing = ({ displayLogin, auth, route, breakpoint, posts, searchReturn, setSearchReturn, result, searchList, setSearchList, searchTerms, setSearchTerms, searchContent, setSearchContent, submitSearch, updateTerms, setLandSearch }) => {
-<<<<<<< HEAD
+const Landing = ({ displayLogin, auth, route, breakpoint, posts, setSearchReturn, result, searchList, setSearchList, searchTerms, setSearchTerms, searchContent, setSearchContent, submitSearch, updateTerms, setLandSearch }) => {
   const [ searchTerms, setSearchTerms ] = useState([]);     //only for the searchBar
   const [ searchContent, setSearchContent ] = useState([]); //this is the actual search dataconst Landing = ({ displayLogin, auth, route, breakpoint, posts }) => {
   const [ searchList, setSearchList ] = useState([]);
@@ -44,8 +43,6 @@ const Landing = ({ displayLogin, auth, route, breakpoint, posts, searchReturn, s
     setLandSearch(false);
     setSearchTerms([]);
   }, []);
-=======
->>>>>>> 375ad030c69581cc0972ce0fa06194ea1fe40cd3
 
   return(
     <div id='LandingRoot' className={ `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW' : 'rowNW' }` }>
@@ -57,12 +54,7 @@ const Landing = ({ displayLogin, auth, route, breakpoint, posts, searchReturn, s
           (auth.role === 'COMPANY' || auth.role === 'ADMIN') && <form onSubmit = { () => submitSearch(true) } className = 'rowNW widthundred marginRightHalf'>
           <input placeholder='search jobs' value = { searchTerms.join(' ') } onChange = { ({ target }) => updateTerms(target.value) } className = 'bgLB colorDB topLeft15 bottomLeft15 borderDB padHalf widthundred' />  
           <input type = 'submit' value = 'Search' className = 'bgDB colorOW borderDB topRight15 bottomRight15 padHalf' />
-<<<<<<< HEAD
         </form>}
-=======
-        </form> 
-        }
->>>>>>> 375ad030c69581cc0972ce0fa06194ea1fe40cd3
       </div>
       <div className='marginHalf'>
         <h2>Find Local Labor without Having Kids!</h2>
