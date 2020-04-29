@@ -33,6 +33,8 @@ const sync = async() => {
             city VARCHAR(100),
             state VARCHAR(25),
             zip VARCHAR(10),
+            latitude VARCHAR(150),
+            longitude VARCHAR(150),
             username VARCHAR(100) NOT NULL UNIQUE,
             password VARCHAR(100),
             "googleId" VARCHAR(50),
@@ -58,6 +60,8 @@ const sync = async() => {
             "startDate" DATE,
             "endDate" DATE,
             "siteAddress" TEXT,
+            latitude VARCHAR(150),
+            longitude VARCHAR(150),
             "proposedBudget" INT,
             status post_status
         );
