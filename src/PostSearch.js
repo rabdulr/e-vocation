@@ -3,7 +3,7 @@ import {Posts} from '../db/models/constructors';
 import moment from 'moment';
 import PostForm from './PostForm';
 
-const PostSearch = ({auth, posts, route, breakpoint, createJobPost, setFocus}) => {
+const PostSearch = ({auth, posts, route, breakpoint, createJobPost}) => {
   const [userId, setUserId] = useState('');
   const [postDisplay, setPostDisplay] = useState(false);
 
@@ -34,7 +34,7 @@ const PostSearch = ({auth, posts, route, breakpoint, createJobPost, setFocus}) =
           posts.map(post => {
             return (
             <li key = { `post${ post.id }` } className = 'colorDB'>
-              <a  href = {`#post/${post.id}`} onClick = {()=>{setFocus(post.id)}}>
+              <a  href = {`#post/${post.id}`} >
                 <h4 className = 'leftMarginHalf colorDB'>{ post.title }</h4>
               </a>
               <div className = 'borderBB bgLB padHalf border10 marginHalf'>

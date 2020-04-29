@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react';
 import qs from 'qs';
 import axios from 'axios';
 import moment from 'moment'
+import { headers, getAllPosts } from './appMethods'
 // Components
 import NavBar from './NavBar';
 import Landing from './Landing';
@@ -34,15 +35,6 @@ import Contracts from './Contracts';
 import GoogleNewUser from './GoogleNewUser'
 import Fuse from 'fuse.js';
 
-const headers = () => {
-    const token = window.localStorage.getItem('token');
-    return {
-        headers: {
-            authorization: token
-        }
-    };
-};
-
 const AppHome = () => {
     const [users, setUsers] = useState([]);
     // const [ratings, setRatings] = useState([]);
@@ -52,18 +44,27 @@ const AppHome = () => {
     const [contracts, setContracts] = useState([]);
     const [auth, setAuth] = useState({});
     const [ratings, setRatings] = useState([]);
+
     const [ searchReturn, setSearchReturn ] = useState([]);
     const [ searchList, setSearchList ] = useState([]);
     const [ searchTerms, setSearchTerms ] = useState([]);     //only for the searchBar
     const [ searchContent, setSearchContent ] = useState([]); //this is the actual search data
     const [ landSearch, setLandSearch ] = useState(false);
-    const [focus, setFocus] = useState('');
     const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
     const [breakpoint, setBreakpoint] = useState(window.innerWidth < 641 ? 'sm'
         : window.innerWidth < 769 ? 'md'
         : window.innerWidth < 1025 ? 'lg'
         : window.innerWidth < 2441 ? 'xl'
         : 'xxl' );
+
+    const headers = () => {
+        const token = window.localStorage.getItem('token');
+        return {
+            headers: {
+                authorization: token
+            }
+        };
+    };
 
     useEffect(()=>{
         const socket = io();
@@ -283,16 +284,16 @@ const AppHome = () => {
                 { logDisplay.on === true && logDisplay.form === 'login' && <LoginForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 { logDisplay.on === true && logDisplay.form === 'sign' && <SignInForm displayLogin = { displayLogin } login = { login } toggleForm = { toggleForm } /> }
                 <NavBar displayLogin = { displayLogin } auth = { auth } setAuth = { setAuth } route = { route } breakpoint = { breakpoint }/>
-                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} setFocus={ setFocus } searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } searchList = { searchList } setSearchList = { setSearchList } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } searchContent = { searchContent } setSearchContent = { setSearchContent } submitSearch = { submitSearch } updateTerms = { updateTerms } landSearch = { landSearch } setLandSearch = { setLandSearch } /> }
-                { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost } setFocus = {setFocus}/> }
-                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } breakpoint = { breakpoint } route = { route } setFocus = { setFocus } users = { users } /> }
-                { window.location.hash === `#profile/settings/${ focus }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser} route = { route }/> }
-                { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }
-                { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route } /> }
+                { window.location.hash === '' && <Landing displayLogin = { displayLogin } route = { route } auth = { auth } breakpoint = { breakpoint } posts={posts.filter(post => post.status === 'Active')} searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } searchList = { searchList } setSearchList = { setSearchList } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } searchContent = { searchContent } setSearchContent = { setSearchContent } submitSearch = { submitSearch } updateTerms = { updateTerms } landSearch = { landSearch } setLandSearch = { setLandSearch } /> }
+                { auth.id && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = {posts} route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost }/> }
+                { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } bids = { bids } posts = { posts } setPosts = {setPosts} breakpoint = { breakpoint } route = { route } users = { users }/> }
+                { window.location.hash === `#profile/settings/${ auth.id }` && <ProfileSettings auth = { auth } breakpoint = { breakpoint } updateUser={updateUser} route = { route }/> }
+                { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }  
+                { window.location.hash === '#jobs' && <Jobs auth = { auth } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
                 { (auth.role === 'COMPANY' || auth.role === 'ADMIN') && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn } setFocus = { setFocus } searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } />}
-                { window.location.hash === `#post/${ focus }` && <PostDetail auth = { auth } focus = { focus } post = { posts.find(post => post.id === focus) } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
-                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } setFocus={ setFocus }/> }
-                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params}
+                { window.location.hash.includes(`#post/`) && <PostDetail auth = { auth } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
+                { auth.role === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } /> }
+                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params} headers = {headers}/> }
                  user = {users.filter(user => user.id === params.id)}/> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts} ratings={ratings} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
