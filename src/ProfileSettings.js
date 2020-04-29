@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { headers } from './appMethods';
 
-const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
+const ProfileSettings = ({ auth, setAuth, route, breakpoint, updateUser}) => {
     const [mode, setMode] = useState(auth.role !== 'ADMIN' ? auth.role : null);
     const [id, setId] = useState(auth.id);
     const [role, setRole] = useState(auth.role);
@@ -14,16 +16,15 @@ const ProfileSettings = ({ auth, route, breakpoint, updateUser}) => {
     const [zip, setZip] = useState(auth.zip);
 
     useEffect(() => {
-        console.log(mode);
-        console.log(auth.role);
         if(!(auth.id)){
             route('#');
         }
     }, []);
     
-    const userMode = ({ target }) => {
+    const userMode = async ({ target }) => {
         event.preventDefault();
-        console.log(target.value.toUpperCase());
+        const response = await axios.put(`api/users/${ auth.id }`, { ...auth, role: mode.toUpperCase() }, headers())
+        setAuth(response.data);
     }
 
     const onSubmit = ({ target }) => {
