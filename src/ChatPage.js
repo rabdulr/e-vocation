@@ -8,12 +8,12 @@ const ChatPage = ({displayChat, socket, auth, params, user})=>{
     let tempAuth = auth.id;
 
     //testing refresh
-    let refresh = window.localStorage.getItem('refresh');
-    console.log(refresh);
-    if (refresh===null){
-        window.location.reload();
-        window.localStorage.setItem('refresh', "1");
-    }
+    // let refresh = window.localStorage.getItem('refresh');
+    // console.log(refresh);
+    // if (refresh===null){
+    //     window.location.reload();
+    //     window.localStorage.setItem('refresh', "1");
+    // }
 
     console.log("2. auth.id:", auth.id)
     console.log("3. tempAuth: ", tempAuth )
