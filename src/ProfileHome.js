@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { runInContext } from 'vm';
 import ProfileCalendar from './ProfileCalendar'
 
-// slice instead of filter on most recent list?
-//change key in same to post.id
-
 const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, route })=>{
   const [ list, setList ] = useState([]);
   const [ bidList, setBidList ] = useState([]);
@@ -22,7 +19,11 @@ const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, rou
   }, [mode, bids, posts]);
 
   useEffect(() => {
-    const newList = list.filter(item => mode === 'COMPANY' ? item.bidderId === auth.id : item.userId === auth.id);
+    const newList = list.filter(item => mode === 'COMPANY' ? item.bidderId === auth.id : item.userId === auth.id).sort((l, r) => {
+      return l.startDate > r.startDate ? 1
+      : l.startDate === r.startDate ? 0
+      : -1
+    });
     setPostList(newList.length >= 5 ? newList.slice(newList.length - 5, newList.length) : [...newList]);
   }, [mode, posts, bids, list]);
 
@@ -45,7 +46,10 @@ const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, rou
         <ul className = 'scrollable maxHeight2 bgLB border5 maxWidth4'>{ 
           postList.map(item => {
             return (
-              <li key = { `bid${ Math.ceil(Math.random() * 1000) }${ mode === 'COMPANY' ? item.companyId : item.userId }` } className = 'bgAlphaDB colorLB border10 pad1 marginHalf'>{ mode === 'COMPANY' ? item.proposal : item.description }</li>
+              <li key = { `bid${ Math.ceil(Math.random() * 1000) }${ mode === 'COMPANY' ? item.companyId : item.userId }` } className = 'bgAlphaDB colorLB border10 pad1 marginHalf'>
+                <a href = { `#post/${ mode === 'COMPANY' ? item.postId : item.id }` }>{ mode === 'COMPANY' ? posts.find(post => item.postId === post.id).title : item.title }</a>
+                <div className = 'topMargin1'>{ mode === 'COMPANY' ? item.proposal : item.description }</div>
+              </li>
             )
           })
         }</ul>  
