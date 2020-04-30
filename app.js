@@ -82,11 +82,17 @@ app.use('/api/posts', api.posts.router);
 
 app.use('/api/users', api.users.router);
 
-app.use('/api/bids', api.bids.router);
-
 app.use('/api/google', api.google.router);
 
 app.use('/api/chats', api.chats.router);
+
+app.use('/api/bids', api.bids.router);
+
+app.put('/api/bids/changeStatus', (req, res, next) => {
+  models.bids.changeStatus(req.body)
+    .then(bid => res.send(bid))
+    .catch(next)
+})
 
 app.post('/api/createUser', (req, res, next) => {
   models.users.create(req.body)

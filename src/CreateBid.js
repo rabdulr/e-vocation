@@ -50,6 +50,12 @@ const CreateBid = ({post, auth, createBid, bids}) => {
               </p>
             </div>
           }
+          {
+            bidState === 'deleted' && 
+            <div>
+              <h3>Your bid has been closed.(</h3>
+            </div>
+          }
       </div>
     )
 }
