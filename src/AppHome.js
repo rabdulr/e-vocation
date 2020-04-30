@@ -56,31 +56,63 @@ const AppHome = () => {
         : window.innerWidth < 2441 ? 'xl'
         : 'xxl' );
 
+    const [socket, setSocket] = useState(null);
+    const [tempMessage, setTempMessage]= useState({});
+
+    //workaround for auth
     useEffect(()=>{
-        const socket = io();
-        socket.on('message', (message)=>{
-            displayChat(message, auth);
-        })
-        socket.on('history', (messages)=>{
-            messages.forEach(message => displayChat(message, auth))
-        })
+        if(auth){
+            window.tempAuth = auth;
+        }
     }, [auth])
 
-    const displayChat = (message, auth)=>{
-        if (params.id === "General Chat"){
-            const list = document.querySelector('#messages')
-            list.innerHTML += `<li class = 'padHalf'> ${message.username}: ${message.message}</li>`;
-            document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
-        }
-        else if((params.id === message.senderId) && (auth.id === message.receiverId) ||
-            (auth.id === message.senderId) && ( params.id === message.receiverId)){
+    const [chatMessages, setChatMessages] = useState([]);
 
-            const list = document.querySelector('#messages')
-            list.innerHTML += `<li class = 'padHalf'> <strong>${message.username}: </strong> ${message.message}</li>`;
-            //setChatBack(chatBack === 'bgOW' ? 'bgLB' : 'bgOW');
-            document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
+    //grab old messages from specific user
+    useEffect(()=>{
+        if(params.view === "chat"){
+            axios.get(`/api/chats/getChats/${auth.id}/${params.id}`)
+            .then((chatHistory)=>{
+                setChatMessages(chatHistory.data)
+            })
         }
+    }, [params, auth])
+
+    const addMessage = (message)=>{
+        const temp = [...chatMessages]
+        temp.push(message)
+        setChatMessages(temp)
     }
+
+    const createChatMessage = (message)=>{
+        axios.post('/api/chats/createChat', {...message, senderId: auth.id})
+        .then(response =>{
+            addMessage(response.data)
+            socket.emit('message', response.data)
+
+        })
+    }
+
+    useEffect(()=>{
+        setSocket(io())
+    }, [])
+
+    useEffect(()=>{
+        if(tempMessage.message){
+            addMessage(tempMessage)
+            setTempMessage({})
+        }
+    },[tempMessage])
+
+    useEffect(()=>{
+        if(socket){
+            socket.on("message",(message)=>{
+                if(message.receiverId === window.tempAuth.id){
+                    setTempMessage(message)
+                }
+            })
+        }
+    },[socket])
 
     useEffect(() => {
         const token = window.localStorage.getItem('token');
@@ -249,7 +281,7 @@ const AppHome = () => {
         keys: ['title', 'description', 'industry'],
         threshold: 0.6
     };
-    
+
     const fuse = new Fuse(searchList, options);
 
     const result = fuse.search(searchTerms.toString());
@@ -257,7 +289,7 @@ const AppHome = () => {
     useEffect(()=> {
         if(posts){
             setSearchList(posts);
-        }  
+        }
     }, [posts]);
 
     return (
@@ -270,12 +302,12 @@ const AppHome = () => {
                 { mode === 'USER' && window.location.hash === '#posts' && <PostSearch auth = { auth } posts = { posts.filter(post => post.userId === auth.id) } route = { route } breakpoint = { breakpoint } createJobPost={ createJobPost }/> }
                 { window.location.hash === `#profile/${ auth.id }` && <ProfileHome auth = { auth } mode = { mode } bids = { bids } posts = { posts } setPosts = {setPosts} breakpoint = { breakpoint } route = { route } users = { users } /> }
                 { window.location.hash === `#profile/settings/${ auth.id }` && <ProfileSettings auth = { auth } setAuth = { setAuth } breakpoint = { breakpoint } updateUser={updateUser} route = { route } mode = { mode } setMode = { setMode } errorMessage = { errorMessage } setErrorMessage = { setErrorMessage } /> }
-                { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }  
+                { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }
                 { window.location.hash === '#jobs' && <Jobs auth = { auth } mode = { mode } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
                 { mode === 'COMPANY' && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn }  searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } />}
                 { window.location.hash.includes(`#post/`) && <PostDetail auth = { auth } mode = { mode } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
                 { mode === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } /> }
-                { params.view === `chat` && <ChatPage  displayChat = {displayChat} auth = {auth} route = { route } params = {params} headers = {headers} user = {users.filter(user => user.id === params.id)}/> }
+                { params.view === `chat` && <ChatPage auth = {auth} chatMessages = {chatMessages} createChatMessage = {createChatMessage} route = { route } params = {params} headers = {headers} user = {users.filter(user => user.id === params.id)}/> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts.filter(contract => auth.id === (mode === 'COMPANY' ? contract.bidderId : contract.userId))} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
                 { window.location.hash === '' && !auth.id && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
