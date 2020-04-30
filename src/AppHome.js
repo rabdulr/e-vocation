@@ -130,11 +130,6 @@ const AppHome = () => {
             axios.get('/api/posts/getAllPosts', headers())
                 .then(allPosts => {
                     setPosts(allPosts.data);
-                    allPosts.data.forEach( post => {
-                        if(post.status === 'Active') {
-                            dropMarker(post)
-                        }
-                    } )
                 })
                 .catch(ex => console.log('AppHome.getAllPosts:', ex))
         }
@@ -170,10 +165,10 @@ const AppHome = () => {
         })
     }, []);
 
-    useEffect(() => {
-        if(auth)
-            initMap();
-    }, [auth]);
+    // useEffect(() => {
+    //     if(auth)
+    //         initMap();
+    // }, [auth]);
 
     let map;
 
@@ -191,6 +186,7 @@ const AppHome = () => {
         const infowindow = await new google.maps.InfoWindow({
             'content': contentString
         });
+        console.log('location: ', location, 'Map: ', map)
         const marker = await new google.maps.Marker({'position': location, 'map': map, 'title': title});
         marker.addListener('click', function() {
             infowindow.open(map, marker)
@@ -271,21 +267,22 @@ const AppHome = () => {
         event.preventDefault();
         //do something with searchContent
         setSearchReturn(result);
+        console.log(result)
         if(landSearch !== bool){
             setLandSearch(bool);
-        }
+        }        
         route('#jobs/search');
       };
 
     const options = {
         includeScore: true,
         keys: ['title', 'description', 'industry'],
-        threshold: 0.6
+        threshold: 0.7
     };
 
     const fuse = new Fuse(searchList, options);
 
-    const result = fuse.search(searchTerms.toString());
+    const result = fuse.search(searchTerms.toString()).filter(post => post.item.status === 'Active');
 
     useEffect(()=> {
         if(posts){
@@ -305,7 +302,7 @@ const AppHome = () => {
                 { window.location.hash === `#profile/settings/${ auth.id }` && <ProfileSettings auth = { auth } setAuth = { setAuth } breakpoint = { breakpoint } updateUser={updateUser} route = { route } mode = { mode } setMode = { setMode } errorMessage = { errorMessage } setErrorMessage = { setErrorMessage } /> }
                 { window.location.hash === `#job-history/${ auth.id }` && <JobHistory auth = { auth } route = { route } posts = { posts } breakpoint = { breakpoint } /> }
                 { window.location.hash === '#jobs' && <Jobs auth = { auth } mode = { mode } posts = { posts } setPosts = { setPosts } breakpoint = { breakpoint } bids = { bids } users = { users } route = { route }/> }
-                { mode === 'COMPANY' && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn }  searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } />}
+                { mode === 'COMPANY' && window.location.hash === '#jobs/search' && <JobSearch auth = { auth } result = { result } searchReturn = { searchReturn }  searchReturn = { searchReturn } setSearchReturn = { setSearchReturn } result = { result } submitSearch = { submitSearch } searchTerms = { searchTerms } setSearchTerms = { setSearchTerms } updateTerms = { updateTerms } setSearchReturn = { setSearchReturn } landSearch = { landSearch } setLandSearch = { setLandSearch } initMap = { initMap } auth = { auth } dropMarker = { dropMarker } />}
                 { window.location.hash.includes(`#post/`) && <PostDetail auth = { auth } mode = { mode } createBid = { createBid } bids = { bids } users = { users } route = { route }/>}
                 { mode === 'COMPANY' && window.location.hash === '#bids' && <Bids bids = {bids} auth = { auth } breakpoint = { breakpoint } route = { route } posts={ posts } /> }
                 { params.view === `chat` && <ChatPage auth = {auth} chatMessages = {chatMessages} createChatMessage = {createChatMessage} route = { route } params = {params} headers = {headers} user = {users.filter(user => user.id === params.id)}/> }
