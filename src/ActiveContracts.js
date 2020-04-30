@@ -10,11 +10,11 @@ const ActiveContracts = ({contracts, auth, users}) => {
                     const currentContractor = users.find(user => user.id === contract.bidderId)
                     return(
                         <li key={`contract${ contract.id }`} className = 'columnNW bgLB topMargin1'>
-                            <h3 className = 'bgDB centerText topMargin1 bottomMargin1 widthundred colorAO padQuarter'>{ contract.title }</h3>
-                            <div className = 'leftPad1 topPadHalf'>Contractor: { currentContractor.username } - { currentContractor.companyName }</div>
-                            <div className = 'leftPad1 topPadHalf'>Comment: { contract.contract }</div>
-                            <div className = 'leftPad1 topPadHalf'>Contract Status: { contract.contractStatus }</div>
-                            <div className = 'leftPad1 bottomPad1 topPadHalf'> -- Contract Details -- </div>
+                            <h3 className = 'bgDB centerText topMargin1 bottomMargin1 colorAO padQuarter'>{ contract.title }</h3>
+                            <div className = 'leftPad1 topPadHalf rightPad1'>Contractor: { currentContractor.username } - { currentContractor.companyName }</div>
+                            <div className = 'leftPad1 topPadHalf rightPad1'>Comment: { contract.contract }</div>
+                            <div className = 'leftPad1 topPadHalf rightPad1'>Contract Status: { contract.contractStatus }</div>
+                            <div className = 'leftPad1 bottomPad1 rightPad1 topPadHalf'> -- Contract Details -- </div>
                         </li>
                     )
                 })
