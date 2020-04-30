@@ -14,7 +14,7 @@ const runSeed = async() => {
     const admin = await users.create(new Users('Capstone', 'Admin', 'E-Vocation', 'Local Host', 'Atascadero', 'CA', '93422', '35.488892', '-120.667732', 'Admin', 'AdminPass'));
 
     await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['ADMIN', admin.id]);
-    
+
     const santa = await users.create(new Users('Santa', 'Claus', 'Christmas', '4141 Postmark Dr', 'Anchorage', 'AK', '99530', '61.181210', '-149.984060', 'Santa', 'SantaPass'));
 
     const gordon = await users.create(new Users( 'Gordon', 'Ramsey', 'Hell\'s Kitchen', '888 Higuera', 'San Luis Obispo', 'CA', '93401', '35.28051186', '-120.66195073', 'Gordon', 'GordonPass'));
@@ -84,8 +84,6 @@ const runSeed = async() => {
     const chat05 = await chats.create(new Chats(santa.id, jack.id, "Ho Ho Ho! Well I couldn't do that, isn't that illigal??"))
 
     const chat06 = await chats.create(new Chats(jack.id, santa.id, " Don't worry about it, you are Santa, no ones going to put you in jail"))
-
-    const chat07 = await chats.create(new Chats(santa.id, jack.id, "TRU DAT, TRU DAT..."))
 
     const chat08 = await chats.create(new Chats(gordon.id, eva.id, "I'm ready to cook for you."))
 
