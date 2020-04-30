@@ -3,7 +3,6 @@ module.exports = {
     posts: require('./posts'),
     bids: require('./bids'),
     contracts: require('./contracts'),
-    ratings: require('./ratings'),
     comments: require('./comments'),
     chats: require('./chats')
 };
