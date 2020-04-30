@@ -84,13 +84,6 @@ const sync = async() => {
             "contractStatus" post_status
         );
 
-        CREATE TABLE ratings (
-            id UUID REFERENCES contracts(id),
-            "idOfRated" UUID,
-            rating INT,
-            comments TEXT
-        );
-
         CREATE TABLE comments (
             id UUID REFERENCES posts(id),
             "idOfPoster" UUID,

@@ -1,7 +1,7 @@
 
 const client = require('../client');
-const { users, posts, bids, contracts, ratings, comments, chats } = require('../models');
-const { Users, Posts, Bids, Contracts, Ratings, Comments, Chats } = require('../models/constructors')
+const { users, posts, bids, contracts, comments, chats } = require('../models');
+const { Users, Posts, Bids, Contracts, Comments, Chats } = require('../models/constructors')
 
 const runSeed = async() => {
     //Users using Users constructor
@@ -66,11 +66,6 @@ const runSeed = async() => {
     const contract3 = await contracts.create(new Contracts(eva.id, admin.id, item5.id, "You again? Use Google. Google is your friend.", 'Completed'))
 
     const contract4 = await contracts.create(new Contracts(eva.id, admin.id, item4.id, "You must be new here. Check your chat messages", 'Completed'))
-
-    //Ratings using Ratings constructor
-    const rating1 = await ratings.create(new Ratings(contract1.id, gordon.id, 5, 'You were rude, annoying, and I could not stand you. I will hire you again in a heartbeat.'))
-
-    const rating2 = await ratings.create(new Ratings(contract1.id, eva.id, 1, 'Fancy hot dogs? You had no idea what you wanted. It was horrible working with you.'))
 
     //seeding some chat messages
     const chat01 = await chats.create(new Chats(santa.id, jack.id, "Ho Ho Ho! did you get my bid proposal?"))
