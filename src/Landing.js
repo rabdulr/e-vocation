@@ -8,7 +8,7 @@ const Landing = ({ displayLogin, auth, mode, route, breakpoint, posts, searchRet
     <div id='LandingRoot' className={ `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW' : 'rowNW' }` }>
       <div className='marginHalf'>
         <h2>Find a Job Near You. Gluten-Free!</h2>
-        <div id='map'></div>
+        {/* <div id='map'></div> */}
         <p>so many jobs!</p>
         { mode === 'COMPANY' && <form onSubmit = { () => submitSearch(true) } className = 'rowNW widthundred marginRightHalf'>
           <input placeholder='search jobs' value = { searchTerms.join(' ') } onChange = { ({ target }) => updateTerms(target.value) } className = 'bgLB colorDB topLeft15 bottomLeft15 borderDB padHalf widthundred' />  

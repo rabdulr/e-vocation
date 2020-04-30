@@ -7,7 +7,7 @@ const runSeed = async() => {
     //Users using Users constructor
     const jack = await users.create(new Users('Jack', 'Skellington', null, '1540 Froom Ranch Way', 'San Luis Obispo', 'CA', '93405', '35.250420', '-120.689770', 'Jack', 'JackPass'));
 
-    const eva = await users.create(new Users('Eva', 'Winters', null, '817 Palm', 'San Luis Obispo', 'CA', '93401', '35.281440', '-120.663700', 'Eva', 'EvasPass'));
+    const eva = await users.create(new Users('Eva', 'Winters', null, '563 Higuera Street', 'San Luis Obispo', 'CA', '93401', '35.277810', '-120.666290', 'Eva', 'EvasPass'));
 
     const guy = await users.create(new Users('Guy', 'Fieri', null, '1005 Monterey St', 'San Luis Obispo', 'CA', '93401', '35.281690', '-120.661060', 'Guy', 'FLAVORTOWN'));
 
@@ -28,15 +28,15 @@ const runSeed = async() => {
 
     const item2 = await posts.createSeed(new Posts(eva.id, gordon.id, 'Cater My Event', 'I am hosting an event that needs to be catered to 1000 people and the food needs to be excellent. Anything less is a travesty', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, `${eva.latitude}`, `${eva.longitude}`, new Date('2020-5-31'), new Date('2020-5-31'), 1000000, 'Active'));
 
-    const item3 = await posts.createSeed(new Posts(eva.id, gordon.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, `${eva.latitude}`, `${eva.longitude}`, new Date('2020-5-10'), new Date('2020-5-10'), 10000, 'Active'));
+    const item3 = await posts.createSeed(new Posts(eva.id, gordon.id, 'Fancy Hot Dogs','Hosting a fashion show. The models have ice to chew. Guests can have fancy hot dogs', 'Food', `1499 San Luis Dr, San Luis Obispo, CA, 93401`, '35.283795', '-120.650488', new Date('2020-5-10'), new Date('2020-5-10'), 10000, 'Active'));
 
     const item4 = await posts.createSeed(new Posts(eva.id, admin.id, 'Create a Post','This site is cool, but i\'m so confused... someone help me make a post', 'Tech', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, `${eva.latitude}`, `${eva.longitude}`, new Date('2020-5-1'), new Date('2020-5-1'), 10000, 'Completed'));
 
-    const item5 = await posts.createSeed(new Posts(eva.id, admin.id, 'Delete a post','Ok, so now i feel really silly and am looking to remove a post. Someone help?', 'Tech', `${eva.address}, ${eva.city}, ${eva.state}, ${eva.zip}`, `${eva.latitude}`, `${eva.longitude}`, new Date('2020-5-2'), new Date('2020-5-2'), 10000, 'Completed'));
+    const item5 = await posts.createSeed(new Posts(eva.id, admin.id, 'Delete a post','Ok, so now i feel really silly and am looking to remove a post. Someone help?', 'Tech', `839 Higuera Street, San Luis Obispo, CA, 93401`, '35.279900', '-120.662720', new Date('2020-5-2'), new Date('2020-5-2'), 10000, 'Completed'));
 
     const item6 = await posts.createSeed(new Posts(guy.id, null, 'Surprise Birthday Party','I am throwing a birthday party for my son and I need a clown and fireworks expert', 'Entertainment', `${guy.address}, ${guy.city}, ${guy.state}, ${guy.zip}`, `${guy.latitude}`, `${guy.longitude}`, new Date('2020-5-14'), new Date('2020-5-14'), 10000, 'Active'));
 
-    const item7 = await posts.createSeed(new Posts(guy.id, null, 'Taste Test','I need new tasters for my ULTRA-SPICY sauce after previous tasters hospitalized', 'Food', `${guy.address}, ${guy.city}, ${guy.state}, ${guy.zip}`, `${guy.latitude}`, `${guy.longitude}`, new Date('2020-5-26'), new Date('2020-5-26'), 10000, 'Active'));
+    const item7 = await posts.createSeed(new Posts(guy.id, null, 'Taste Test','I need new tasters for my ULTRA-SPICY sauce after previous tasters hospitalized', 'Food', `900 Southwood Dr, San Luis Obispo, CA, 93401`, '35.266608', '-120.644657', new Date('2020-5-26'), new Date('2020-5-26'), 10000, 'Active'));
 
     //await client.query('UPDATE posts SET status=$1 WHERE "userId"=$2 RETURNING *', ['Completed', eva.id]);
 
