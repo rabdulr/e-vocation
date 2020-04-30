@@ -12,6 +12,11 @@ const bids = {
     },
     getBids: async(bidderId) => {
         return (await client.query(`SELECT * FROM bids, posts WHERE "postId" = id AND "bidderId"=$1`, [bidderId])).rows;
+    },
+    changeStatus: async({bidderId, postId, bidStatus}) => {
+        const SQL = `UPDATE bids SET "bidStatus"=$3 WHERE "bidderId"=$1 AND "postId"=$2 RETURNING *`;
+        
+        return (await client.query(SQL, [ bidderId, postId, bidStatus ])).rows[0];
     }
 }
 

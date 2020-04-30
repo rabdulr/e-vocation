@@ -14,4 +14,12 @@ router.post('/createBid', (req, res, next) => {
     .catch(next)
 });
 
+router.put('/changeStatus', (req, res, next) => {
+  bids.changeStatus(req.body)
+    .then(response => {
+      return(res.send(response))
+    })
+    .catch(next)
+})
+
 module.exports = {router};

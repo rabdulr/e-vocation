@@ -18,12 +18,24 @@ const getAllPosts = async() => {
 
   await axios.get('/api/posts/getAllPosts', headers())
     .then((response) => sendIt = response)
-    .catch(ex => console.log('AppHome.getAllPosts:', ex))
-    
+    .catch(ex => console.log('appMethods.getAllPosts:', ex))
+
   return (sendIt)
+}
+
+const changeBidStatus = async(bid) => {
+  let hereYaGo = []
+  console.log('bid', bid)
+  await axios.put('/api/bids/changeStatus', bid, headers())
+    .then((gotEEm) => hereYaGo = gotEEm)
+    .catch(ex => console.log('appMethods.getAllPosts:', ex))
+  
+  console.log('hereYaGo', hereYaGo)
+  return(hereYaGo)
 }
 
 module.exports = {
   getAllPosts,
   headers,
+  changeBidStatus,
 }

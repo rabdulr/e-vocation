@@ -8,7 +8,8 @@ import { isString } from 'util';
 const PostDetail = ({auth, mode, createBid, bids, users}) => {
 
   const [ post, setPost] = useState({})
-  const [filteredBids, setFilteredBids] = useState({})
+  const [ filteredBids, setFilteredBids ] = useState([])
+  // const [bidStates, setBidStates] = useState([])
   
   const postId = window.location.hash.split('#post/')[1]
 
@@ -20,6 +21,10 @@ const PostDetail = ({auth, mode, createBid, bids, users}) => {
   useEffect(()=>{
     setFilteredBids(bids.filter(bid => bid.postId === post.id))
   },[post])
+  
+  useEffect(()=>{
+    console.log(filteredBids)
+  },[filteredBids])
 
   return (
     <div id = 'PostDetailRoot'>
@@ -31,7 +36,7 @@ const PostDetail = ({auth, mode, createBid, bids, users}) => {
       <p>Site Address: {post.siteAddress}</p>
       <p>Proposed budget: ${post.proposedBudget}</p>
       { mode === 'COMPANY' && <CreateBid post={post} auth={auth} createBid={createBid} bids={filteredBids}/> }
-      { mode === 'USER' && auth.id === post.userId && <BidList bids = {filteredBids} users = {users} /> }
+      { mode === 'USER' && auth.id === post.userId && <BidList bids = {filteredBids} setBids = {setFilteredBids} users = {users} /> }
     </div>)
 }
 

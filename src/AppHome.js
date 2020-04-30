@@ -248,6 +248,7 @@ const AppHome = () => {
     };
 
     const updateUser = async (user) => {
+        console.log(user)
         const response = await axios.put(`/api/users/${user.id}`, user, headers());
         setAuth(response.data);
     };
