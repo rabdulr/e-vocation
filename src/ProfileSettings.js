@@ -4,16 +4,17 @@ import { headers } from './appMethods';
 import DenialForm from './DenialForm';
 
 const ProfileSettings = ({ auth, setAuth, errorMessage, setErrorMessage, route, breakpoint, updateUser }) => {
-    const [id, setId] = useState(auth.id);
-    const [role, setRole] = useState(auth.role);
-    const [username, setUsername] = useState(auth.username);
-    const [password, setPassword] = useState('');
-    const [firstName, setFirstName] = useState(auth.firstName);
-    const [lastName, setlastName] = useState(auth.lastName);
-    const [address, setAddress] = useState(auth.address);
-    const [city, setCity] = useState(auth.city);
-    const [state, setState] = useState(auth.state);
-    const [zip, setZip] = useState(auth.zip);
+    const [ id, setId ] = useState(auth.id);
+    const [ role, setRole ] = useState(auth.role);
+    const [ username, setUsername ] = useState(auth.username);
+    const [ companyName, setCompanyName ] = useState(auth.companyName ? auth.companyName : null)
+    const [ password, setPassword ] = useState('');
+    const [ firstName, setFirstName ] = useState(auth.firstName);
+    const [ lastName, setlastName ] = useState(auth.lastName);
+    const [ address, setAddress ] = useState(auth.address);
+    const [ city, setCity ] = useState(auth.city);
+    const [ state, setState ] = useState(auth.state);
+    const [ zip, setZip ] = useState(auth.zip);
 
     const [ toggleDenial, setToggleDenial ] = useState(false);
 
@@ -38,7 +39,7 @@ const ProfileSettings = ({ auth, setAuth, errorMessage, setErrorMessage, route, 
 
     const onSubmit = ({ target }) => {
         event.preventDefault();
-        const updatedInfo = {id, role, username, password, firstName, lastName, address, city, state, zip}
+        const updatedInfo = {id, role, username, password, firstName, lastName, companyName, address, city, state, zip}
         updateUser(updatedInfo)
     };
 
@@ -64,6 +65,10 @@ const ProfileSettings = ({ auth, setAuth, errorMessage, setErrorMessage, route, 
                     <div className = 'rowNW colorOW spaceBetweenRow topMarginHalf'>
                         <div>Last Name</div>
                         <input placeholder = 'New Last...' className = 'bgDB colorOW borderOW padQuarter' value={lastName} onChange={({target})=> setlastName(target.value)}/>
+                    </div>
+                    <div className = 'rowNW colorOW spaceBetweenRow topMarginHalf'>
+                        <div>Company Name</div>
+                        <input placeholder = 'New Company...' className = 'bgDB colorOW borderOW padQuarter' value={ companyName } onChange={({target})=> setCompanyName(target.value)}/>
                     </div>
                     <div className = 'rowNW colorOW spaceBetweenRow topMarginHalf'>
                         <div>Address</div>

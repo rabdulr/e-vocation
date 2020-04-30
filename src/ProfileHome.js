@@ -33,7 +33,7 @@ const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, rou
   return(
     <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW alignCenter' : 'rowWrap spaceBetweenRow' } margin1` }>
       <div className = 'columnNW'>
-        <h1>{ auth.firstName } { auth.lastName }</h1>
+        <h1>{ mode === 'COMPANY' ? auth.companyName : `${ auth.firstName } ${ auth.lastName }` }</h1>
         <div className = 'rowWrap spaceBetweenRow'>
           <input type = 'button' className = 'bgDB colorAO borderLB border5 fourteenPoint padHalf' onClick={ ()=> route(`#profile/settings/${ auth.id }`) } value = 'Edit Profile' />
           <input type = 'button' className = 'bgDB colorAO borderLB border5 fourteenPoint padHalf' onClick={ ()=> route(`#job-history/${ auth.id }`) } value = 'History' />
