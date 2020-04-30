@@ -17,7 +17,6 @@ function ProfileCalendar({ auth }){
   const setUpCalendar = ()=> {
     const _calendar = new Calendar(calendarEl, {
       plugins: [ dayGridPlugin, interactionPlugin ],
-      // eventClick: (what) => setFocus(what.event._def.publicId)
     });
     _calendar.render();
     setCalendar(_calendar);
