@@ -8,23 +8,18 @@ import { isString } from 'util';
 const PostDetail = ({auth, mode, createBid, bids, users}) => {
 
   const [ post, setPost] = useState({})
-  const [ postId, setPostId] = useState(window.location.hash.split('#post/')[1])
   const [filteredBids, setFilteredBids] = useState({})
-
-  // useEffect(() => {
-  //   if(!(auth.id)){
-  //       route('#');
-  //   }
-  // }, []);
+  
+  const postId = window.location.hash.split('#post/')[1]
 
   useEffect(()=>{
     getAllPosts(headers)
       .then(gotEEm => setPost(gotEEm.data.filter(suspect => suspect.id === postId)[0]))
-  },[postId])   //API call for POSTS
+  },[])   //API call for POSTS
 
   useEffect(()=>{
     setFilteredBids(bids.filter(bid => bid.postId === post.id))
-  },[postId])
+  },[post])
 
   return (
     <div id = 'PostDetailRoot'>
