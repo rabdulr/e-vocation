@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const CompletedContracts = ({contracts, ratings, auth, users}) => {
+const CompletedContracts = ({contracts, auth, users}) => {
     return (
         <div className = 'colorDB'>
             <h3 className = 'centerText topMargin1'>Contract List</h3>

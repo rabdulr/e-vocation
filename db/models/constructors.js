@@ -51,15 +51,6 @@ class Contracts {
     }
 };
 
-class Ratings {
-    constructor(id, idOfRated, rating, comments){
-        this.id = id;
-        this.idOfRated = idOfRated;
-        this.rating = rating;
-        this.comments = comments;
-    }
-};
-
 class Comments {
     constructor(id, idOfPoster, comment){
         this.id = id;
@@ -81,7 +72,6 @@ module.exports = {
     Posts,
     Bids,
     Contracts,
-    Ratings,
     Comments,
     Chats
 }
