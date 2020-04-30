@@ -15,13 +15,13 @@ const ChatPage = ({ auth, params, user, chatMessages, createChatMessage})=>{
         createChatMessage({message, receiverId: user[0].id})
     }
     return(
-        <div className = 'columnNW grow1 vh80'>
-            <div className = 'columnNW borderDB bgBB border5 marginHalf vh80 grow1'>
+        <div className = 'columnNW grow1 vh70'>
+            <div className = 'columnNW borderDB bgBB border5 marginHalf vh70 grow1'>
                 <h4 className = 'centerText colorOW padHalf'>Chat with { user.length > 0 ? user[0].username : '' }</h4>
-                <ul id = 'messages' className = 'columnNW borderDB bgOW colorDB border10 marginHalf grow1 vh80 scrollable'>
+                <ul id = 'messages' className = 'columnNW borderDB bgOW colorDB border10 marginHalf grow1 scrollable'>
                     {chatMessages.map((chatMessage, idx) =>{
                         return(
-                            <li key={idx}> <strong>{chatMessage.senderId === auth.id ? auth.username : user[0].username}: </strong>{chatMessage.message} </li>
+                            <li key={idx} className = 'rowNW'> <strong className = 'colorAO padQuarter topMarginHalf bottomMarginHalf leftMarginHalf rightPad1 leftPad1 topLeft15 bottomLeft15 bgDB'>{ chatMessage.senderId === auth.id ? auth.username : user[0].username }</strong><div className = { `padQuarter rightMarginHalf topMarginHalf bottomMarginHalf rightPad1 leftPad1 topRight15 bottomRight15 ${ chatMessage.senderId === auth.id ? 'bgBB colorOW' : 'bgAO colorDB' }` }>{ chatMessage.message }</div></li>
                         )
                     })}
                 </ul>
