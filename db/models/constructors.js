@@ -42,12 +42,12 @@ class Bids {
 };
 
 class Contracts {
-    constructor(userId, bidderId, postId, contract, contractStatus){
+    constructor(userId, bidderId, postId, proposal, bidStatus){
         this.userId = userId;
         this.bidderId = bidderId;
         this.postId = postId;
-        this.contract = contract;
-        this.contractStatus = contractStatus
+        this.proposal = proposal;
+        this.bidStatus = bidStatus
     }
 };
 

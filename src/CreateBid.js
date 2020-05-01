@@ -3,8 +3,6 @@ import { Bids } from '../db/models/constructors';
 
 
 const CreateBid = ({post, auth, createBid, singleBid}) => {
-    console.log('single', singleBid)
-    // console.log('auth', auth.id)
     const [proposal, setProposal] = useState('');
     const [bid, setBid] = useState('');
     const [currentBid, setCurrentBid] = useState({bidStatus: 'false'})

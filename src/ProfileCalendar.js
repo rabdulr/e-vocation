@@ -29,7 +29,6 @@ function ProfileCalendar({ auth }){
 
   useEffect(()=>{
     if( Array.isArray(posts) ){
-    // console.log(posts)
       setEvents(posts.filter(post=>(post.userId === auth.id || post.acceptedId === auth.id)).map(pozt => {
         if(pozt.userId === auth.id){
           return({

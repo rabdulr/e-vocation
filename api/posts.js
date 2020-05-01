@@ -18,8 +18,6 @@ const createLocation = async (req) => {
 
 router.post('/createJobPost', async (req, res, next) => {
   const coord = await createLocation(req)
-  console.log('return: ', {...req.body, coord})
-  console.log({...req.body, coord})
     posts.create({...req.body, coord})
       .then(post => res.send(post).sendStatus(204))
       .catch(next)

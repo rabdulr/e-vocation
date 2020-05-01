@@ -1,8 +1,4 @@
-console.log('appMethods.js')
-
-// const {setPosts} = require('./AppHome');
 const axios = require('axios');
-// import qs from 'qs';
 
 const headers = () => {
   const token = window.localStorage.getItem('token');
@@ -28,8 +24,7 @@ const changeBidStatus = async(bid) => {
   await axios.put('/api/bids/changeStatus', bid, headers())
     .then((gotEEm) => hereYaGo = gotEEm)
     .catch(ex => console.log('appMethods.getAllPosts:', ex))
-  
-  console.log('hereYaGo', hereYaGo)
+
   return(hereYaGo)
 }
 

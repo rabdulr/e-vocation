@@ -175,7 +175,7 @@ const AppHome = () => {
     const initMap = async () => {
         map = await new google.maps.Map(document.getElementById('map'), {
             center: {'lat': auth.latitude*1 || 35.281440, 'lng': auth.longitude*1 || -120.663700},
-            zoom: 9,
+            zoom: 13,
             streetViewControl: false
         });
     };
@@ -186,7 +186,6 @@ const AppHome = () => {
         const infowindow = await new google.maps.InfoWindow({
             'content': contentString
         });
-        console.log('location: ', location, 'Map: ', map)
         const marker = await new google.maps.Marker({'position': location, 'map': map, 'title': title});
         marker.addListener('click', function() {
             infowindow.open(map, marker)
@@ -225,7 +224,7 @@ const AppHome = () => {
 
     const exchangeTokenForAuth = async() => {
         const response = await axios.get('/api/auth', headers())
-        .then(user => { setAuth(user.data); console.log(user); setMode(user.data.role !== 'ADMIN' ? user.data.role : 'COMPANY') })
+        .then(user => { setAuth(user.data); setMode(user.data.role !== 'ADMIN' ? user.data.role : 'COMPANY') })
         .catch(ex => console.log('AppHome.exchangeTokenForAuth:', ex));
     }
 
@@ -248,7 +247,6 @@ const AppHome = () => {
     };
 
     const updateUser = async (user) => {
-        console.log(user)
         const response = await axios.put(`/api/users/${user.id}`, user, headers());
         setAuth(response.data);
     };
@@ -265,9 +263,7 @@ const AppHome = () => {
 
     const submitSearch = (bool) => {
         event.preventDefault();
-        //do something with searchContent
         setSearchReturn(result);
-        console.log(result)
         if(landSearch !== bool){
             setLandSearch(bool);
         }        
