@@ -20,7 +20,7 @@ const BidList = ({bids, users, setBids}) => {
         } else {
           return bid
         }
-      })))    
+      })))
     }
   }
 
@@ -36,11 +36,11 @@ const BidList = ({bids, users, setBids}) => {
           <div className = "rowNW spaceBetweenRow">
             <h3>Bid from {users.filter(use => use.id === bid.bidderId)[0].companyName}</h3>
             <h4 className = {"topMarginAuto " +statusColor} >{bid.bidStatus}</h4>
-          </div> 
+          </div>
           <p>{bid.proposal}</p>
           <div className = "rowNW spaceBetweenRow">
             <button onClick = { ()=>Accept() }>Accept</button>
-            <button onClick = { ()=>Message() }>Message</button>
+            <button onClick = { ()=>window.location.href= `#view=chat&id=${ bid.bidderId }`}> Message</button>
             <button onClick = { ()=>Delete(bid) }>Delete</button>
           </div>
         </li>)
