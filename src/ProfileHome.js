@@ -67,7 +67,7 @@ const ProfileHome = ({ auth, mode, bids, posts, setPosts, breakpoint, users, rou
           }, [])
           .map(id => {
             return (
-              <li key = { `chat${ id }` } className = { `bgDB marginHalf centerText padHalf border5 ${ breakpoint === 'sm' || breakpoint === 'md' ? '' : 'vw3' }` }><a href = { `#view=chat&id=${ id }` } className = 'colorBB'>{ mode === 'COMPANY' ? users.find(user => user.id === id).username : users.find(user => user.id === id).companyName }</a></li>
+              <li key = { `chat${ id }` } className = { `bgDB marginHalf centerText padHalf border5 ${ breakpoint === 'sm' || breakpoint === 'md' ? '' : 'vw3' }` }><a href = { `#view=chat&id=${ id }` } className = 'colorBB'>{ mode === 'COMPANY' ? users.find(user => user.id === id).firstName : users.find(user => user.id === id).companyName }</a></li>
             )
           })
         }</ul>
