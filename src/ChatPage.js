@@ -17,7 +17,7 @@ const ChatPage = ({ auth, params, user, chatMessages, createChatMessage})=>{
     return(
         <div className = 'columnNW grow1 vh70'>
             <div className = 'columnNW borderDB bgBB border5 marginHalf vh70 grow1'>
-                <h4 className = 'centerText colorOW padHalf'>Chat with { user.length > 0 ? user[0].username : '' }</h4>
+                <h4 className = 'centerText colorOW padHalf'>Chat with { user.length > 0 ? user[0].firstName : '' }</h4>
                 <ul id = 'messages' className = 'columnNW borderDB bgOW colorDB border10 marginHalf grow1 scrollable'>
                     {chatMessages.map((chatMessage, idx) =>{
                         return(
