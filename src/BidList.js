@@ -1,11 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import { changeBidStatus } from './appMethods'
+import { changeBidStatus, createContract } from './appMethods'
 
 const BidList = ({bids, users, setBids}) => {
 
   let newness = {}
-  const Accept = () => {
-    alert("//TODO move this bid to the top, call the backEnd, disable other bids, initiate contract?, email bidder?")
+//{ userId, bidderId, postId, contract, contractStatus }
+  const Accept = async(bid) => {
+    console.log(bid)
+    bid.bidStatus = "Active"
+    // let use = bid.userId;
+    // let bidd = bid.bidderId;
+    // let pozt = bid.postId;
+    // let contrakt = bid.proposal;
+    // let stat = "Active"
+    console.log({...bid})
+    await createContract(bid)
+    alert("Your offer has become a Contract!")
   }
   const Message = () => {
     alert("//TODO route to ChatPage between users")
@@ -38,7 +48,7 @@ const BidList = ({bids, users, setBids}) => {
           </div>
           <p>{bid.proposal}</p>
           <div className = "rowNW spaceBetweenRow">
-            <button onClick = { ()=>Accept() }>Accept</button>
+            <button onClick = { ()=>Accept(bid) }>Accept</button>
             <button onClick = { ()=>window.location.href= `#view=chat&id=${ bid.bidderId }`}> Message</button>
             <button onClick = { ()=>Delete(bid) }>Delete</button>
           </div>
