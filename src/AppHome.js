@@ -308,7 +308,6 @@ const AppHome = () => {
                 { params.view === `chat` && <ChatPage auth = {auth} chatMessages = {chatMessages} createChatMessage = {createChatMessage} route = { route } params = {params} headers = {headers} user = {users.filter(user => user.id === params.id)}/> }
                 { window.location.hash.includes('#contracts') && <Contracts contracts={contracts.filter(contract => auth.id === (mode === 'COMPANY' ? contract.bidderId : contract.userId))} auth={auth} users={users} route = { route } /> }
                 { window.location.hash === `#google` && <GoogleNewUser auth={auth} breakpoint={breakpoint} updateUser={updateUser} route={route} />}
-                { window.location.hash === '' && !auth.id && <form method="GET" action={`/api/google`}><input type = 'submit' value = 'Google Log In' /></form> }
             </main>
             <footer className = 'centerText'>
                 © 2020 Collaborators: Abdul Rahim • Frazier • Lal • Adema  <a href="#view=chat">HelpChat</a>
