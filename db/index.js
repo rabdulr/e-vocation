@@ -80,8 +80,8 @@ const sync = async() => {
             "userId" UUID REFERENCES users(id),
             "bidderId" UUID REFERENCES users(id),
             "postId" UUID REFERENCEs posts(id),
-            contract TEXT,
-            "contractStatus" post_status
+            proposal TEXT,
+            "bidStatus" post_status
         );
 
         CREATE TABLE comments (

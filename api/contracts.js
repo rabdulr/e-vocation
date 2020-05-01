@@ -8,4 +8,11 @@ router.get('/getContracts', (req, res, next) => {
       .catch(next)
 });
 
+router.post('/createContract', (req, res, next) => {
+  console.log(req.body)
+  contracts.create(req.body)
+    .then(contracts => res.send(contracts))
+    .catch(next)
+})
+
 module.exports = {router};

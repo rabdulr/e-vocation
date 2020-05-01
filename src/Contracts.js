@@ -26,8 +26,8 @@ const Contracts = ({ contracts, auth, users, route, breakpoint }) => {
                     <a href = { `#contracts/complete` } onClick = { () => changeTab('Completed') } className = { `borderAO topRight10 topLeft10 padHalf ${ tab === 'Completed' ? 'bottomBorderOW bgBB' : 'bottomBorderAO bgDB' }` }>Complete</a>  
                 </div>
                 <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? '' : 'maxWidth6' } columnNW grow1 vh74 borderAO topRight10 bottomRight10 bottomLeft10`  }>
-                    { window.location.hash === '#contracts/active' && <ActiveContracts contracts = { contracts.filter(contract => contract.contractStatus === 'Active') } auth = { auth } users = { users } /> }
-                    { window.location.hash === '#contracts/complete' && <CompletedContracts contracts = { contracts.filter(contract => contract.contractStatus === 'Completed') } auth = { auth } users = { users } /> }
+                    { window.location.hash === '#contracts/active' && <ActiveContracts contracts = { contracts.filter(contract => contract.bidStatus === 'Active') } auth = { auth } users = { users } /> }
+                    { window.location.hash === '#contracts/complete' && <CompletedContracts contracts = { contracts.filter(contract => contract.bidStatus === 'Completed') } auth = { auth } users = { users } /> }
                 </div>
             </div>
         </div>
