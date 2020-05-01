@@ -65,8 +65,6 @@ const runSeed = async() => {
     //Contracts using Contracts constructor
     const contract1 = await contracts.create(new Contracts(eva.id, gordon.id, item2.id, 'I will cook your damn food.', 'Completed'))
 
-    const contract2 = await contracts.create(new Contracts(eva.id, gordon.id, item3.id, "Fancy hot dogs? You'll get what you get. Calm down.", 'Active'))
-
     const contract3 = await contracts.create(new Contracts(eva.id, admin.id, item5.id, "You again? Use Google. Google is your friend.", 'Completed'))
 
     const contract4 = await contracts.create(new Contracts(eva.id, admin.id, item4.id, "You must be new here. Check your chat messages", 'Completed'))
