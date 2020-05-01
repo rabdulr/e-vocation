@@ -4,17 +4,17 @@ import { changeBidStatus, createContract } from './appMethods'
 const BidList = ({bids, users, setBids}) => {
 
   let newness = {}
-//{ userId, bidderId, postId, contract, contractStatus }
+
   const Accept = async(bid) => {
-    console.log(bid)
     bid.bidStatus = "Active"
-    // let use = bid.userId;
-    // let bidd = bid.bidderId;
-    // let pozt = bid.postId;
-    // let contrakt = bid.proposal;
-    // let stat = "Active"
-    console.log({...bid})
     await createContract(bid)
+      .then(returnedBid => setBids(bids.map( bid => {
+        if(bid.id === returnedBid.id) {
+          return returnedBid
+        } else {
+          return
+        }
+      })))
     alert("Your offer has become a Contract!")
   }
   const Message = () => {
