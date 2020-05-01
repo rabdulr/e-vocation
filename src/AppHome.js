@@ -175,7 +175,7 @@ const AppHome = () => {
     const initMap = async () => {
         map = await new google.maps.Map(document.getElementById('map'), {
             center: {'lat': auth.latitude*1 || 35.281440, 'lng': auth.longitude*1 || -120.663700},
-            zoom: 9,
+            zoom: 13,
             streetViewControl: false
         });
     };
