@@ -33,14 +33,17 @@ const PostDetail = ({auth, mode, createBid, bids, users}) => {
   },[singleBid])
 
   return (
-    <div id = 'PostDetailRoot'>
-      <h1>{post.title}</h1>
-      <p>{moment(post.datePosted).format('MM/DD/YYYY')}</p>
-      <p>{post.description}</p>
-      <p>Start date: {moment(post.startDate).format('MM/DD/YYYY')}</p>
-      <p>End date: {moment(post.endDate).format('MM/DD/YYYY')}</p>
-      <p>Site Address: {post.siteAddress}</p>
-      <p>Proposed budget: ${post.proposedBudget}</p>
+    <div id = 'PostDetailRoot' className = 'margin1'>
+      <h1 className = 'centerText'>{post.title}</h1>
+      <div className = 'bgDB colorOW margin1 pad1 border5'>
+        <p>{moment(post.datePosted).format('MM/DD/YYYY')}</p>
+        <p>{post.description}</p>
+        <p>Start date: {moment(post.startDate).format('MM/DD/YYYY')}</p>
+        <p>End date: {moment(post.endDate).format('MM/DD/YYYY')}</p>
+        <p>Site Address: {post.siteAddress}</p>
+        <p className = 'rowNW'><div>Proposed budget: $</div><div className = 'colorAO'>{post.proposedBudget}</div></p>  
+      </div>
+      
       { mode === 'COMPANY' && <CreateBid post={post} auth={auth} createBid={createBid} bids={filteredBids} singleBid = {singleBid} /> }
       { mode === 'USER' && auth.id === post.userId && <BidList bids = {filteredBids} setBids = {setFilteredBids} users = {users} /> }
       { mode === 'USER' && auth.id !== post.userId && <h2>Please switch to Company Mode to make a bid.</h2> }

@@ -10,6 +10,10 @@
     height: 400px;
 }
 
+.width4{
+    width: 400px;
+}
+
 .maxWidth2{
     max-width: 200px;
 }
