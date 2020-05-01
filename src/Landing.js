@@ -6,7 +6,7 @@ const Landing = ({ displayLogin, auth, mode, route, breakpoint, posts, searchRet
 
   return(
     <div id='LandingRoot' className={ `${ breakpoint === 'sm' || breakpoint === 'md' ? 'columnNW alignCenter' : 'rowNW' }` }>
-      <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'scrollable maxHeight3' : '' } marginHalf bgBB topLeft5 topRight5 bottomRight15 bottomLeft15 maxWidth4` }>
+      <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' ? 'scrollable maxHeight3' : '' } marginHalf bgBB topLeft5 topRight5 bottomRight15 bottomLeft15 maxWidth4` }>
         <h2 className = 'centerText colorAO padHalf'>About EVocation</h2>
         <div className = 'pad1 bgDB colorOW border15 maxWidth4'>
           <p className = 'indent1'><em>EVocation</em> was built with the goal of helping communities rebuild as we adapt to a new way of life and doing business during the Covid-19 Global Health Crisis.</p>
