@@ -6,6 +6,10 @@
     height: 100%;
 }
 
+.height4{
+    height: 400px;
+}
+
 .maxWidth2{
     max-width: 200px;
 }
