@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
-const JobSearch = ({ result, searchReturn, submitSearch, searchTerms, updateTerms, setSearchTerms, setSearchReturn, landSearch, setLandSearch, initMap, dropMarker,  }) => {
+const JobSearch = ({ result, searchReturn, submitSearch, searchTerms, updateTerms, setSearchTerms, setSearchReturn, landSearch, setLandSearch, initMap, dropMarker, breakpoint }) => {
 
     useEffect(() => {
         if(!landSearch){
@@ -13,8 +13,6 @@ const JobSearch = ({ result, searchReturn, submitSearch, searchTerms, updateTerm
     }, []);
 
     useEffect(() => {
-        //doesn't work as intended. Should remove list of results as soon as searchbar is cleared.
-        //checking searchTerms === [""] also doesn't work.
         if(searchTerms.length === 0){
             setSearchReturn([]);
         }
@@ -22,17 +20,17 @@ const JobSearch = ({ result, searchReturn, submitSearch, searchTerms, updateTerm
 
     useEffect(() => {
         initMap()
-            if(searchReturn.length !== 0){ 
-                searchReturn.forEach( post => {
-                    console.log(post.item)
-                    dropMarker(post.item)
+        if(searchReturn.length !== 0){ 
+            searchReturn.forEach( post => {
+                console.log(post.item)
+                dropMarker(post.item)
             });
         }
     }, [searchReturn])
 
     return (
         <div>
-            <div id='map'></div>
+            <div id = 'map' className = { `height4 ${ breakpoint === 'sm' ? '' : 'margin2 topMargin1' }` }></div>
             <form onSubmit = { () => submitSearch(false) } className = 'rowNW margin1'>
                 <input placeholder='search jobs' value = { searchTerms.join(' ') } onChange = { ({ target }) => updateTerms(target.value) } className = 'bgLB colorDB topLeft15 bottomLeft15 borderDB padHalf widthundred' />  
                 <input type = 'submit' value = 'Search' className = 'bgDB colorOW borderDB topRight15 bottomRight15 padHalf' />
