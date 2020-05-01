@@ -5,9 +5,9 @@ const { Users, Posts, Bids, Contracts, Comments, Chats } = require('../models/co
 
 const runSeed = async() => {
     //Users using Users constructor
-    const jack = await users.create(new Users('Jack', 'Skellington', null, '1540 Froom Ranch Way', 'San Luis Obispo', 'CA', '93405', '35.250420', '-120.689770', 'jack@halloweentown.com', 'JackPass'));
+    const jack = await users.create(new Users('Jack', 'Skellington', null, '1540 Froom Ranch Way', 'San Luis Obispo', 'CA', '93405', '35.250420', '-120.689770', 'jack@jack.com', 'JackPass'));
 
-    const eva = await users.create(new Users('Eva', 'Winters', null, '563 Higuera Street', 'San Luis Obispo', 'CA', '93401', '35.277810', '-120.666290', 'eva@fashionforward.com', 'EvasPass'));
+    const eva = await users.create(new Users('Eva', 'Winters', null, '563 Higuera Street', 'San Luis Obispo', 'CA', '93401', '35.277810', '-120.666290', 'eva@eva.com', 'EvasPass'));
 
     const guy = await users.create(new Users('Guy', 'Fieri', null, '1005 Monterey St', 'San Luis Obispo', 'CA', '93401', '35.281690', '-120.661060', 'mayor@flavortown.com', 'FLAVORTOWN'));
 
@@ -15,9 +15,9 @@ const runSeed = async() => {
 
     await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['ADMIN', admin.id]);
 
-    const santa = await users.create(new Users('Santa', 'Claus', 'Christmas', '4141 Postmark Dr', 'Anchorage', 'AK', '99530', '61.181210', '-149.984060', 'santa@northpole.com', 'SantaPass'));
+    const santa = await users.create(new Users('Santa', 'Claus', 'Christmas', '4141 Postmark Dr', 'Anchorage', 'AK', '99530', '61.181210', '-149.984060', 'santa@santa.com', 'SantaPass'));
 
-    const gordon = await users.create(new Users( 'Gordon', 'Ramsey', 'Hell\'s Kitchen', '888 Higuera', 'San Luis Obispo', 'CA', '93401', '35.28051186', '-120.66195073', 'gordon@gordongroup.com', 'GordonPass'));
+    const gordon = await users.create(new Users( 'Gordon', 'Ramsey', 'Hell\'s Kitchen', '888 Higuera', 'San Luis Obispo', 'CA', '93401', '35.28051186', '-120.66195073', 'gordon@gordon.com', 'GordonPass'));
 
     await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['COMPANY', gordon.id]);
 

@@ -14,7 +14,6 @@ const ActiveContracts = ({contracts, auth, users}) => {
                             <div className = 'leftPad1 topPadHalf rightPad1'>Contractor: { currentContractor.username } - { currentContractor.companyName }</div>
                             <div className = 'leftPad1 topPadHalf rightPad1'>Comment: { contract.proposal }</div>
                             <div className = 'leftPad1 topPadHalf rightPad1'>Contract Status: { contract.bidStatus }</div>
-                            <div className = 'leftPad1 bottomPad1 rightPad1 topPadHalf'> -- Contract Details -- </div>
                         </li>
                     )
                 })
