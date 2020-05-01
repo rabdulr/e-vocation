@@ -5,19 +5,19 @@ const { Users, Posts, Bids, Contracts, Comments, Chats } = require('../models/co
 
 const runSeed = async() => {
     //Users using Users constructor
-    const jack = await users.create(new Users('Jack', 'Skellington', null, '1540 Froom Ranch Way', 'San Luis Obispo', 'CA', '93405', '35.250420', '-120.689770', 'Jack', 'JackPass'));
+    const jack = await users.create(new Users('Jack', 'Skellington', null, '1540 Froom Ranch Way', 'San Luis Obispo', 'CA', '93405', '35.250420', '-120.689770', 'jack@halloweentown.com', 'JackPass'));
 
-    const eva = await users.create(new Users('Eva', 'Winters', null, '563 Higuera Street', 'San Luis Obispo', 'CA', '93401', '35.277810', '-120.666290', 'Eva', 'EvasPass'));
+    const eva = await users.create(new Users('Eva', 'Winters', null, '563 Higuera Street', 'San Luis Obispo', 'CA', '93401', '35.277810', '-120.666290', 'eva@fashionforward.com', 'EvasPass'));
 
-    const guy = await users.create(new Users('Guy', 'Fieri', null, '1005 Monterey St', 'San Luis Obispo', 'CA', '93401', '35.281690', '-120.661060', 'Guy', 'FLAVORTOWN'));
+    const guy = await users.create(new Users('Guy', 'Fieri', null, '1005 Monterey St', 'San Luis Obispo', 'CA', '93401', '35.281690', '-120.661060', 'mayor@flavortown.com', 'FLAVORTOWN'));
 
-    const admin = await users.create(new Users('Capstone', 'Admin', 'E-Vocation', 'Local Host', 'Atascadero', 'CA', '93422', '35.488892', '-120.667732', 'Admin', 'AdminPass'));
+    const admin = await users.create(new Users('Capstone', 'Admin', 'E-Vocation', 'Local Host', 'Atascadero', 'CA', '93422', '35.488892', '-120.667732', 'admin@evocation.com', 'AdminPass'));
 
     await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['ADMIN', admin.id]);
 
-    const santa = await users.create(new Users('Santa', 'Claus', 'Christmas', '4141 Postmark Dr', 'Anchorage', 'AK', '99530', '61.181210', '-149.984060', 'Santa', 'SantaPass'));
+    const santa = await users.create(new Users('Santa', 'Claus', 'Christmas', '4141 Postmark Dr', 'Anchorage', 'AK', '99530', '61.181210', '-149.984060', 'santa@northpole.com', 'SantaPass'));
 
-    const gordon = await users.create(new Users( 'Gordon', 'Ramsey', 'Hell\'s Kitchen', '888 Higuera', 'San Luis Obispo', 'CA', '93401', '35.28051186', '-120.66195073', 'Gordon', 'GordonPass'));
+    const gordon = await users.create(new Users( 'Gordon', 'Ramsey', 'Hell\'s Kitchen', '888 Higuera', 'San Luis Obispo', 'CA', '93401', '35.28051186', '-120.66195073', 'gordon@gordongroup.com', 'GordonPass'));
 
     await client.query('UPDATE users SET role=$1 WHERE id=$2 RETURNING *', ['COMPANY', gordon.id]);
 
@@ -37,6 +37,10 @@ const runSeed = async() => {
     const item6 = await posts.createSeed(new Posts(guy.id, null, 'Surprise Birthday Party','I am throwing a birthday party for my son and I need a clown and fireworks expert', 'Entertainment', `${guy.address}, ${guy.city}, ${guy.state}, ${guy.zip}`, `${guy.latitude}`, `${guy.longitude}`, new Date('2020-5-14'), new Date('2020-5-14'), 10000, 'Active'));
 
     const item7 = await posts.createSeed(new Posts(guy.id, null, 'Taste Test','I need new tasters for my ULTRA-SPICY sauce after previous tasters hospitalized', 'Food', `900 Southwood Dr, San Luis Obispo, CA, 93401`, '35.266608', '-120.644657', new Date('2020-5-26'), new Date('2020-5-26'), 10000, 'Active'));
+
+    const item8 = await posts.createSeed(new Posts(gordon.id, null, 'Restaurant Remodel', 'I need my new space remodeled. Open to ideas.', 'Food', `712 Marsh, San Luis Obispo, CA, 93401`, '35.278340', '-120.663842', new Date('2020-5-15'), new Date('2020-5-29'), 80000, 'Active'));
+
+    const item9 = await posts.createSeed(new Posts(gordon.id, null, 'Need New Signs', 'I need new signs created and delievered to a restaurant I am opening.', 'Restaurant', `952 Higuera, San Luis Obispo, CA, 93401`, '35.280823', '-120.661629', new Date('2020-4-30'), new Date('2020-5-2'), 1500, 'Active'));
 
     //await client.query('UPDATE posts SET status=$1 WHERE "userId"=$2 RETURNING *', ['Completed', eva.id]);
 
