@@ -224,3 +224,13 @@
 .bottomLeft15{
     border-bottom-left-radius: 15px;
 }
+
+/* Indenting Paragraphs */
+
+.indentHalf{
+    text-indent: .5rem;
+}
+
+.indent1{
+    text-indent: 1rem;
+}
