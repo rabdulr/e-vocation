@@ -48,6 +48,10 @@
     max-height: 100%;
 }
 
+.vw3{
+    width: 29vw;
+}
+
 .vh6{
     height: 6vh;
 }

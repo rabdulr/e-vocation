@@ -12,7 +12,7 @@ const BidList = ({bids, users, setBids}) => {
   }
   const Delete = async(bid) => {
     if(confirm('The Bidder will not be able to re-bid on your post. Proceed?')){
-      bid.bidStatus = 'deleted'
+      bid.bidStatus = 'Deleted'
       // console.log(bid)
       await changeBidStatus(bid).then(newness => setBids(bids.map(bid => {
         if(bid.bidderId === newness.bidderId){

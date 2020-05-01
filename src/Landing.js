@@ -9,7 +9,7 @@ const Landing = ({ displayLogin, auth, mode, route, breakpoint, posts, searchRet
       <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'scrollable maxHeight3' : '' } marginHalf bgBB topLeft5 topRight5 bottomRight15 bottomLeft15 maxWidth4` }>
         <h2 className = 'centerText colorAO padHalf'>About EVocation</h2>
         <div className = 'pad1 bgDB colorOW border15 maxWidth4'>
-          <p className = 'indent1'><em>EVocation</em> was build with the goal of helping communities rebuild as we adapt to a new way of life and doing business during the Covid-19 Global Health Crisis.</p>
+          <p className = 'indent1'><em>EVocation</em> was built with the goal of helping communities rebuild as we adapt to a new way of life and doing business during the Covid-19 Global Health Crisis.</p>
           <p className = 'indent1'>We want to help connect struggling businesses, local contractors, people who need odd jobs done, and everyone in between to find the labor and the work they need to get by in these trying times.</p>
           <p className = 'indent1'>As a user of our website, you can post jobs and allow companies, contractors, and qualified individuals bid for a fair price to do the work you need done. Once you choose an appropriate and affordable bid,
            you can contact the company and arrange a formal contract with them. We'll help you keep track of when the work is scheduled to be done.</p>

@@ -9,22 +9,30 @@ const PostDetail = ({auth, mode, createBid, bids, users}) => {
 
   const [ post, setPost] = useState({})
   const [ filteredBids, setFilteredBids ] = useState([])
+  const [ singleBid, setSingleBid ] = useState({})
   // const [bidStates, setBidStates] = useState([])
-  
-  const postId = window.location.hash.split('#post/')[1]
+
+  let postHold = {}
 
   useEffect(()=>{
     getAllPosts(headers)
-      .then(gotEEm => setPost(gotEEm.data.filter(suspect => suspect.id === postId)[0]))
-  },[])   //API call for POSTS
+      .then(response => postHold = response.data.find(post => post.id === window.location.hash.split('#post/')[1]))
+      .then(()=>setPost(postHold))
+  },[])   //API call for POSTSdat) console.log(Array.isArray(response.data[0]));
+  //.post=>post.id === )[0]
 
   useEffect(()=>{
     setFilteredBids(bids.filter(bid => bid.postId === post.id))
-  },[post])
+  },[post, bids])
   
   useEffect(()=>{
-    console.log(filteredBids)
-  },[filteredBids])
+    console.log('bids for singles', bids)
+    setSingleBid(bids.find(bidz => bidz.postId === post.id && bidz.bidderId === auth.id))
+  },[bids, postHold])
+
+  useEffect(()=>{
+    console.log( 'singleBid', singleBid)
+  },[singleBid])
 
   return (
     <div id = 'PostDetailRoot'>
@@ -35,8 +43,9 @@ const PostDetail = ({auth, mode, createBid, bids, users}) => {
       <p>End date: {moment(post.endDate).format('MM/DD/YYYY')}</p>
       <p>Site Address: {post.siteAddress}</p>
       <p>Proposed budget: ${post.proposedBudget}</p>
-      { mode === 'COMPANY' && <CreateBid post={post} auth={auth} createBid={createBid} bids={filteredBids}/> }
+      { mode === 'COMPANY' && <CreateBid post={post} auth={auth} createBid={createBid} bids={filteredBids} singleBid = {singleBid} /> }
       { mode === 'USER' && auth.id === post.userId && <BidList bids = {filteredBids} setBids = {setFilteredBids} users = {users} /> }
+      { mode === 'USER' && auth.id !== post.userId && <h2>Please switch to Company Mode to make a bid.</h2> }
     </div>)
 }
 
