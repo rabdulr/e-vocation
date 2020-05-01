@@ -20,7 +20,6 @@ const PostSearch = ({auth, posts, route, breakpoint, createJobPost}) => {
   }, [auth])
 
   const togglePost = () => {
-    console.log('PostSearch.togglePost:', postDisplay);
     setPostDisplay(!postDisplay);
   }
 

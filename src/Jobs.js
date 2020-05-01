@@ -16,11 +16,6 @@ const Jobs = ({ auth, mode, posts, breakpoint, bids, users, route, result }) => 
         }
     }, [posts]);
 
-    //looks for posts that active and equal to auth.id
-    //loop over the filtered lists
-    //within filtered lists, show the bid
-
-    console.log('Filter posts: ', filterPosts)
     return (
         <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>
             { mode === 'COMPANY' && <input className = 'marginHalf border10 borderAO bgDB colorOW' type = 'button' value = 'Search' onClick = { () => route('#jobs/search') }/> }

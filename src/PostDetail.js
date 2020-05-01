@@ -18,20 +18,18 @@ const PostDetail = ({auth, mode, createBid, bids, users}) => {
     getAllPosts(headers)
       .then(response => postHold = response.data.find(post => post.id === window.location.hash.split('#post/')[1]))
       .then(()=>setPost(postHold))
-  },[])   //API call for POSTSdat) console.log(Array.isArray(response.data[0]));
-  //.post=>post.id === )[0]
+  },[]) 
 
   useEffect(()=>{
     setFilteredBids(bids.filter(bid => bid.postId === post.id))
   },[post, bids])
   
   useEffect(()=>{
-    console.log('bids for singles', bids)
     setSingleBid(bids.find(bidz => bidz.postId === post.id && bidz.bidderId === auth.id))
   },[bids, postHold])
 
   useEffect(()=>{
-    console.log( 'singleBid', singleBid)
+    
   },[singleBid])
 
   return (

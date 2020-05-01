@@ -26,7 +26,6 @@ const BidList = ({bids, users, setBids}) => {
 
   return(<ul className = "rowWrap">
     { bids.map(bid=>{
-      console.log("bid map")
       let statusColor = ''
       if(bid.bidStatus === 'Active'){
         statusColor = 'colorG'
