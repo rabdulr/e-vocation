@@ -38,7 +38,7 @@ function ProfileCalendar({ auth }){
             start: moment(pozt.startDate).format('YYYY-MM-DD'),
             end: moment(pozt.endDate).format('YYYY-MM-DD'),
             url: `#post/${pozt.id}`,
-            color: 'blue',
+            color: '#1c5d83',
           })
         } else {
           return({
@@ -47,7 +47,7 @@ function ProfileCalendar({ auth }){
             start: moment(pozt.startDate).format('YYYY-MM-DD'),
             end: moment(pozt.endDate).format('YYYY-MM-DD'),
             url: `#post/${pozt.id}`,
-            color: 'orange',
+            color: '#ea7200',
           })
         }
       }))
@@ -61,7 +61,7 @@ function ProfileCalendar({ auth }){
   useEffect(setUpCalendar, []);
 
   return (
-    <div ref={ ref => calendarEl = ref } ></div>
+    <div ref={ ref => calendarEl = ref } className = 'maxWidth5'></div>
   );
 }
 
