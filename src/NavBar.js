@@ -12,7 +12,7 @@ const NavBar = ({ auth, mode, setMode, setAuth, displayLogin, route, breakpoint 
   return (
     <div>
       <nav id = 'navBar' className = 'rowNW spaceBetweenRow'>
-        <a href = '#' onClick = { () => setDropVis(false) }><img src = { `./assets/img/E-Vocation${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? '-256p-247p' : '-1800p-560p' }.png` } className = 'vh6' /></a>
+        <a href = '#' onClick = { () => setDropVis(false) }><img src = { `./assets/img/E-Vocation${ breakpoint === 'sm' || breakpoint === 'md' ? '-256p-247p' : '-1800p-560p' }.png` } className = 'vh6' /></a>
         { auth.companyName && <div>
           <div>
             <input type = 'button' value = 'User' className = {`${ mode === 'USER' ? 'bgAO colorDB borderAO' : 'bgLB colorAO borderDB' } padHalf topLeft5 bottomLeft5`} onClick = { ({ target }) => setMode(target.value.toUpperCase())  } />

@@ -17,12 +17,13 @@ const Jobs = ({ auth, mode, posts, breakpoint, bids, users, route, result }) => 
     }, [posts]);
 
     return (
-        <div className = { `${ breakpoint === 'sm' || breakpoint === 'md' || breakpoint === 'lg' ? 'columnNW' : 'rowNW' }` }>
+        <div className = 'columnNW'>
             { mode === 'COMPANY' && <input className = 'marginHalf border10 borderAO bgDB colorOW' type = 'button' value = 'Search' onClick = { () => route('#jobs/search') }/> }
             <h2 className = 'centerText colorDB topMargin1'>Active Jobs</h2>
-            <ul className = 'columnNW marginHalf scrollable maxHeight4'>{
-                filterPosts.map( post => {
-                    return(
+            <ul className = { `marginHalf scrollable ${ breakpoint === 'sm' ? 'columnNW maxHeight4' : 'rowWrap justifyStart vh62' }` }>{
+                filterPosts.filter(post => post.status === 'Active').map(post => {
+                    const contractor = post.acceptedId ? users.find(user => post.acceptedId === user.id) : null;
+                    return (
                         <li key = { `post${ post.id }` } className = 'topMargin1 padHalf bgBB colorOW border10'>
                             <h4>{ post.title }</h4>
                             <div className = 'topMarginHalf'>Industry: { post.industry }</div>
